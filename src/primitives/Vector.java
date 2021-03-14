@@ -40,12 +40,19 @@ public class Vector {
         return _head.equals(vector._head);
     }
 
-    public Vector crossProduct(Vector vector) {
-        return null;
+    public Vector crossProduct(Vector other) {
+        double x = (_head._y.coord * other.getHead()._z.coord)-(_head._z.coord * other.getHead()._y.coord);
+        double y = (_head._z.coord * other.getHead()._x.coord)-(_head._x.coord * other.getHead()._z.coord);
+        double z = (_head._x.coord * other.getHead()._y.coord)-(_head._y.coord * other.getHead()._x.coord);
+        return new Vector(x,y,z);
     }
 
-    public double dotProduct(Vector vector) {
-        return 0d;
+    public double dotProduct(Vector other) {
+
+        double x = (_head._x.coord * other.getHead()._x.coord);
+        double y = (_head._y.coord * other.getHead()._y.coord);
+        double z = (_head._z.coord * other.getHead()._z.coord);
+        return x+y+z;
     }
 
     public Vector subtract(Vector other) {
