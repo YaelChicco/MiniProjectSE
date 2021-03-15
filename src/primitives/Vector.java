@@ -54,6 +54,24 @@ public class Vector {
     }
 
     /**
+     * multiplies vector by number
+     * @param number
+     * @return
+     */
+    public Vector scale(int number) {
+
+        if (isZero(number)) {
+            throw new ArithmeticException("number equals 0");
+        }
+
+        double x = _head._x.coord *number;
+        double y = _head._y.coord *number;
+        double z = _head._z.coord *number;
+
+        Vector newVector=new Vector(x, y, z);
+        return newVector;
+    }
+    /**
      * does cross product between two vectors
      * @param other is the second vector in the product
      * @return vector
@@ -79,8 +97,23 @@ public class Vector {
     }
 
     /**
+     * does add between two vectors
+     * @param other
+     * @return
+     */
+    public Vector add(Vector other) {
+        if (other.scale(-1).equals(this)) {
+            throw new IllegalArgumentException("parameter vector cannot be the opposite of this vector");
+        }
+
+        Vector newVector=other;
+        newVector._head.add(this);
+        return newVector;
+    }
+
+    /**
      * does subtract between two vectors
-     * @param other is the second vector in the product
+     * @param other
      * @return
      */
     public Vector subtract(Vector other) {
