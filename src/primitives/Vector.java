@@ -101,5 +101,4 @@ public class Vector {
         return result;
     }
 
-
 }
