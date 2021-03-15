@@ -71,6 +71,7 @@ public class Vector {
         Vector newVector=new Vector(x, y, z);
         return newVector;
     }
+
     /**
      * does cross product between two vectors
      * @param other is the second vector in the product
@@ -177,6 +178,5 @@ public class Vector {
         result.normalize();
         return result;
     }
-
 
 }

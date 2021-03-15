@@ -7,6 +7,7 @@ public class Plane implements Geometry{
 
     private Point3D point3D;
     private Vector normal;
+
     public Plane(Point3D p1, Point3D p2, Point3D p3) {
         Vector v1=p2.subtract(p1);
         Vector v2=p3.subtract(p1);
