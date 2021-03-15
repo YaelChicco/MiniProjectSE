@@ -40,6 +40,11 @@ public class Vector {
         return _head.equals(vector._head);
     }
 
+    /**
+     * does cross product between two vectors
+     * @param other is the second vector in the product
+     * @return vector
+     */
     public Vector crossProduct(Vector other) {
         double x = (_head._y.coord * other.getHead()._z.coord)-(_head._z.coord * other.getHead()._y.coord);
         double y = (_head._z.coord * other.getHead()._x.coord)-(_head._x.coord * other.getHead()._z.coord);
@@ -47,6 +52,11 @@ public class Vector {
         return new Vector(x,y,z);
     }
 
+    /**
+     * does dot product between two vectors
+     * @param other is the second vector in the product
+     * @return number
+     */
     public double dotProduct(Vector other) {
 
         double x = (_head._x.coord * other.getHead()._x.coord);
@@ -55,6 +65,11 @@ public class Vector {
         return x+y+z;
     }
 
+    /**
+     * does subtract between two vectors
+     * @param other is the second vector in the product
+     * @return
+     */
     public Vector subtract(Vector other) {
         if (other.equals(this)) {
             throw new IllegalArgumentException("parameter vector cannot be equals to this vector");
@@ -63,6 +78,10 @@ public class Vector {
         return other._head.subtract(_head);
     }
 
+    /**
+     * calculates the squared length of vector
+     * @return the squared length
+     */
     public double lengthSquared() {
         double xx = (_head._x.coord * _head._x.coord);
         double yy = (_head._y.coord * _head._y.coord);
@@ -70,10 +89,18 @@ public class Vector {
         return xx + yy + zz;
     }
 
+    /**
+     * calculates the length of vector
+     * @return the length
+     */
     public double length() {
         return Math.sqrt(lengthSquared());
     }
 
+    /**
+     * normalizes the current vector
+     * @return the current vector after normalization
+     */
     public Vector normalize() {
 
         double len = length();
@@ -95,6 +122,10 @@ public class Vector {
         return this;
     }
 
+    /**
+     * places the current vector in a new vector and normalizes it
+     * @return the new vector after normalization
+     */
     public Vector normalized() {
         Vector result=new Vector(_head);
         result.normalize();
