@@ -8,7 +8,6 @@ public class Vector {
 
     /**
      * primary constructor for Vector
-     *
      * @param head
      */
     public Vector(Point3D head) {
@@ -19,19 +18,33 @@ public class Vector {
         _head = new Point3D(head._x.coord,head._y.coord,head._z.coord);
     }
 
+    /**
+     * constructor for Vector
+     */
     public Vector(double x, double y, double z) {
         this(new Point3D(x, y, z));
     }
 
+    /**
+     * constructor for Vector
+     */
     public Vector(Coordinate x, Coordinate y, Coordinate z) {
         this(new Point3D(x, y, z));
     }
 
+    /**
+     * getter of the head of the vector
+     * @return _head
+     */
     public Point3D getHead() {
         return _head;
     }
 
-
+    /**
+     *checking to see if two vectors are equal
+     * @param o
+     * @return
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
