@@ -48,14 +48,6 @@ public class Sphere implements Geometry{
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Sphere sphere = (Sphere) o;
-        return Double.compare(sphere.radius, radius) == 0 && Objects.equals(center, sphere.center);
-    }
-
-    @Override
     public String toString() {
         return "Sphere{" +
                 "center=" + center +
