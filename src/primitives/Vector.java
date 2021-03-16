@@ -5,7 +5,7 @@ import static primitives.Util.isZero;
 
 public class Vector {
     /**
-     * end point of the vector
+     * start point of the vector
      */
     Point3D _head;
 
