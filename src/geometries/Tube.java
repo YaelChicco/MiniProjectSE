@@ -10,11 +10,11 @@ public class Tube implements Geometry{
     /**
      * tube direction
      */
-    private Ray axisRay;
+    protected Ray axisRay;
     /**
      * tube radius
      */
-    private double radius;
+    protected double radius;
 
     /**
      * constructor of the tube
