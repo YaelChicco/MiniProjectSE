@@ -11,7 +11,7 @@ public class Vector {
 
     /**
      * primary constructor for Vector
-     * @param head
+     * @param head is the start point of the vector
      */
     public Vector(Point3D head) {
         if (ZERO.equals(head)) {
@@ -37,7 +37,7 @@ public class Vector {
 
     /**
      * getter of the head of the vector
-     * @return _head
+     * @return _head is the start point of the vector
      */
     public Point3D getHead() {
         return _head;
@@ -53,7 +53,7 @@ public class Vector {
 
     /**
      * multiplies vector by number
-     * @param number
+     * @param number- parameter to multiply the vector with
      * @return
      */
     public Vector scale(int number) {
@@ -97,7 +97,7 @@ public class Vector {
 
     /**
      * does add between two vectors
-     * @param other
+     * @param other is the second vector in the product
      * @return
      */
     public Vector add(Vector other) {
@@ -112,7 +112,7 @@ public class Vector {
 
     /**
      * does subtract between two vectors
-     * @param other
+     * @param other is the second vector in the subtraction operation
      * @return
      */
     public Vector subtract(Vector other) {
