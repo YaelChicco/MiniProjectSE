@@ -43,14 +43,6 @@ public class Tube implements Geometry{
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Tube tube = (Tube) o;
-        return Double.compare(tube.radius, radius) == 0 && Objects.equals(axisRay, tube.axisRay);
-    }
-
-    @Override
     public String toString() {
         return "Tube{" +
                 "axisRay=" + axisRay +

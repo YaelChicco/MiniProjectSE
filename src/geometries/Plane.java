@@ -58,14 +58,6 @@ public class Plane implements Geometry{
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Plane plane = (Plane) o;
-        return point3D.equals(plane.point3D) && normal.equals(plane.normal);
-    }
-
-    @Override
     public String toString() {
         return "Plane{" +
                 "point3D=" + point3D +
