@@ -41,7 +41,7 @@ public class Vector {
     }
 
     /**
-     *checking to see if two vectors are equal
+     *checking to see if two vectors are equalךךך
      * @param o
      * @return
      */
