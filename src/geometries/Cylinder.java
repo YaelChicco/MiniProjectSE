@@ -12,6 +12,21 @@ public class Cylinder extends Tube{
     double height;
 
     /**
+     * constructor of the cylinder
+     * @param axisRay cylinder direction
+     * @param radius  cylinder radius
+     * @param height  cylinder height
+     */
+    public Cylinder(Ray axisRay, double radius, double height) {
+        super(axisRay, radius);
+
+        if (height==0)
+            throw new IllegalArgumentException("height cannot be 0");
+
+        this.height=height;
+    }
+
+    /**
      * @return the height of the cylinder
      */
     public double getHeight() {
@@ -32,18 +47,5 @@ public class Cylinder extends Tube{
                 '}';
     }
 
-    /**
-     * constructor of the tube
-     *
-     * @param axisRay tube direction
-     * @param radius  tube radius
-     */
-    public Cylinder(Ray axisRay, double radius, double height) {
-        super(axisRay, radius);
 
-        if (height==0)
-            throw new IllegalArgumentException("height cannot be 0");
-
-        this.height=height;
-    }
 }
