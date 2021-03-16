@@ -4,6 +4,9 @@ import static primitives.Point3D.ZERO;
 import static primitives.Util.isZero;
 
 public class Vector {
+    /**
+     * end point of the vector
+     */
     Point3D _head;
 
     /**
@@ -40,11 +43,6 @@ public class Vector {
         return _head;
     }
 
-    /**
-     *checking to see if two vectors are equalךךך
-     * @param o
-     * @return
-     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -179,4 +177,18 @@ public class Vector {
         return result;
     }
 
+    /**
+     * getter of the end point of the vector
+     * @return end point
+     */
+    public Point3D get_head() {
+        return _head;
+    }
+
+    @Override
+    public String toString() {
+        return "Vector{" +
+                "_head=" + _head +
+                '}';
+    }
 }

@@ -1,12 +1,14 @@
 package primitives;
 
 import java.util.Objects;
-
-/**
- * Class that represents ray by starting point and direction vector
- */
-public class Ray {
+    public class Ray {
+    /**
+     * starting point of the ray
+     */
     Point3D p0;
+    /**
+     * direction vector
+     */
     Vector dir;
 
     /**

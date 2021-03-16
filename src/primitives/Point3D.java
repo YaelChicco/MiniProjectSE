@@ -66,7 +66,8 @@ public class Point3D {
     public double distance(Point3D other) {
         return Math.sqrt(distanceSquared(other));
     }
-        @Override
+
+    @Override
     public String toString() {
         return "Point3D(" + "" + _x + "," + _y + "," + _z + ')';
     }

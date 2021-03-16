@@ -3,20 +3,21 @@ package geometries;
 import primitives.Point3D;
 import primitives.Vector;
 
+import java.util.Objects;
+
 public class Plane implements Geometry{
 
     /**
      * the reference point of the plane
      */
     private Point3D point3D;
-
     /**
      * the normal to the plane
      */
     private Vector normal;
 
     /**
-     * Calculates the normal to a triangle and saves one of the points as the reference point
+     * constructor that calculates the normal to a triangle and saves one of the points as the reference point
      */
     public Plane(Point3D p1, Point3D p2, Point3D p3) {
         Vector v1=p2.subtract(p1);
@@ -38,5 +39,37 @@ public class Plane implements Geometry{
     @Override
     public Vector getNormal(Point3D point) {
         return normal;
+    }
+
+    /**
+     * getter of the plane point
+     * @return plane point
+     */
+    public Point3D getPoint3D() {
+        return point3D;
+    }
+
+    /**
+     * getter of the normal of the plane
+     * @return normal to the plane
+     */
+    public Vector getNormal() {
+        return normal;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Plane plane = (Plane) o;
+        return point3D.equals(plane.point3D) && normal.equals(plane.normal);
+    }
+
+    @Override
+    public String toString() {
+        return "Plane{" +
+                "point3D=" + point3D +
+                ", normal=" + normal +
+                '}';
     }
 }
