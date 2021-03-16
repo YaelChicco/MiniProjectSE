@@ -2,19 +2,35 @@ package primitives;
 
 import java.util.Objects;
 
+/**
+ * Class that represents ray by starting point and direction vector
+ */
 public class Ray {
     Point3D p0;
     Vector dir;
 
+    /**
+     * constructor that normalizes the given vector
+     * @param p0 point of the ray beginning
+     * @param dir direction vector
+     */
     public Ray(Point3D p0, Vector dir) {
         this.p0 = p0;
         this.dir = dir.normalized();
     }
 
+    /**
+     * getter of the ray beginning point
+     * @return p0
+     */
     public Point3D getP0() {
         return p0;
     }
 
+    /**
+     * getter of the direction vector
+     * @return dir
+     */
     public Vector getDir() {
         return dir;
     }
@@ -25,5 +41,13 @@ public class Ray {
         if (o == null || getClass() != o.getClass()) return false;
         Ray ray = (Ray) o;
         return p0.equals(ray.p0) && dir.equals(ray.dir);
+    }
+
+    @Override
+    public String toString() {
+        return "Ray{" +
+                "p0=" + p0 +
+                ", dir=" + dir +
+                '}';
     }
 }
