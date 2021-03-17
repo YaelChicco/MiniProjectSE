@@ -6,11 +6,14 @@ import primitives.Vector;
 
 import java.util.Objects;
 
+import static primitives.Util.alignZero;
+import static primitives.Util.isZero;
+
 public class Tube implements Geometry{
     /**
      * tube direction
      */
-    protected Ray axisRay;
+    protected Ray _axisRay;
     /**
      * tube radius
      */
@@ -22,7 +25,7 @@ public class Tube implements Geometry{
      * @param radius tube radius
      */
     public Tube(Ray axisRay, double radius) {
-        this.axisRay = axisRay;
+        this._axisRay = axisRay;
         this.radius = radius;
     }
 
@@ -31,7 +34,7 @@ public class Tube implements Geometry{
      * @return tube direction
      */
     public Ray getAxisRay() {
-        return axisRay;
+        return _axisRay;
     }
 
     /**
@@ -45,13 +48,27 @@ public class Tube implements Geometry{
     @Override
     public String toString() {
         return "Tube{" +
-                "axisRay=" + axisRay +
+                "axisRay=" + _axisRay +
                 ", radius=" + radius +
                 '}';
     }
 
+    /**
+     * getNormal
+     * @param point the normal point in the geometry
+     * @return
+     */
     @Override
     public Vector getNormal(Point3D point) {
-        return null;
+        Point3D p0=_axisRay.getP0();
+        Vector v=_axisRay.getDir();
+        Vector p0_p= point.subtract(p0);
+        double t=alignZero(p0_p.dotProduct(v));
+        if (isZero(t)){
+            return p0_p.normalize();
+        }
+        Point3D O=p0.add(v.scale(t));
+        Vector O_P=point.subtract(O);
+        return O_P.normalize();
     }
 }

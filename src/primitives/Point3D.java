@@ -21,26 +21,15 @@ public class Point3D {
     public final static Point3D ZERO = new Point3D(0d, 0d, 0d);
 
     /**
-     * primary constructor for 3D Point
-     *
-     * @param x value for x Coordinate
-     * @param y value for y Coordinate
-     * @param z value for z Coordinate
-     */
-    public Point3D(Coordinate x, Coordinate y, Coordinate z) {
-        _x = x;
-        _y = y;
-        _z = z;
-    }
-
-    /**
      * constructor that gets the 3 coordinates
      * @param x value for creating x Coordinate
      * @param y value for creating y Coordinate
      * @param z value for creating z Coordinate
      */
     public Point3D(double x, double y, double z) {
-        this(new Coordinate(x), new Coordinate(y), new Coordinate(z));
+        _x=new Coordinate(x);
+        _y=new Coordinate(y);
+        _z=new Coordinate(z);
     }
 
     @Override

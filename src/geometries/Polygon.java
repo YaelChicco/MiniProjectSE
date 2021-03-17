@@ -55,6 +55,8 @@ public class Polygon implements Geometry {
 
         Vector n = plane.getNormal(null);
 
+//       Vector n = plane.getNormal();
+
         // Subtracting any subsequent points will throw an IllegalArgumentException
         // because of Zero Vector if they are in the same point
         Vector edge1 = vertices[vertices.length - 1].subtract(vertices[vertices.length - 2]);

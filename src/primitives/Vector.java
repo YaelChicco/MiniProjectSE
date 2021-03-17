@@ -29,13 +29,6 @@ public class Vector {
     }
 
     /**
-     * constructor for Vector
-     */
-    public Vector(Coordinate x, Coordinate y, Coordinate z) {
-        this(new Point3D(x, y, z));
-    }
-
-    /**
      * getter of the head of the vector
      * @return _head is the start point of the vector
      */
@@ -56,7 +49,7 @@ public class Vector {
      * @param number- parameter to multiply the vector with
      * @return
      */
-    public Vector scale(int number) {
+    public Vector scale(double number) {
 
         if (isZero(number)) {
             throw new ArithmeticException("number equals 0");

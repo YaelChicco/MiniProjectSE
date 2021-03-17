@@ -9,7 +9,7 @@ public class Cylinder extends Tube{
     /**
      * the height of the cylinder
      */
-    double height;
+    double _height;
 
     /**
      * constructor of the cylinder
@@ -23,14 +23,14 @@ public class Cylinder extends Tube{
         if (height==0)
             throw new IllegalArgumentException("height cannot be 0");
 
-        this.height=height;
+        this._height=height;
     }
 
     /**
      * @return the height of the cylinder
      */
     public double getHeight() {
-        return height;
+        return _height;
     }
 
     @Override
@@ -41,8 +41,8 @@ public class Cylinder extends Tube{
     @Override
     public String toString() {
         return "Cylinder{" +
-                "height=" + height +
-                ", axisRay=" + axisRay +
+                "height=" + _height +
+                ", axisRay=" + _axisRay +
                 ", radius=" + radius +
                 '}';
     }

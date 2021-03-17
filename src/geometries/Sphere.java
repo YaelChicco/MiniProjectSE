@@ -10,7 +10,7 @@ public class Sphere implements Geometry{
     /**
      * Mid-ball point
      */
-    private Point3D center;
+    private Point3D _center;
     /**
      * Radius of the ball
      */
@@ -22,13 +22,16 @@ public class Sphere implements Geometry{
      * @param radius ball radius
      */
     public Sphere(Point3D center, double radius) {
-        this.center = center;
+        this._center = center;
         this.radius = radius;
     }
 
     @Override
     public Vector getNormal(Point3D point) {
-        return null;
+        if(point.equals(_center))
+            throw new IllegalArgumentException("point cannot be equals to the center");
+        Vector v=point.subtract(_center);
+        return v.normalize();
     }
 
     /**
@@ -36,7 +39,7 @@ public class Sphere implements Geometry{
      * @return ball center point
      */
     public Point3D getCenter() {
-        return center;
+        return _center;
     }
 
     /**
@@ -50,7 +53,7 @@ public class Sphere implements Geometry{
     @Override
     public String toString() {
         return "Sphere{" +
-                "center=" + center +
+                "center=" + _center +
                 ", radius=" + radius +
                 '}';
     }
