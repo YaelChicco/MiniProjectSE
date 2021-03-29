@@ -1,3 +1,7 @@
+/**
+ * Yael Chicco, 211503545, Yaelchicco14@gmail.com
+ * Avigayil Cohen, 211531512, avigayiltess@gmail.com
+ */
 package program;
 
 import primitives.*;
