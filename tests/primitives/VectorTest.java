@@ -64,6 +64,12 @@ class VectorTest {
 
     @Test
     void testLength() {
+        Vector v1 = new Vector(1, 2, 3);
+        Vector v2 = new Vector(0, 3, 4);
+
+        assertEquals (v1.lengthSquared() - 14,ZERO,"ERROR: lengthSquared() wrong value");
+        assertEquals (v2.length() - 5,"ERROR: length() wrong value");
+
     }
 
     @Test
