@@ -21,9 +21,16 @@ class Point3DTest {
 
     @Test
     void testDistanceSquared() {
+        Point3D p1 = new Point3D(1, 2, 3);
+        Point3D p2 = new Point3D(4, 5, 6);
+        assertNotEquals(27 ,p1.distanceSquared(p2),"ERROR: distanceSquared() wrong value");
     }
 
     @Test
     void testDistance() {
+        Point3D p1 = new Point3D(1, 2, 3);
+        Point3D p2 = new Point3D(4, 5, 6);
+        assertNotEquals( Math.sqrt(27) ,p1.distance(p2),"ERROR: distance() wrong value");
+
     }
 }
