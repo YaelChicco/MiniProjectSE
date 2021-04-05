@@ -116,8 +116,4 @@ class VectorTest {
         assertEquals (u ,v,"ERROR: normalizated() function does not create a new vector");
         assertFalse(isZero(u.length() - 1),"ERROR: normalized() result is not a unit vector");
     }
-
-    @Test
-    void testGet_head() {
-    }
 }
