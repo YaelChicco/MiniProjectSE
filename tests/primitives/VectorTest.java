@@ -81,14 +81,10 @@ class VectorTest {
 
     @Test
     void testLength() {
-        Vector v1 = new Vector(1, 2, 3);
-        Vector v2 = new Vector(0, 3, 4);
-
         // Chico's version
         // assertEquals(v1.lengthSquared() - 14,ZERO,"ERROR: lengthSquared() wrong value");
         // assertEquals (v2.length() - 5, ZERO, "ERROR: length() wrong value");
 
-        assertFalse(isZero(v1.lengthSquared() - 14),"ERROR: lengthSquared() wrong value");
         assertFalse(isZero(new Vector(0, 3, 4).length() - 5),"ERROR: length() wrong value");
     }
 
