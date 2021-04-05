@@ -47,7 +47,7 @@ public class Vector {
     /**
      * multiplies vector by number
      * @param number- parameter to multiply the vector with
-     * @return
+     * @return the vector after multiplication
      */
     public Vector scale(double number) {
 
@@ -90,8 +90,8 @@ public class Vector {
 
     /**
      * does add between two vectors
-     * @param other is the second vector in the product
-     * @return
+     * @param other vector for adding
+     * @return original vector plus the other vector
      */
     public Vector add(Vector other) {
         if (other.scale(-1).equals(this)) {
@@ -105,15 +105,14 @@ public class Vector {
 
     /**
      * does subtract between two vectors
-     * @param other is the second vector in the subtraction operation
-     * @return
+     * @param other second vector in the subtraction operation
+     * @return current vector minus the other vector
      */
     public Vector subtract(Vector other) {
         if (other.equals(this)) {
             throw new IllegalArgumentException("parameter vector cannot be equals to this vector");
         }
-
-        return other._head.subtract(_head);
+        return _head.subtract(other._head);
     }
 
     /**

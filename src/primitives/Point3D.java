@@ -55,7 +55,7 @@ public class Point3D {
 
     /**
      * vector subtraction
-     * @param point
+     * @param point head of the new vector (after subtraction)
      * @return vector from the given point to the current point
      */
     public Vector subtract(Point3D point) {
