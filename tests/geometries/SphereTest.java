@@ -10,16 +10,9 @@ class SphereTest {
 
     @Test
     void testGetNormal() {
+        // ============ Equivalence Partitions Tests ==============
+        // TC01: There is a simple single test here
         Sphere sp=new Sphere(new Point3D(0,0,0),1d);
-       // double sqrt3 = Math.sqrt(1d / 3);
-        //assertEquals( new Vector(sqrt3, sqrt3, sqrt3), sp.getNormal(new Point3D(0, 0, 1)),"Bad normal to trinagle");
-    }
-
-    @Test
-    void testGetCenter() {
-    }
-
-    @Test
-    void testGetRadius() {
+        assertEquals( new Vector(0, 0, 1), sp.getNormal(new Point3D(0, 0, 1)),"Bad normal to sphere");
     }
 }

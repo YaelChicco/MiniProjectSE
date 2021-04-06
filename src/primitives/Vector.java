@@ -15,7 +15,7 @@ public class Vector {
      */
     public Vector(Point3D head) {
         if (ZERO.equals(head)) {
-            throw new IllegalArgumentException("head of vector cannot be point(0,0,0,)");
+            throw new IllegalArgumentException("head of vector cannot be point(0,0,0)");
         }
 
         _head = new Point3D(head._x.coord,head._y.coord,head._z.coord);
@@ -97,10 +97,7 @@ public class Vector {
         if (other.scale(-1).equals(this)) {
             throw new IllegalArgumentException("parameter vector cannot be the opposite of this vector");
         }
-
-        Vector newVector=other;
-        newVector._head.add(this);
-        return newVector;
+        return new Vector(other._head.add(this));
     }
 
     /**
