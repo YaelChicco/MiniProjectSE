@@ -15,7 +15,7 @@ public class Vector {
      */
     public Vector(Point3D head) {
         if (ZERO.equals(head)) {
-            throw new IllegalArgumentException("head of vector cannot be point(0,0,0,)");
+            throw new IllegalArgumentException("head of vector cannot be point(0,0,0)");
         }
 
         _head = new Point3D(head._x.coord,head._y.coord,head._z.coord);
