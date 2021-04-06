@@ -17,16 +17,7 @@ public class Triangle extends Polygon{
 
     @Override
     public Vector getNormal(Point3D point) {
-        return this.getNormal(point);
-    }
-
-    /**
-     * getter of the normal of the triangle
-     * @return normal to the triangle
-     */
-    public Vector getNormal() {
-        return this.getNormal();
-
+        return super.getNormal(point);
     }
 
     @Override
