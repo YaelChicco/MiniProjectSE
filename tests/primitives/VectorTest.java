@@ -12,6 +12,8 @@ class VectorTest {
 
     @Test
     void testScale() {
+        // ============ Equivalence Partitions Tests ==============
+        // TC01: There is a simple single test here
         Vector v1 = new Vector(1, 2, 3);
         double t=3;
         assertEquals(v1.scale(t),new Vector(3,6,9),"ERROR: scale() wrong value");
@@ -43,10 +45,6 @@ class VectorTest {
             assertThrows(IllegalArgumentException.class,
                     () -> v1.crossProduct(v3),
                     "" + "crossProduct() for parallel vectors does not throw an exception");
-            // try {
-            //     v1.crossProduct(v2);
-            //     fail("crossProduct() for parallel vectors does not throw an exception");
-            // } catch (Exception e) {}
         }
 
     @Test
@@ -55,12 +53,19 @@ class VectorTest {
         Vector v2 = new Vector(-2, -4, -6);
         Vector v3 = new Vector(0, 3, -2);
 
-        assertTrue(isZero(v1.dotProduct(v3)),"ERROR: dotProduct() for orthogonal vectors is not zero");
+        // ============ Equivalence Partitions Tests ==============
+        // TC01: There is a simple single test here
         assertTrue(isZero(v1.dotProduct(v2)+28),"ERROR: dotProduct() wrong value");
+
+        // =============== Boundary Values Tests ==================
+        //TC11: Orthogonal vectors
+        assertTrue(isZero(v1.dotProduct(v3)),"ERROR: dotProduct() for orthogonal vectors is not zero");
     }
 
     @Test
     void testAdd() {
+        // ============ Equivalence Partitions Tests ==============
+        // TC01: There is a simple single test here
         Vector v1 = new Vector(1, 2, 3);
         Vector v2 = new Vector(-2, -4, -6);
         assertEquals(v1.add(v2),new Vector(-1,-2,-3),"ERROR: add() wrong value");
@@ -68,6 +73,8 @@ class VectorTest {
 
     @Test
     void testSubtract() {
+        // ============ Equivalence Partitions Tests ==============
+        // TC01: There is a simple single test here
         Vector v1 = new Vector(1, 2, 3);
         Vector v2 = new Vector(-2, -4, -6);
         assertEquals(v1.subtract(v2),new Vector(3,6,9),"ERROR: subtract() wrong value");
@@ -75,16 +82,16 @@ class VectorTest {
 
     @Test
     void testLengthSquared() {
+        // ============ Equivalence Partitions Tests ==============
+        // TC01: There is a simple single test here
         Vector v1 = new Vector(1, 2, 3);
         assertEquals(v1.lengthSquared(),14,"ERROR: lengthSquared() wrong value");
     }
 
     @Test
     void testLength() {
-        // Chico's version
-        // assertEquals(v1.lengthSquared() - 14,ZERO,"ERROR: lengthSquared() wrong value");
-        // assertEquals (v2.length() - 5, ZERO, "ERROR: length() wrong value");
-
+        // ============ Equivalence Partitions Tests ==============
+        // TC01: There is a simple single test here
         assertTrue(isZero(new Vector(0, 3, 4).length() - 5),"ERROR: length() wrong value");
     }
 
@@ -94,13 +101,12 @@ class VectorTest {
         Vector vCopy = new Vector(v.getHead());
         Vector vCopyNormalize = vCopy.normalize();
 
-//        Chico's version
-//        assertEquals (vCopy,vCopyNormalize,"ERROR: normalize() function creates a new vector");
-//        assertEquals (vCopyNormalize.length() - 1, ZERO,"ERROR: normalize() result is not a unit vector");
-//        Vector u = v.normalized();
-//        assertEquals (u ,v,"ERROR: normalizated() function does not create a new vector");
+        // ============ Equivalence Partitions Tests ==============
 
+        // TC01: Checks that the function does not create a new vector
         assertEquals (vCopy,vCopyNormalize,"ERROR: normalize() function creates a new vector");
+
+        // TC02: Checks that the result is a unit vector
         assertTrue(isZero(vCopyNormalize.length() - 1),"ERROR: normalize() result is not a unit vector");
     }
 
@@ -109,7 +115,12 @@ class VectorTest {
         Vector v = new Vector(1, 2, 3);
         Vector u = v.normalized();
 
+        // ============ Equivalence Partitions Tests ==============
+
+        // TC01: Checks that the function creates a new vector
         assertNotEquals(u ,v,"ERROR: normalizated() function does not create a new vector");
+
+        // TC02: Checks that the result is a unit vector
         assertTrue(isZero(u.length() - 1),"ERROR: normalized() result is not a unit vector");
     }
 }
