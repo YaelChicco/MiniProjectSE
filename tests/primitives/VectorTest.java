@@ -55,8 +55,8 @@ class VectorTest {
         Vector v2 = new Vector(-2, -4, -6);
         Vector v3 = new Vector(0, 3, -2);
 
-        assertFalse(isZero(v1.dotProduct(v3)),"ERROR: dotProduct() for orthogonal vectors is not zero");
-        assertFalse(isZero(v1.dotProduct(v2)+28),"ERROR: dotProduct() wrong value");
+        assertTrue(isZero(v1.dotProduct(v3)),"ERROR: dotProduct() for orthogonal vectors is not zero");
+        assertTrue(isZero(v1.dotProduct(v2)+28),"ERROR: dotProduct() wrong value");
     }
 
     @Test
@@ -85,7 +85,7 @@ class VectorTest {
         // assertEquals(v1.lengthSquared() - 14,ZERO,"ERROR: lengthSquared() wrong value");
         // assertEquals (v2.length() - 5, ZERO, "ERROR: length() wrong value");
 
-        assertFalse(isZero(new Vector(0, 3, 4).length() - 5),"ERROR: length() wrong value");
+        assertTrue(isZero(new Vector(0, 3, 4).length() - 5),"ERROR: length() wrong value");
     }
 
     @Test
@@ -100,8 +100,8 @@ class VectorTest {
 //        Vector u = v.normalized();
 //        assertEquals (u ,v,"ERROR: normalizated() function does not create a new vector");
 
-        assertNotEquals (vCopy,vCopyNormalize,"ERROR: normalize() function creates a new vector");
-        assertFalse(isZero(vCopyNormalize.length() - 1),"ERROR: normalize() result is not a unit vector");
+        assertEquals (vCopy,vCopyNormalize,"ERROR: normalize() function creates a new vector");
+        assertTrue(isZero(vCopyNormalize.length() - 1),"ERROR: normalize() result is not a unit vector");
     }
 
     @Test
@@ -109,7 +109,7 @@ class VectorTest {
         Vector v = new Vector(1, 2, 3);
         Vector u = v.normalized();
 
-        assertEquals (u ,v,"ERROR: normalizated() function does not create a new vector");
-        assertFalse(isZero(u.length() - 1),"ERROR: normalized() result is not a unit vector");
+        assertNotEquals(u ,v,"ERROR: normalizated() function does not create a new vector");
+        assertTrue(isZero(u.length() - 1),"ERROR: normalized() result is not a unit vector");
     }
 }

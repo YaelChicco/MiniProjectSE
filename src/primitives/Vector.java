@@ -97,10 +97,7 @@ public class Vector {
         if (other.scale(-1).equals(this)) {
             throw new IllegalArgumentException("parameter vector cannot be the opposite of this vector");
         }
-
-        Vector newVector=other;
-        newVector._head.add(this);
-        return newVector;
+        return new Vector(other._head.add(this));
     }
 
     /**
