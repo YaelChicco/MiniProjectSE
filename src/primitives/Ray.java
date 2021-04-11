@@ -52,4 +52,8 @@ import java.util.Objects;
                 ", dir=" + dir +
                 '}';
     }
-}
+
+        public Point3D getPoint(double t1) {
+        return p0.add(dir.scale(t1));
+        }
+    }

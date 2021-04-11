@@ -92,4 +92,14 @@ public class Point3D {
     public String toString() {
         return "Point3D(" + "" + _x + "," + _y + "," + _z + ')';
     }
+
+    public double getX() {
+        return _x.coord;
+    }
+
+    public double getY() {
+        return _y.coord;
+    }
+
+    public double getZ() { return _z.coord; }
 }
