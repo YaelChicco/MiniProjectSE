@@ -7,6 +7,8 @@ import primitives.Vector;
 import java.util.List;
 import java.util.Objects;
 
+import static primitives.Util.isZero;
+
 public class Plane implements Geometry{
 
     /**
@@ -62,7 +64,51 @@ public class Plane implements Geometry{
 
     @Override
     public List<Point3D> findIntersections(Ray ray) {
-        return null;
+
+        Point3D p0 = ray.getP0();
+        Point3D D = q0;
+        Vector V = ray.getDir();
+        Vector U = D.subtract(p0);
+
+        //tD=denominator of parameter t
+        double tD = normal.dotProduct(U);
+
+        //tN=numerator of parameter t
+        double tN = normal.dotProduct(V);
+
+        //the ray begins in the same point which appears as
+        //reference point in the plane
+        if(p0.equals(q0)){
+            return null;
+        }
+
+        //the ray begins in the plane
+        if(isZero(tD)){
+            return null;
+        }
+
+        //Ray is parallel to the plane
+        if(isZero(tN)){
+            return null;
+        }
+        double t= tD/tN;
+
+        //Ray is orthogonal to the plane-------להמשיך את זה
+        if(V.normalized().equals(normal)){
+
+        }
+
+
+        //if there is an intersection point
+        if (t>0){
+            Point3D iP=p0.add(V.scale(t));
+            return List.of(iP);
+        }
+
+        else{
+            return null;
+        }
+
     }
 
     @Override

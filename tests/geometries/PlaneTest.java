@@ -5,7 +5,10 @@ import primitives.Point3D;
 
 import static primitives.Util.isZero;
 
+import primitives.Ray;
 import primitives.Vector;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -33,5 +36,21 @@ class PlaneTest {
         Plane pl = new Plane(new Point3D(0, 0, 1), new Point3D(1, 0, 0), new Point3D(0, 1, 0));
         double sqrt3 = Math.sqrt(1d / 3);
         assertEquals(new Vector(sqrt3, sqrt3, sqrt3), pl.getNormal(new Point3D(0, 0, 1)), "Bad normal to plane");
+    }
+
+    @Test
+    void testFindIntersections() {
+        Plane pl = new Plane(new Point3D(0, 0, 1), new Point3D(1, 0, 0), new Point3D(0, 1, 0));
+        Ray ray=new Ray(new Point3D(-1, 0, 0),new Vector(-1,-1,1));
+        assertNull(pl.findIntersections(ray),"Ray's line out of plane");
+
+        ray=new Ray(new Point3D(1, 2, -2),new Vector(-2,2,1));
+        List<Point3D> result = pl.findIntersections(ray);
+
+        //אני צריכה לבדוק אותם
+        //assertEquals( 0, result.size(),"Wrong number of points");
+        //assertNull(pl.findIntersections(ray),"Ray's line out of plane");
+
+
     }
 }
