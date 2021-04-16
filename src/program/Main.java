@@ -4,7 +4,11 @@
  */
 package program;
 
+import geometries.Polygon;
 import primitives.*;
+
+import java.util.List;
+
 import static java.lang.System.out;
 import static primitives.Util.*;
 
@@ -72,6 +76,18 @@ public final class Main {
             out.println("ERROR: Point + Vector does not work correctly");
         if (!new Vector(1, 1, 1).equals(new Point3D(2, 3, 4).subtract(p1)))
             out.println("ERROR: Point - Point does not work correctly");
+
+/**
+        Polygon quadr=new Polygon(new Point3D(1,0,0),new Point3D(-2,0,0),new Point3D(-2,0,2),new Point3D(1,0,2));
+
+        Ray ray=new Ray(new Point3D(0,1,0),new Vector(0,-2,1));
+
+        List<Point3D> iP= quadr.findIntersections(ray);
+
+        if(new Point3D(0, 0, 0.5).equals(iP.get(0)))
+            out.println("the intersection point is  true");
+
+*/
 
         out.println("If there were no any other outputs - all tests succeeded!");
     }

@@ -66,9 +66,8 @@ public class Plane implements Geometry{
     public List<Point3D> findIntersections(Ray ray) {
 
         Point3D p0 = ray.getP0();
-        Point3D D = q0;
         Vector V = ray.getDir();
-        Vector U = D.subtract(p0);
+        Vector U = q0.subtract(p0);
 
         //tD=denominator of parameter t
         double tD = normal.dotProduct(U);

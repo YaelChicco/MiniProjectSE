@@ -2,6 +2,8 @@ package geometries;
 
 import java.util.List;
 import primitives.*;
+
+import static java.lang.System.out;
 import static primitives.Util.*;
 
 /**
@@ -91,6 +93,33 @@ public class Polygon implements Geometry {
 
     @Override
     public List<Point3D> findIntersections(Ray ray) {
+
+        List<Point3D> result= plane.findIntersections(ray);
+        Point3D p0=ray.getP0();
+        Vector V=(vertices.get(0)).subtract(p0);
+        List<Vector> edges =List.of(V);
+        Vector v1,v2,v3,n1,n2;
+
+        //only if the ray intersects the plane that the polygon is included in
+        // check if the intersection point is in the polygon
+        if(!result.isEmpty()){
+
+            //Vi is the edges of the pyramid that the polygon is the bases of and the ray's head is the vertex of
+            //Ni is the normals to each side of the pyramid
+            //checks if each Ni*Vi have the same sign
+            for(int i=0;i<edges.size()-3;i++) {
+                v1 = (vertices.get(i)).subtract(p0);
+                v2 = (vertices.get(i + 1)).subtract(p0);
+                v3 = (vertices.get(i + 2)).subtract(p0);
+                n1 = (v1.crossProduct(v2)).normalize();
+                n2 = (v2.crossProduct(v3)).normalize();
+                if (!checkSign(v1.dotProduct(n1), v2.dotProduct(n2))) {
+                    return null;
+                }
+            }
+            return result;
+
+            }
         return null;
     }
 }

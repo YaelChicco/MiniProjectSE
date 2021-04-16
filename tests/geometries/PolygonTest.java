@@ -8,6 +8,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static primitives.Point3D.ZERO;
 import static primitives.Util.isZero;
 import primitives.*;
+
+import java.util.List;
+
 /**
  * Testing Polygons
  *
@@ -88,6 +91,16 @@ public class PolygonTest {
         Polygon pl = new Polygon(new Point3D(0, 0, 1), new Point3D(1, 0, 0), new Point3D(0, 1, 0),
                 new Point3D(-1, 1, 1));
         double sqrt3 = Math.sqrt(1d / 3);
-        assertEquals( new Vector(sqrt3, sqrt3, sqrt3), pl.getNormal(new Point3D(0, 0, 1)),"Bad normal to trinagle");
+        assertEquals( new Vector(sqrt3, sqrt3, sqrt3), pl.getNormal(new Point3D(0, 0, 1)),"Bad normal to polygon");
+    }
+
+    @Test
+    void testFindIntersections() {
+        Polygon quadr=new Polygon(new Point3D(1,0,0),new Point3D(-2,0,0),new Point3D(-2,0,2),new Point3D(1,0,2));
+        Ray ray=new Ray(new Point3D(0,1,0),new Vector(0,-2,1));
+        List<Point3D> iP=quadr.findIntersections(ray);
+        assertEquals(1,iP.size(),"number of points is wrong");
+        assertEquals( new Point3D(0, 0, 0.5), iP.get(0),"the intersection point is not true");
+
     }
 }
