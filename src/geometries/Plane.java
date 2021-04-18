@@ -92,22 +92,20 @@ public class Plane implements Geometry{
         }
         double t= tD/tN;
 
-        //Ray is orthogonal to the plane-------להמשיך את זה
+        //Ray is orthogonal to the plane
         if(V.normalized().equals(normal)){
-
+            return List.of(p0.add(V.scale(t)));
         }
-
 
         //if there is an intersection point
         if (t>0){
             Point3D iP=p0.add(V.scale(t));
             return List.of(iP);
         }
-
         else{
             return null;
-        }
 
+        }
     }
 
     @Override
