@@ -67,6 +67,8 @@ public class Plane implements Geometry{
 
         Point3D p0 = ray.getP0();
         Vector V = ray.getDir();
+        if(p0.equals(q0))
+            return null;
         Vector U = q0.subtract(p0);
 
         //tD=denominator of parameter t
@@ -92,22 +94,14 @@ public class Plane implements Geometry{
         }
         double t= tD/tN;
 
-        //Ray is orthogonal to the plane-------להמשיך את זה
-        if(V.normalized().equals(normal)){
-
-        }
-
-
         //if there is an intersection point
         if (t>0){
             Point3D iP=p0.add(V.scale(t));
             return List.of(iP);
         }
-
         else{
             return null;
         }
-
     }
 
     @Override
