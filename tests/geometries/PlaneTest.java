@@ -64,23 +64,23 @@ class PlaneTest {
         ray=new Ray(new Point3D(1, 1, 2),new Vector(1,-1,0));
         assertNull(pl.findIntersections(ray),"Ray is parallel and not included in the plane");
 
-        //Ray is orthogonal to the plane- before the plane
+        // TC12: Ray is orthogonal to the plane- before the plane
         ray=new Ray(new Point3D(1, 5, -1),new Vector(0,0,4));
         assertEquals(pl.findIntersections(ray).size(),1,"Ray is orthogonal to the plane- before the plane");
 
-        //Ray is orthogonal to the plane- in the plane
+        // TC13:Ray is orthogonal to the plane- in the plane
         ray=new Ray(new Point3D(1, 5, 1),new Vector(0,0,2));
         assertNull(pl.findIntersections(ray) ,"Ray is orthogonal to the plane- in the plane");
 
-        //Ray is orthogonal to the plane- after the plane
+        // TC14: Ray is orthogonal to the plane- after the plane
         ray=new Ray(new Point3D(1, 1, 2),new Vector(0,0,1));
         assertNull(pl.findIntersections(ray),"Ray is orthogonal to the plane- after the plane");
 
-        //Ray is neither orthogonal nor parallel to and begins at the plane
+        // TC15: Ray is neither orthogonal nor parallel to and begins at the plane
         ray=new Ray(new Point3D(1, 5, 1),new Vector(0,-5,2));
         assertNull(pl.findIntersections(ray),"Ray intersects and begins at the plane");
 
-        // Ray is neither orthogonal nor parallel to the plane and begins in the reference point of the plane
+        // TC16: Ray is neither orthogonal nor parallel to the plane and begins in the reference point of the plane
         Point3D refPoint= pl.getPoint3D();
         ray=new Ray(refPoint,new Vector(0,-5,2));
         assertNull(pl.findIntersections(ray),"Ray intersects and begins at the reference point of the plane");
