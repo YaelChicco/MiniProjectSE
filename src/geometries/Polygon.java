@@ -107,7 +107,7 @@ public class Polygon implements Geometry {
             //Vi is the edges of the pyramid that the polygon is the bases of and the ray's head is the vertex of
             //Ni is the normals to each side of the pyramid
             //checks if each Ni*Vi have the same sign
-            for(int i=0;i<edges.size()-3;i++) {
+            for(int i=0;i<vertices.size()-3;i++) {
                 v1 = (vertices.get(i)).subtract(p0);
                 v2 = (vertices.get(i + 1)).subtract(p0);
                 v3 = (vertices.get(i + 2)).subtract(p0);
@@ -116,9 +116,11 @@ public class Polygon implements Geometry {
                 if (!checkSign(v1.dotProduct(n1), v2.dotProduct(n2))) {
                     return null;
                 }
+                if (isZero(v1.dotProduct(n1))) {
+                    return null;
+                }
             }
             return result;
-
             }
         return null;
     }
