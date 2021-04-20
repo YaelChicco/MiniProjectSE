@@ -29,7 +29,7 @@ class TriangleTest {
         // TC01: Inside triangle
         Ray ray=new Ray(new Point3D(4, -2, -1),new Vector(-6,4,4));
         List<Point3D> result=tr.findIntersections(ray);
-        assertEquals(result.size(),1,"Ray intersection inside triangle");
+        assertEquals(1,result.size(),"Ray intersection inside triangle");
         assertEquals(new Point3D(1,0,1), result.get(0), "Wrong point value");
 
         // TC02: Outside against edge

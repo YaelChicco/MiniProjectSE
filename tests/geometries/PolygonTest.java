@@ -101,6 +101,5 @@ public class PolygonTest {
         List<Point3D> iP=quadr.findIntersections(ray);
         assertEquals(1,iP.size(),"number of points is wrong");
         assertEquals( new Point3D(0, 0, 0.5), iP.get(0),"the intersection point is not true");
-
     }
 }

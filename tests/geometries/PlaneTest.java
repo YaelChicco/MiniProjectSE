@@ -47,7 +47,7 @@ class PlaneTest {
         // TC01: Ray intersects the plane
         Ray ray=new Ray(new Point3D(-1, 2, -2),new Vector(0,2,1));
         List<Point3D> result=pl.findIntersections(ray);
-        assertEquals(result.size(),1,"Ray intersects the plane");
+        assertEquals(1,result.size(),"Ray intersects the plane");
         assertEquals(new Point3D(-1,10d/3,-4d/3), result.get(0), "Wrong point value");
 
         // TC02: Ray does not intersect the plane
@@ -69,7 +69,7 @@ class PlaneTest {
         // TC12: Ray is orthogonal to the plane- before the plane
         ray=new Ray(new Point3D(1, 5, -1),new Vector(0,0,4));
         result=pl.findIntersections(ray);
-        assertEquals(result.size(),1,"Ray is orthogonal to the plane- before the plane");
+        assertEquals(1,result.size(),"Ray is orthogonal to the plane- before the plane");
         assertEquals(new Point3D(1,5,1), result.get(0), "Wrong point value");
 
         // TC13:Ray is orthogonal to the plane- in the plane
