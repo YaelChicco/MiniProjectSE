@@ -67,11 +67,25 @@ public class Camera {
         return this;
     }
 
+    /**
+     *
+     * @param distance
+     * @return
+     */
+
     public Camera setDistance(double distance) {
         _distance = distance;
         return this;
     }
 
+    /**
+     *
+     * @param nX
+     * @param nY
+     * @param j
+     * @param i
+     * @return
+     */
     public Ray constructRayThroughPixel(int nX, int nY, int j, int i){
         Point3D Pc=_p0.add(_vTo.scale(_distance));
         double Ry=_hight/nY;
