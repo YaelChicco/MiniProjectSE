@@ -37,7 +37,5 @@ class GeometriesTest {
         Triangle tr1=new Triangle(new Point3D(-3.07,-3.56,0), new Point3D(-0.53, -5, 0), new Point3D(-2.83, -1.67, 0));
         geometries.add(tr1);
         assertEquals((geometries.findIntersections(ray)).size(),2,"Wrong number of points");
-
-
     }
 }
