@@ -12,11 +12,8 @@ public class Geometries implements Intersectable {
     private List<Intersectable> _intersectables;
 
     public Geometries(Intersectable... list) {
-       // if (list!=null){
         _intersectables=new LinkedList<Intersectable>(Arrays.asList(list.clone()));
 
-       // add(list);
-       // _intersectables.remove(0);
     }
 
     public void add(Intersectable... list) {
