@@ -1,11 +1,9 @@
 package elements;
 
 import geometries.Intersectable;
-import geometries.Sphere;
+import geometries.*;
 import org.junit.jupiter.api.Test;
-import primitives.Point3D;
-import primitives.Vector;
-import primitives.Ray;
+import primitives.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class IntegrationTest {
@@ -32,17 +30,17 @@ public class IntegrationTest {
     void testSphere(){
 
         //TC01: Sphere radius=1
-        Sphere sphere=new Sphere(new Point3D(0,0,-3),1);
         Camera camera=new Camera(new Point3D(0,0,0),new Vector(0,0,-1),new Vector(0,1,0));
         camera.setViewPlaneSize(3,3);
         camera.setDistance(1);
+        Sphere sphere=new Sphere(new Point3D(0,0,-3),1);
         assertEquals(2,intersectionSum(camera,sphere),"sphere, radius 1, wrong number of intersection points");
 
         //TC02: Sphere radius=2.5
-        sphere=new Sphere(new Point3D(0,0,-2.5),2.5);
         camera=new Camera(new Point3D(0,0,0.5),new Vector(0,0,-1),new Vector(0,1,0));
         camera.setViewPlaneSize(3,3);
         camera.setDistance(1);
+        sphere=new Sphere(new Point3D(0,0,-2.5),2.5);
         assertEquals(18,intersectionSum(camera,sphere),"sphere, radius 2.5, wrong number of intersection points");
 
         //TC03: Sphere radius=2
@@ -61,6 +59,14 @@ public class IntegrationTest {
     @Test
     void testPlane(){
 
+        //TC01: plane parallel to the view plane
+        Camera camera=new Camera(new Point3D(0,0,0),new Vector(0,0,-1),new Vector(0,1,0));
+        camera.setViewPlaneSize(3,3);
+        camera.setDistance(1);
+        Plane plane=new Plane(new Point3D(0,0,-3),new Vector(0,0,-1));
+        assertEquals(9,intersectionSum(camera,plane),"plane is parallel to the view plane, wrong number of intersection points");
+
+        //TC02: plane creates an acute angle with the view plane
     }
 
     @Test
