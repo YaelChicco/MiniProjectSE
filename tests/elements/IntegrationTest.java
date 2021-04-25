@@ -67,6 +67,12 @@ public class IntegrationTest {
         assertEquals(9,intersectionSum(camera,plane),"plane is parallel to the view plane, wrong number of intersection points");
 
         //TC02: plane creates an acute angle with the view plane
+        plane=new Plane(new Point3D(0,0,-3),new Vector(0,0.5,-1));
+        assertEquals(9,intersectionSum(camera,plane),"plane is parallel to the view plane, wrong number of intersection points");
+
+        //plane creates an obtuse angle with the view plane
+        plane=new Plane(new Point3D(0,0,-3),new Vector(0,1,-1));
+        assertEquals(6,intersectionSum(camera,plane),"plane is parallel to the view plane, wrong number of intersection points");
     }
 
     @Test
