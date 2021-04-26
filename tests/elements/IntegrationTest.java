@@ -77,6 +77,17 @@ public class IntegrationTest {
 
     @Test
     void testTriangle(){
+        Camera camera=new Camera(new Point3D(0,0,0),new Vector(0,0,-1),new Vector(0,1,0));
+        camera.setViewPlaneSize(3,3);
+        camera.setDistance(1);
+
+        //TC01: triangle is small
+        Triangle tr=new Triangle(new Point3D(0,1,-2),new Point3D(1,-1,-2),new Point3D(-1,-1,-2));
+        assertEquals(1,intersectionSum(camera,tr),"triangle is parallel to the view plane, wrong number of intersection points");
+
+        //TC02: triangle is tall and narrow
+        tr=new Triangle(new Point3D(0,20,-2),new Point3D(1,-1,-2),new Point3D(-1,-1,-2));
+        assertEquals(2,intersectionSum(camera,tr),"triangle is parallel to the view plane, wrong number of intersection points");
 
     }
 
