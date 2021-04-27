@@ -9,7 +9,7 @@ import java.util.Objects;
 
 import static primitives.Util.isZero;
 
-public class Plane implements Geometry{
+public class Plane implements Geometry {
 
     /**
      * the reference point of the plane
@@ -24,15 +24,16 @@ public class Plane implements Geometry{
      * constructor that calculates the normal to a triangle and saves one of the points as the reference point
      */
     public Plane(Point3D p1, Point3D p2, Point3D p3) {
-        Vector v1=p2.subtract(p1);
-        Vector v2=p3.subtract(p1);
-        Vector n=v1.crossProduct(v2);
-        normal=n.normalize();
-        q0=p1;
+        Vector v1 = p2.subtract(p1);
+        Vector v2 = p3.subtract(p1);
+        Vector n = v1.crossProduct(v2);
+        normal = n.normalize();
+        q0 = p1;
     }
 
     /**
      * primary constructor for Plane
+     *
      * @param point3D is the reference point
      * @param normal  is the normal to the plane
      */
@@ -48,6 +49,7 @@ public class Plane implements Geometry{
 
     /**
      * getter of the normal of the plane
+     *
      * @return normal to the plane
      */
     public Vector getNormal() {
@@ -56,6 +58,7 @@ public class Plane implements Geometry{
 
     /**
      * getter of the plane point
+     *
      * @return plane point
      */
     public Point3D getPoint3D() {
@@ -67,7 +70,7 @@ public class Plane implements Geometry{
 
         Point3D p0 = ray.getP0();
         Vector V = ray.getDir();
-        if(p0.equals(q0))
+        if (p0.equals(q0))
             return null;
         Vector U = q0.subtract(p0);
 
@@ -79,27 +82,26 @@ public class Plane implements Geometry{
 
         //the ray begins in the same point which appears as
         //reference point in the plane
-        if(p0.equals(q0)){
+        if (p0.equals(q0)) {
             return null;
         }
 
         //the ray begins in the plane
-        if(isZero(tD)){
+        if (isZero(tD)) {
             return null;
         }
 
         //Ray is parallel to the plane
-        if(isZero(tN)){
+        if (isZero(tN)) {
             return null;
         }
-        double t= tD/tN;
+        double t = tD / tN;
 
         //if there is an intersection point
-        if (t>0){
-            Point3D iP=p0.add(V.scale(t));
+        if (t > 0) {
+            Point3D iP = p0.add(V.scale(t));
             return List.of(iP);
-        }
-        else{
+        } else {
             return null;
         }
     }

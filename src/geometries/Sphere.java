@@ -3,7 +3,9 @@ package geometries;
 import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
+
 import static primitives.Util.*;
+
 import java.util.List;
 
 public class Sphere implements Geometry {
@@ -65,13 +67,13 @@ public class Sphere implements Geometry {
         Point3D p0 = ray.getP0();
         Point3D D = _center;
         Vector V = ray.getDir();
-        double tm=0,d=0;
-        try{
+        double tm = 0, d = 0;
+        try {
             Vector U = D.subtract(p0);
             tm = V.dotProduct(U);
             d = Math.sqrt(U.lengthSquared() - tm * tm);
+        } catch (IllegalArgumentException e) {
         }
-        catch (IllegalArgumentException e){ }
 
         if (d >= _radius) {
             return null;
@@ -81,7 +83,7 @@ public class Sphere implements Geometry {
         double t2 = alignZero(tm + th);
 
         if ((t1 > 0) && (t2 > 0)) {
-            Point3D p1=ray.getPoint(t1);
+            Point3D p1 = ray.getPoint(t1);
             Point3D p2 = ray.getPoint(t2);
             return (List.of(p1, p2));
         }
