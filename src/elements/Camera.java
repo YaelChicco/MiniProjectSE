@@ -151,7 +151,7 @@ public class Camera {
      * @param nY - number of pixels in view plane hight
      * @param j - distance of the intercept from the midpoint on the y-axis
      * @param i - distance of the intercept from the midpoint on the X-axis
-     * @return
+     * @return ray from the camera through a specific pixel center
      */
     public Ray constructRayThroughPixel(int nX, int nY, int j, int i) {
         Point3D Pc = _p0.add(_vTo.scale(_distance));
