@@ -49,7 +49,6 @@ public class Render {
                 Ray ray = _camera.constructRayThroughPixel(nX, nY, j, i);
                 Color color = _rayTracer.traceRay(ray);
                 _imageWriter.writePixel(j, i, color);
-                // List<Point3D>rayList=_scene.geometries.findIntersections(ray);
             }
 
         }

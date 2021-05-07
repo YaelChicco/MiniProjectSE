@@ -24,8 +24,8 @@ public class RenderTest {
     public void basicRenderTwoColorTest() {
 
         Scene scene = new Scene("Test scene")//
-                .setAmbientLight(new AmbientLight(new Color(255, 191, 191), 1, intensity)) //
-                .setBackground(new Color(75, 127, 90));
+                .setAmbientLight(new AmbientLight(new Color(255, 191, 191), 1)) //
+                .setBackGround(new Color(75, 127, 90));
 
         scene.geometries.add(new Sphere(new Point3D(0, 0, -100), 50),
                 new Triangle(new Point3D(-100, 0, -100), new Point3D(0, 100, -100), new Point3D(-100, 100, -100)), // up left
@@ -48,8 +48,8 @@ public class RenderTest {
     /**
      * Test for XML based scene - for bonus
      */
-    @Test
-  /*  public void basicRenderXml() {
+   /* @Test
+    public void basicRenderXml() {
         Scene scene = new Scene("XML Test scene", name1);
         // enter XML file name and parse from XML file into scene object
         // ...

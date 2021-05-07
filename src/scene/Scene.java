@@ -8,12 +8,12 @@ import primitives.Point3D;
 public class Scene {
     private final String _name;
 
-    private AmbientLight ambientLight;
-    private Color backGroundColor;
+    public AmbientLight ambientLight;
+    public Color backGroundColor;
     public Geometries geometries;
 
 
-    public Scene setBackGroundColor(Color backGroundColor) {
+    public Scene setBackGround(Color backGroundColor) {
         this.backGroundColor = backGroundColor;
         return this;
     }
@@ -26,7 +26,6 @@ public class Scene {
 
     public Scene(String name) {
         _name = name;
-        geometries=new Geometries();
+        geometries = new Geometries();
     }
-
 }
