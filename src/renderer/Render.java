@@ -7,10 +7,10 @@ import primitives.Ray;
 import scene.Scene;
 
 import java.util.List;
+import java.util.MissingResourceException;
 
 public class Render {
     private ImageWriter _imageWriter;
-    private Scene _scene;
     private Camera _camera;
     private RayTracerBase _rayTracer;
 
@@ -25,12 +25,6 @@ public class Render {
         return this;
     }
 
-
-    public Render setScene(Scene scene) {
-        _scene = scene;
-        return this;
-    }
-
     public Render setCamera(Camera camera) {
         _camera = camera;
         return this;
@@ -42,6 +36,13 @@ public class Render {
     }
 
     public void renderImage() {
+        if(_imageWriter==null)
+            throw new MissingResourceException("_imageWriter is null", "Render", "ImageWriter");
+        if(_camera==null)
+            throw new MissingResourceException("_camera is null", "Render", "Camera");
+        if(_rayTracer==null)
+            throw new MissingResourceException("_rayTracer is null", "Render", "RayTracerBase");
+
         int nX = _imageWriter.getNx();
         int nY = _imageWriter.getNy();
         for (int i = 0; i < nY; i++) {
@@ -50,25 +51,27 @@ public class Render {
                 Color color = _rayTracer.traceRay(ray);
                 _imageWriter.writePixel(j, i, color);
             }
-
         }
     }
 
     public void printGrid(int interval, Color intervalColor) {
+        if(_imageWriter==null)
+            throw new MissingResourceException("_imageWriter is null", "Render", "ImageWriter");
+
         int nX = _imageWriter.getNx();
         int nY = _imageWriter.getNy();
         for (int i = 0; i < nY; i++) {
             for (int j = 0; j < nX; j++) {
                 if (i % interval == 0 || j % interval == 0) {
                     _imageWriter.writePixel(j, i, intervalColor);
-
                 }
-                // List<Point3D>rayList=_scene.geometries.findIntersections(ray);
             }
         }
     }
 
     public void writeToImage() {
+        if(_imageWriter==null)
+            throw new MissingResourceException("_imageWriter is null", "Render", "ImageWriter");
         _imageWriter.writeToImage();
     }
 

@@ -9,7 +9,7 @@ public class AmbientLight {
         return _intensity;
     }
 
-    public AmbientLight(Color Ia, int Ka) {
+    public AmbientLight(Color Ia, double Ka) {
         _intensity = Ia.scale(Ka);
     }
 }

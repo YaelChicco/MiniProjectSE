@@ -36,7 +36,6 @@ public class RenderTest {
         ImageWriter imageWriter = new ImageWriter("base render test", 1000, 1000);
         Render render = new Render() //
                 .setImageWriter(imageWriter) //
-                .setScene(scene) //
                 .setCamera(camera) //
                 .setRayTracer(new BasicRayTracer(scene));
 
@@ -65,6 +64,4 @@ public class RenderTest {
         render.printGrid(100, new Color(java.awt.Color.YELLOW));
         render.writeToImage();
     }*/
-
-
 }
