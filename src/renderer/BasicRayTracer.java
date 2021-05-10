@@ -7,7 +7,15 @@ import scene.Scene;
 
 import java.util.List;
 
+/**
+ * class for the color of the shape that intersects the ray first.
+ */
 public class BasicRayTracer extends RayTracerBase{
+
+    /**
+     * constructor with parameter
+     * @param scene shapes scene
+     */
     public BasicRayTracer(Scene scene) {
         super(scene);
     }
@@ -21,6 +29,11 @@ public class BasicRayTracer extends RayTracerBase{
         return calcColor(closestPoint);
     }
 
+    /**
+     * calculates the color in a given point
+     * @param closestPoint closest point to that ray start
+     * @return color in the point
+     */
     private Color calcColor(Point3D closestPoint) {
         return _scene.ambientLight.getIntensity();
     }

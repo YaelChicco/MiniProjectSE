@@ -57,16 +57,27 @@ import java.util.Objects;
                     '}';
         }
 
+        /**
+         * calculates and returns point on the ray (according to a given length)
+         * @param t1 distance between the start point and the final point
+         * @return point on the ray
+         */
         public Point3D getPoint(double t1) {
             return p0.add(dir.scale(t1));
         }
 
+        /**
+         * finding the closest point from the list to the ray start
+         * @param intersections list of intersections points
+         * @return closest point from the list
+         */
         public Point3D getClosestPoint(List<Point3D> intersections) {
             Point3D result = null;
             if (intersections == null) {
                 return null;
             }
 
+            //finding the shortest distance between the point and the ray start point
             double distance = Double.MAX_VALUE;
             for (Point3D p : intersections) {
                 double dist = p0.distance(p);

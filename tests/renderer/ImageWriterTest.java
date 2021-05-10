@@ -8,6 +8,8 @@ public class ImageWriterTest {
 
     @Test
     public void writeToImageTest() {
+        //checking creation of image with blue background and red grid
+
         ImageWriter imageWriter=new ImageWriter("testImage",800,500);
         int nX = imageWriter.getNx();
         int nY = imageWriter.getNy();
