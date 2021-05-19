@@ -1,8 +1,12 @@
 package scene;
 
 import elements.AmbientLight;
+import elements.LightSource;
 import geometries.Geometries;
 import primitives.Color;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * class for the image base
@@ -25,6 +29,8 @@ public class Scene {
      * shapes in the scene
      */
     public Geometries geometries=new Geometries();
+
+    public List<LightSource> lights=new LinkedList<LightSource>();
 
     /**
      * constructor that gets the scene name

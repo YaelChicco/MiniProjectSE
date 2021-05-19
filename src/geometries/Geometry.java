@@ -1,14 +1,10 @@
 package geometries;
 
-import primitives.Color;
-import primitives.Point3D;
-import primitives.Ray;
-import primitives.Vector;
-
-import java.util.List;
+import primitives.*;
 
 public abstract class Geometry implements Intersectable {
     protected Color _emission=Color.BLACK;
+    protected Material _material=new Material();
 
     public Color get_emission() {
         return _emission;
@@ -16,6 +12,15 @@ public abstract class Geometry implements Intersectable {
 
     public Geometry set_emission(Color emission) {
         _emission = emission;
+        return this;
+    }
+
+    public Material get_material() {
+        return _material;
+    }
+
+    public Geometry setMaterial(Material _material) {
+        this._material = _material;
         return this;
     }
 

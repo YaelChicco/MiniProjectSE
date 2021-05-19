@@ -3,9 +3,7 @@ package geometries;
 import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
-
 import static primitives.Util.*;
-
 import java.util.List;
 
 public class Sphere extends Geometry {
