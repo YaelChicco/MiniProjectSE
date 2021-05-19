@@ -10,7 +10,7 @@ import java.util.Objects;
 import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
 
-public class Tube implements Geometry{
+public class Tube extends Geometry{
     /**
      * tube direction
      */
@@ -77,7 +77,7 @@ public class Tube implements Geometry{
     }
 
     @Override
-    public List<Point3D> findIntersections(Ray ray) {
+    public List<GeoPoint> findGeoIntersections(Ray ray) {
         return null;
     }
 }

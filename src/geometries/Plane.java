@@ -9,7 +9,7 @@ import java.util.Objects;
 
 import static primitives.Util.isZero;
 
-public class Plane implements Geometry {
+public class Plane extends Geometry {
 
     /**
      * the reference point of the plane
@@ -66,7 +66,7 @@ public class Plane implements Geometry {
     }
 
     @Override
-    public List<Point3D> findIntersections(Ray ray) {
+    public List<GeoPoint> findGeoIntersections(Ray ray) {
 
         Point3D p0 = ray.getP0();
         Vector V = ray.getDir();
@@ -100,7 +100,7 @@ public class Plane implements Geometry {
         //if there is an intersection point
         if (t > 0) {
             Point3D iP = p0.add(V.scale(t));
-            return List.of(iP);
+            return List.of(new GeoPoint(this,iP));
         } else {
             return null;
         }

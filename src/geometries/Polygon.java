@@ -12,7 +12,7 @@ import static primitives.Util.*;
  *
  * @author Dan
  */
-public class Polygon implements Geometry {
+public class Polygon extends Geometry {
 
     /**
      * List of polygon's vertices
@@ -92,20 +92,20 @@ public class Polygon implements Geometry {
     }
 
     @Override
-    public List<Point3D> findIntersections(Ray ray) {
+    public List<GeoPoint> findGeoIntersections(Ray ray) {
 
-        List<Point3D> result= plane.findIntersections(ray);
+        List<GeoPoint> planeGeoIntersections= plane.findGeoIntersections(ray);
         Point3D p0=ray.getP0();
         Vector V;
         Vector v1,v2,v3,v4,n1,n2,n3;
 
         //only if the ray intersects the plane that the polygon is included in
         // check if the intersection point is in the polygon
-        if(result==null) {
+        if(planeGeoIntersections==null) {
             return null;
         }
         else{
-            V=(result.get(0)).subtract(p0);
+            V=(planeGeoIntersections.get(0).point).subtract(p0);
             //Vi is the edges of the pyramid that the polygon is the bases of and the ray's head is the vertex of
             //Ni is the normals to each side of the pyramid
             //checks if each Ni*Vi have the same sign
@@ -133,7 +133,7 @@ public class Polygon implements Geometry {
                 v2=v3;
                 n1=n2;
             }
-            return result;
+            return List.of(new GeoPoint(this,planeGeoIntersections.get(0).point));
             }
     }
 }

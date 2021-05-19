@@ -1,7 +1,8 @@
 package primitives;
 
+import static geometries.Intersectable.GeoPoint;
 import java.util.List;
-import java.util.Objects;
+
     public class Ray {
         /**
          * starting point of the ray
@@ -84,6 +85,24 @@ import java.util.Objects;
                 if (dist < distance) {
                     distance = dist;
                     result = p;
+                }
+            }
+            return result;
+        }
+
+        public GeoPoint findClosestGeoPoint(List<GeoPoint> geoPointsList){
+            GeoPoint result = null;
+            if (geoPointsList == null) {
+                return null;
+            }
+
+            //finding the shortest distance between the point and the ray start point
+            double distance = Double.MAX_VALUE;
+            for (GeoPoint gp : geoPointsList) {
+                double dist = p0.distance(gp.point);
+                if (dist < distance) {
+                    distance = dist;
+                    result = gp;
                 }
             }
             return result;

@@ -3,7 +3,6 @@ package scene;
 import elements.AmbientLight;
 import geometries.Geometries;
 import primitives.Color;
-import primitives.Point3D;
 
 /**
  * class for the image base
@@ -21,7 +20,7 @@ public class Scene {
     /**
      * scene background color
      */
-    public Color backGroundColor=Color.BLACK;
+    public Color backgroundcolor =Color.BLACK;
     /**
      * shapes in the scene
      */
@@ -42,7 +41,7 @@ public class Scene {
      * @return scene
      */
     public Scene setBackGround(Color backGroundColor) {
-        this.backGroundColor = backGroundColor;
+        this.backgroundcolor = backGroundColor;
         return this;
     }
 

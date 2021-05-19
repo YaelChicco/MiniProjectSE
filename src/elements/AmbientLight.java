@@ -13,6 +13,13 @@ public class AmbientLight {
     private final Color _intensity;
 
     /**
+     * default constructor
+     */
+    public AmbientLight() {
+        _intensity = Color.BLACK;
+    }
+
+    /**
      *constructor with parameters
      * @param Ia color
      * @param Ka intensity of the color
