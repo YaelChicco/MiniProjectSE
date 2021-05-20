@@ -97,7 +97,7 @@ public class Plane extends Geometry {
 
         //if there is an intersection point
         if (t > 0) {
-            Point3D iP = p0.add(V.scale(t));
+            Point3D iP = ray.getPoint(t);
             return List.of(new GeoPoint(this,iP));
         } else {
             return null;

@@ -17,16 +17,7 @@ public class Color {
     private final double g;
     private final double b;
 
-    public static final Color BLACK = new Color();
-
-    /**
-     * Default constructor - to generate Black Color (privately)
-     */
-    private Color() {
-        r=0.0;
-        g=0.0;
-        b=0.0;
-    }
+    public static final Color BLACK = new Color(0,0,0);
 
     /**
      * Constructor to generate a color according to RGB components Each component in
@@ -42,17 +33,6 @@ public class Color {
         this.r = r;
         this.g = g;
         this.b = b;
-    }
-
-    /**
-     * Copy constructor for Color
-     *
-     * @param other the source color
-     */
-    public Color(Color other) {
-        r = other.r;
-        g = other.g;
-        b = other.b;
     }
 
     /**

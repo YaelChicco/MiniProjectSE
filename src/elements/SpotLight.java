@@ -2,6 +2,7 @@ package elements;
 
 import primitives.Color;
 import primitives.Point3D;
+import primitives.Util;
 import primitives.Vector;
 
 public class SpotLight extends PointLight implements LightSource{
@@ -15,8 +16,13 @@ public class SpotLight extends PointLight implements LightSource{
 
     @Override
     public Color getIntensity(Point3D point3D) {
-        Vector l = getL(point3D);
+        Vector l = super.getL(point3D);
         Color intensity = super.getIntensity(point3D);
-        return intensity.scale(Math.max(0,l.dotProduct(centerDirection)));
+        return intensity.scale(Math.max(0, Util.alignZero(l.dotProduct(centerDirection))));
+    }
+
+    @Override
+    public  Vector getL(Point3D point3D) {
+        return super.getL(point3D);
     }
 }

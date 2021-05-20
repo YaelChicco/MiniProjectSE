@@ -4,7 +4,7 @@ import primitives.*;
 
 public abstract class Geometry implements Intersectable {
     protected Color _emission=Color.BLACK;
-    protected Material _material=new Material();
+    private Material _material=new Material();
 
     public Color get_emission() {
         return _emission;

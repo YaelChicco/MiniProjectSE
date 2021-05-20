@@ -38,7 +38,6 @@ public class Scene {
      */
     public Scene(String name) {
         _name = name;
-        geometries = new Geometries();
     }
 
     /**
@@ -58,6 +57,16 @@ public class Scene {
      */
     public Scene setAmbientLight(AmbientLight ambientLight) {
         this.ambientLight = ambientLight;
+        return this;
+    }
+
+    public Scene setLights(List<LightSource> lightSource) {
+        this.lights = lightSource;
+        return this;
+    }
+
+    public Scene setGeometries(Geometries geometries) {
+        this.geometries = geometries;
         return this;
     }
 }

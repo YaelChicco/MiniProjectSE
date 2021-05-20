@@ -40,4 +40,9 @@ public class RayTest {
         points.add(new Point3D(1,0,0));
         assertEquals(new Point3D(1,0,0),ray.getClosestPoint(points),"getClosestPoint() last point");
     }
+
+    @Test
+    void getGeoColsestPointTest(){
+
+    }
 }

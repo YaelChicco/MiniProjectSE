@@ -20,7 +20,7 @@ public interface Intersectable {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
             GeoPoint geoPoint = (GeoPoint) o;
-            return geometry.equals(geoPoint.geometry) && point.equals(geoPoint.point);
+            return geometry == geoPoint.geometry && point.equals(geoPoint.point);
         }
     }
 
