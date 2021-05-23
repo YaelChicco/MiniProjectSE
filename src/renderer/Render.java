@@ -7,41 +7,68 @@ import primitives.Ray;
 import scene.Scene;
 
 import java.util.List;
+import java.util.MissingResourceException;
 
+/**
+ * Creating the color matrix of the image from the scene
+ */
 public class Render {
+
+    /**
+     *creates the image
+     */
     private ImageWriter _imageWriter;
-    private Scene _scene;
+    /**
+     * camera details
+     */
     private Camera _camera;
+    /**
+     * ray tracer
+     */
     private RayTracerBase _rayTracer;
 
     /**
-     * chaining methods
-     *
-     * @param imageWriter
-     * @return
+     * setter of the image writer (builder)
+     * @param imageWriter imageWriter
+     * @return render
      */
     public Render setImageWriter(ImageWriter imageWriter) {
         _imageWriter = imageWriter;
         return this;
     }
 
-
-    public Render setScene(Scene scene) {
-        _scene = scene;
-        return this;
-    }
-
+    /**
+     * setter of camera (builder)
+     * @param camera camera details
+     * @return render
+     */
     public Render setCamera(Camera camera) {
         _camera = camera;
         return this;
     }
 
+    /**
+     * setter of the ray tracer (builder)
+     * @param basicRayTracer the ray tracer
+     * @return rebder
+     */
     public Render setRayTracer(BasicRayTracer basicRayTracer) {
         _rayTracer = basicRayTracer;
         return this;
     }
 
+    /**
+     * calculates the ray and the color in each pixel
+     */
     public void renderImage() {
+        //one of the parameters is null
+        if(_imageWriter==null)
+            throw new MissingResourceException("_imageWriter is null", "Render", "ImageWriter");
+        if(_camera==null)
+            throw new MissingResourceException("_camera is null", "Render", "Camera");
+        if(_rayTracer==null)
+            throw new MissingResourceException("_rayTracer is null", "Render", "RayTracerBase");
+
         int nX = _imageWriter.getNx();
         int nY = _imageWriter.getNy();
         for (int i = 0; i < nY; i++) {
@@ -50,27 +77,36 @@ public class Render {
                 Color color = _rayTracer.traceRay(ray);
                 _imageWriter.writePixel(j, i, color);
             }
-
         }
     }
 
+    /**
+     * creates the grid of the image
+     * @param interval amount of pixels between two lines
+     * @param intervalColor grid color
+     */
     public void printGrid(int interval, Color intervalColor) {
+        if(_imageWriter==null)
+            throw new MissingResourceException("_imageWriter is null", "Render", "ImageWriter");
+
         int nX = _imageWriter.getNx();
         int nY = _imageWriter.getNy();
         for (int i = 0; i < nY; i++) {
             for (int j = 0; j < nX; j++) {
                 if (i % interval == 0 || j % interval == 0) {
                     _imageWriter.writePixel(j, i, intervalColor);
-
                 }
-                // List<Point3D>rayList=_scene.geometries.findIntersections(ray);
             }
         }
     }
 
+    /**
+     * saves the image
+     */
     public void writeToImage() {
+        if(_imageWriter==null)
+            throw new MissingResourceException("_imageWriter is null", "Render", "ImageWriter");
         _imageWriter.writeToImage();
     }
-
 }
 

@@ -11,9 +11,12 @@ import java.util.List;
 public class Geometries implements Intersectable {
     private List<Intersectable> _intersectables;
 
+    /**
+     *
+     * @param list non limited array of Geometry implementing Intersectable
+     */
     public Geometries(Intersectable... list) {
-        _intersectables=new LinkedList<Intersectable>(Arrays.asList(list.clone()));
-
+        _intersectables = new LinkedList<Intersectable>(Arrays.asList(list.clone()));
     }
 
     public void add(Intersectable... list) {
@@ -21,13 +24,13 @@ public class Geometries implements Intersectable {
     }
 
     @Override
-    public List<Point3D> findIntersections(Ray ray) {
-        if(_intersectables==null){
+    public List<GeoPoint> findGeoIntersections(Ray ray) {
+        if (_intersectables == null) {
             return null;
         }
-        List<Point3D> result = null;
+        List<GeoPoint> result = null;
         for (Intersectable geo : _intersectables) {
-            List<Point3D> geoPoints = geo.findIntersections(ray);
+            List<GeoPoint> geoPoints = geo.findGeoIntersections(ray);
             if (geoPoints != null) {
                 if (result == null) {
                     result = new LinkedList<>();

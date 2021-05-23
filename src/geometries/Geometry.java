@@ -1,22 +1,33 @@
 package geometries;
 
-import primitives.Point3D;
-import primitives.Ray;
-import primitives.Vector;
+import primitives.*;
 
-import java.util.List;
+public abstract class Geometry implements Intersectable {
+    protected Color _emission=Color.BLACK;
+    private Material _material=new Material();
 
-public interface Geometry extends Intersectable {
+    public Color get_emission() {
+        return _emission;
+    }
+
+    public Geometry set_emission(Color emission) {
+        _emission = emission;
+        return this;
+    }
+
+    public Material get_material() {
+        return _material;
+    }
+
+    public Geometry setMaterial(Material _material) {
+        this._material = _material;
+        return this;
+    }
 
     /**
      * calculates the normal of the geometry
      * @param point the normal point in the geometry
      * @return normal of the geometry
      */
-    Vector getNormal(Point3D point);
-
-    @Override
-    default List<Point3D> findIntersections(Ray ray) {
-        return null;
-    }
+    public abstract Vector getNormal(Point3D point);
 }
