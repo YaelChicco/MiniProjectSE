@@ -6,6 +6,9 @@ import primitives.Vector;
 import static primitives.Util.*;
 import java.util.List;
 
+/**
+ * class for representing a sphere in the scene
+ */
 public class Sphere extends Geometry {
 
     /**
@@ -66,6 +69,7 @@ public class Sphere extends Geometry {
         Point3D D = _center;
         Vector V = ray.getDir();
         double tm = 0, d = 0;
+
         try {
             Vector U = D.subtract(p0);
             tm = V.dotProduct(U);

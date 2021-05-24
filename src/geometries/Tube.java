@@ -3,11 +3,16 @@ package geometries;
 import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
+
 import java.util.List;
+
 import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
 
-public class Tube extends Geometry{
+/**
+ * class for representing a tube in the scene
+ */
+public class Tube extends Geometry {
     /**
      * tube direction
      */
@@ -19,8 +24,9 @@ public class Tube extends Geometry{
 
     /**
      * constructor of the tube
+     *
      * @param axisRay tube direction
-     * @param radius tube radius
+     * @param radius  tube radius
      */
     public Tube(Ray axisRay, double radius) {
         this._axisRay = axisRay;
@@ -29,6 +35,7 @@ public class Tube extends Geometry{
 
     /**
      * getter of the tube direction
+     *
      * @return tube direction
      */
     public Ray getAxisRay() {
@@ -37,6 +44,7 @@ public class Tube extends Geometry{
 
     /**
      * getter of the tube radius
+     *
      * @return tube radius
      */
     public double getRadius() {
@@ -53,22 +61,23 @@ public class Tube extends Geometry{
 
     /**
      * getNormal
+     *
      * @param point the normal point in the geometry
      * @return normal of the tube
      */
     @Override
     public Vector getNormal(Point3D point) {
-        Point3D p0=_axisRay.getP0();
-        Vector v=_axisRay.getDir();
+        Point3D p0 = _axisRay.getP0();
+        Vector v = _axisRay.getDir();
 
-        Vector p0_p= point.subtract(p0);
-        double t=alignZero(p0_p.dotProduct(v));
+        Vector p0_p = point.subtract(p0);
+        double t = alignZero(p0_p.dotProduct(v));
 
-        if (isZero(t)){
+        if (isZero(t)) {
             return p0_p.normalize();
         }
-        Point3D O=p0.add(v.scale(t));
-        Vector O_P=point.subtract(O);
+        Point3D O = p0.add(v.scale(t));
+        Vector O_P = point.subtract(O);
 
         return O_P.normalize();
     }

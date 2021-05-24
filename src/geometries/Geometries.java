@@ -8,7 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * class for representation of intersected shapes
+ * class for representation of collection of intersected shapes
  */
 public class Geometries implements Intersectable {
     private List<Intersectable> _intersectables;
