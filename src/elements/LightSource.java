@@ -9,6 +9,7 @@ public interface LightSource {
 
     /**
      * calculates the amount of light hitting the point
+     *
      * @param point3D the intersection point
      * @return amount of light hitting the point
      */
@@ -16,6 +17,7 @@ public interface LightSource {
 
     /**
      * calculates the distance from the light source to the point
+     *
      * @param point3D the intersection point
      * @return distance from the light source to the point
      */

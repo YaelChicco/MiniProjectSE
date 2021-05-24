@@ -14,6 +14,7 @@ class Light {
 
     /**
      * constructor with parameters
+     *
      * @param intensity color of the light source
      */
     protected Light(Color intensity) {
@@ -22,6 +23,7 @@ class Light {
 
     /**
      * getter of _intensity
+     *
      * @return _intensity
      */
     public Color getIntensity() {
