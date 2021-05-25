@@ -47,6 +47,13 @@ public class BasicRayTracer extends RayTracerBase {
                 .add(calcLocalEffects(closestPoint, ray));
     }
 
+    /**
+     * calculates the local effects
+     *
+     * @param intersection intersection point for calculating the local effects
+     * @param ray          intersected ray
+     * @return local color of the point
+     */
     private Color calcLocalEffects(GeoPoint intersection, Ray ray) {
         Vector v = ray.getDir();
         Vector n = intersection.geometry.getNormal(intersection.point);
@@ -73,12 +80,32 @@ public class BasicRayTracer extends RayTracerBase {
         return color;
     }
 
+    /**
+     * calculates the specular effects
+     *
+     * @param ks             specular coefficient
+     * @param l              vector from the light source
+     * @param n              normal in the point
+     * @param v              vector from the camera
+     * @param nShininess     shininess coefficient
+     * @param lightIntensity intensity of the light source
+     * @return specular color of the point
+     */
     private Color calcSpecular(double ks, Vector l, Vector n, Vector v, int nShininess, Color lightIntensity) {
         Vector r = l.subtract(n.scale(2 * (l.dotProduct(n))));
         double minusVR = v.scale(-1).dotProduct(r);
         return lightIntensity.scale(ks * Math.max(0, Math.pow(minusVR, nShininess)));
     }
 
+    /**
+     * calculates the diffuse effects
+     *
+     * @param kd             diffuse coefficient
+     * @param l              vector from the light source
+     * @param n              normal in the point
+     * @param lightIntensity intensity of the light source
+     * @return diffuse color of the point
+     */
     private Color calcDiffusive(double kd, Vector l, Vector n, Color lightIntensity) {
         return lightIntensity.scale(kd * Math.abs(l.dotProduct(n)));
     }

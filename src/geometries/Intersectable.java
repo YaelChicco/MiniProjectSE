@@ -61,7 +61,6 @@ public interface Intersectable {
 
     /**
      * finds the intersections geoPoints of the ray with the shape
-     *
      * @param ray intersecting ray
      * @return intersections geoPoints
      */
