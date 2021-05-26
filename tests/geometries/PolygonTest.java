@@ -102,6 +102,8 @@ public class PolygonTest {
 
     @Test
     void testFindIntersections() {
+        // ============ Equivalence Partitions Tests ==============
+        // TC01: There is a simple single test here
         Polygon quadr = new Polygon(new Point3D(1, 0, 0), new Point3D(-2, 0, 0), new Point3D(-2, 0, 2), new Point3D(1, 0, 2));
         Ray ray = new Ray(new Point3D(0, 1, 0), new Vector(0, -2, 1));
         List<Point3D> iP = quadr.findIntersections(ray);

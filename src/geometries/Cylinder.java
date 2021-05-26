@@ -6,7 +6,10 @@ import primitives.Vector;
 
 import java.util.List;
 
-public class Cylinder extends Tube{
+/**
+ * class for finite tube
+ */
+public class Cylinder extends Tube {
 
     /**
      * the height of the cylinder
@@ -15,6 +18,7 @@ public class Cylinder extends Tube{
 
     /**
      * constructor of the cylinder
+     *
      * @param axisRay cylinder direction
      * @param radius  cylinder radius
      * @param height  cylinder height
@@ -22,13 +26,15 @@ public class Cylinder extends Tube{
     public Cylinder(Ray axisRay, double radius, double height) {
         super(axisRay, radius);
 
-        if (height==0)
+        if (height == 0)
             throw new IllegalArgumentException("height cannot be 0");
 
-        this._height=height;
+        this._height = height;
     }
 
     /**
+     * getter of the cylinder hight
+     *
      * @return the height of the cylinder
      */
     public double getHeight() {

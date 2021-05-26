@@ -1,6 +1,5 @@
 package geometries;
 
-import primitives.Point3D;
 import primitives.Ray;
 
 import java.util.Arrays;
@@ -8,10 +7,14 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * class for representation of collection of intersected shapes
+ */
 public class Geometries implements Intersectable {
     private List<Intersectable> _intersectables;
 
     /**
+     * constructor that gets all the geometries
      *
      * @param list non limited array of Geometry implementing Intersectable
      */
@@ -19,6 +22,10 @@ public class Geometries implements Intersectable {
         _intersectables = new LinkedList<Intersectable>(Arrays.asList(list.clone()));
     }
 
+    /**
+     * adds geometries to the intersected geometries list
+     * @param list intersected geometries list
+     */
     public void add(Intersectable... list) {
         Collections.addAll(_intersectables, list);
     }
@@ -29,6 +36,7 @@ public class Geometries implements Intersectable {
             return null;
         }
         List<GeoPoint> result = null;
+
         for (Intersectable geo : _intersectables) {
             List<GeoPoint> geoPoints = geo.findGeoIntersections(ray);
             if (geoPoints != null) {

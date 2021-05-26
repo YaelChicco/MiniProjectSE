@@ -7,6 +7,9 @@ import java.util.List;
 
 import static primitives.Util.isZero;
 
+/**
+ * class for representing a plane in the scene
+ */
 public class Plane extends Geometry {
 
     /**

@@ -2,14 +2,35 @@ package geometries;
 
 import primitives.Point3D;
 import primitives.Ray;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * interface for representation of intersected shape
+ */
 public interface Intersectable {
-    public static class GeoPoint{
+
+    /**
+     * class for representation a point on a shape
+     */
+    public static class GeoPoint {
+
+        /**
+         * the geometry of which the point is on
+         */
         public Geometry geometry;
+        /**
+         * the point on the geometry
+         */
         public Point3D point;
 
+        /**
+         * constructor with parameters
+         *
+         * @param geometry shape
+         * @param point    point on the shape
+         */
         public GeoPoint(Geometry geometry, Point3D point) {
             this.geometry = geometry;
             this.point = point;
@@ -25,22 +46,23 @@ public interface Intersectable {
     }
 
     /**
-     * finds the intersections of the ray and the shape
+     * finds the intersections points of the ray with the shape
+     *
      * @param ray intersecting ray
-     * @return intersections of the ray and the shape
+     * @return intersections points
      */
     default List<Point3D> findIntersections(Ray ray) {
         List<GeoPoint> geoList = findGeoIntersections(ray);
         return geoList == null ? null
-                : geoList .stream()
+                : geoList.stream()
                 .map(gp -> gp.point)
                 .collect(Collectors.toList());
     }
 
     /**
-     * finds the intersections of the ray and the shape
+     * finds the intersections geoPoints of the ray with the shape
      * @param ray intersecting ray
-     * @return intersections of the ray and the shape
+     * @return intersections geoPoints
      */
     List<GeoPoint> findGeoIntersections(Ray ray);
 }

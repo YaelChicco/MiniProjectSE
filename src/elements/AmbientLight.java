@@ -5,7 +5,7 @@ import primitives.Color;
 /**
  * ambient light of the scene
  */
-public class AmbientLight extends Light{
+public class AmbientLight extends Light {
 
     /**
      * default constructor
@@ -15,7 +15,8 @@ public class AmbientLight extends Light{
     }
 
     /**
-     *constructor with parameters
+     * constructor with parameters
+     *
      * @param Ia color
      * @param Ka intensity of the color
      */

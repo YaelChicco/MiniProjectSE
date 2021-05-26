@@ -5,6 +5,7 @@ import primitives.Ray;
 import primitives.Vector;
 
 import static primitives.Util.isZero;
+
 /**
  * Class for the construction of the camera and the view plane
  */
@@ -27,7 +28,7 @@ public class Camera {
 
     /**
      * right vector of the camera
-    */
+     */
     private final Vector _vRight;
 
     /**
@@ -48,7 +49,7 @@ public class Camera {
     /**
      * constructor that gets the camera location (point and vectors)
      *
-     * @param p0 camera location
+     * @param p0  camera location
      * @param vTo front vector of the camera
      * @param vUp upward vector of the camera
      */
@@ -66,6 +67,7 @@ public class Camera {
 
     /**
      * getter of p0
+     *
      * @return p0
      */
     public Point3D getP0() {
@@ -74,6 +76,7 @@ public class Camera {
 
     /**
      * getter of vTo
+     *
      * @return vTo
      */
     public Vector getvTo() {
@@ -82,6 +85,7 @@ public class Camera {
 
     /**
      * getter of vUp
+     *
      * @return vUp
      */
     public Vector getvUp() {
@@ -90,6 +94,7 @@ public class Camera {
 
     /**
      * getter of vRight
+     *
      * @return vRight
      */
     public Vector getvRight() {
@@ -98,6 +103,7 @@ public class Camera {
 
     /**
      * getter of width
+     *
      * @return width
      */
     public double getWidth() {
@@ -106,6 +112,7 @@ public class Camera {
 
     /**
      * getter of hight
+     *
      * @return hight
      */
     public double getHight() {
@@ -114,6 +121,7 @@ public class Camera {
 
     /**
      * getter of distance
+     *
      * @return distance
      */
     public double getDistance() {
@@ -137,6 +145,7 @@ public class Camera {
 
     /**
      * setter of distance
+     *
      * @param distance distance
      * @return distance between the view plane and athe camera
      */
@@ -147,10 +156,11 @@ public class Camera {
 
     /**
      * creats a ray from the camera through a specific pixel center
+     *
      * @param nX - number of pixels in view plane width
      * @param nY - number of pixels in view plane hight
-     * @param j - distance of the intercept from the midpoint on the y-axis
-     * @param i - distance of the intercept from the midpoint on the X-axis
+     * @param j  - distance of the intercept from the midpoint on the y-axis
+     * @param i  - distance of the intercept from the midpoint on the X-axis
      * @return ray from the camera through a specific pixel center
      */
     public Ray constructRayThroughPixel(int nX, int nY, int j, int i) {

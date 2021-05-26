@@ -3,6 +3,9 @@ package primitives;
 import static primitives.Point3D.ZERO;
 import static primitives.Util.isZero;
 
+/**
+ * class for a vector in the scene (3 coordinates start point)
+ */
 public class Vector {
     /**
      * end point of the vector
@@ -11,6 +14,7 @@ public class Vector {
 
     /**
      * primary constructor for Vector
+     *
      * @param head is the start point of the vector
      */
     public Vector(Point3D head) {
@@ -18,11 +22,15 @@ public class Vector {
             throw new IllegalArgumentException("head of vector cannot be point(0,0,0)");
         }
 
-        _head = new Point3D(head._x.coord,head._y.coord,head._z.coord);
+        _head = new Point3D(head._x.coord, head._y.coord, head._z.coord);
     }
 
     /**
-     * constructor for Vector
+     * constructor with parameters
+     *
+     * @param x x coordinate of the start point
+     * @param y y coordinate of the start point
+     * @param z z coordinate of the start point
      */
     public Vector(double x, double y, double z) {
         this(new Point3D(x, y, z));
@@ -30,6 +38,7 @@ public class Vector {
 
     /**
      * getter of the head of the vector
+     *
      * @return _head is the start point of the vector
      */
     public Point3D getHead() {
@@ -46,6 +55,7 @@ public class Vector {
 
     /**
      * multiplies vector by number
+     *
      * @param number- parameter to multiply the vector with
      * @return the vector after multiplication
      */
@@ -55,28 +65,30 @@ public class Vector {
             throw new ArithmeticException("number equals 0");
         }
 
-        double x = _head._x.coord *number;
-        double y = _head._y.coord *number;
-        double z = _head._z.coord *number;
+        double x = _head._x.coord * number;
+        double y = _head._y.coord * number;
+        double z = _head._z.coord * number;
 
-        Vector newVector=new Vector(x, y, z);
+        Vector newVector = new Vector(x, y, z);
         return newVector;
     }
 
     /**
      * does cross product between two vectors
+     *
      * @param other is the second vector in the product
      * @return vector
      */
     public Vector crossProduct(Vector other) {
-        double x = (_head._y.coord * other.getHead()._z.coord)-(_head._z.coord * other.getHead()._y.coord);
-        double y = (_head._z.coord * other.getHead()._x.coord)-(_head._x.coord * other.getHead()._z.coord);
-        double z = (_head._x.coord * other.getHead()._y.coord)-(_head._y.coord * other.getHead()._x.coord);
-        return new Vector(x,y,z);
+        double x = (_head._y.coord * other.getHead()._z.coord) - (_head._z.coord * other.getHead()._y.coord);
+        double y = (_head._z.coord * other.getHead()._x.coord) - (_head._x.coord * other.getHead()._z.coord);
+        double z = (_head._x.coord * other.getHead()._y.coord) - (_head._y.coord * other.getHead()._x.coord);
+        return new Vector(x, y, z);
     }
 
     /**
      * does dot product between two vectors
+     *
      * @param other is the second vector in the product
      * @return number
      */
@@ -85,11 +97,12 @@ public class Vector {
         double x = (_head._x.coord * other.getHead()._x.coord);
         double y = (_head._y.coord * other.getHead()._y.coord);
         double z = (_head._z.coord * other.getHead()._z.coord);
-        return x+y+z;
+        return x + y + z;
     }
 
     /**
      * does add between two vectors
+     *
      * @param other vector for adding
      * @return original vector plus the other vector
      */
@@ -102,6 +115,7 @@ public class Vector {
 
     /**
      * does subtract between two vectors
+     *
      * @param other second vector in the subtraction operation
      * @return current vector minus the other vector
      */
@@ -114,6 +128,7 @@ public class Vector {
 
     /**
      * calculates the squared length of vector
+     *
      * @return the squared length
      */
     public double lengthSquared() {
@@ -125,6 +140,7 @@ public class Vector {
 
     /**
      * calculates the length of vector
+     *
      * @return the length
      */
     public double length() {
@@ -133,6 +149,7 @@ public class Vector {
 
     /**
      * normalizes the current vector
+     *
      * @return the current vector after normalization
      */
     public Vector normalize() {
@@ -158,16 +175,18 @@ public class Vector {
 
     /**
      * places the current vector in a new vector and normalizes it
+     *
      * @return the new vector after normalization
      */
     public Vector normalized() {
-        Vector result=new Vector(_head);
+        Vector result = new Vector(_head);
         result.normalize();
         return result;
     }
 
     /**
      * getter of the end point of the vector
+     *
      * @return end point
      */
     public Point3D get_head() {

@@ -5,10 +5,23 @@ import primitives.Point3D;
 import primitives.Util;
 import primitives.Vector;
 
-public class SpotLight extends PointLight implements LightSource{
+/**
+ * class for spot light source
+ */
+public class SpotLight extends PointLight implements LightSource {
 
+    /**
+     * direction of the spot light
+     */
     private final Vector centerDirection;
 
+    /**
+     * constructor with parameters
+     *
+     * @param intensity       color of the light
+     * @param position        position of the light in the scene
+     * @param centerDirection direction of the spot light
+     */
     public SpotLight(Color intensity, Point3D position, Vector centerDirection) {
         super(intensity, position);
         this.centerDirection = centerDirection.normalized();
@@ -22,7 +35,7 @@ public class SpotLight extends PointLight implements LightSource{
     }
 
     @Override
-    public  Vector getL(Point3D point3D) {
+    public Vector getL(Point3D point3D) {
         return super.getL(point3D);
     }
 }
