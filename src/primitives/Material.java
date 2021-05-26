@@ -17,6 +17,8 @@ public class Material {
      * for shininess
      */
     public int nShininess=0;
+    public double kR=0;
+    public double kT=0;
 
     /**
      * setter of the diffuse coefficient
@@ -45,6 +47,16 @@ public class Material {
      */
     public Material setShininess(int nShininess) {
         this.nShininess = nShininess;
+        return this;
+    }
+
+    public Material setkR(double kR) {
+        this.kR = kR;
+        return this;
+    }
+
+    public Material setkT(double kT) {
+        this.kT = kT;
         return this;
     }
 }

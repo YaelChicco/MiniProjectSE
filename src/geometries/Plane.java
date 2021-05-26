@@ -3,8 +3,10 @@ package geometries;
 import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
+
 import java.util.List;
 
+import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
 
 /**
@@ -67,7 +69,7 @@ public class Plane extends Geometry {
     }
 
     @Override
-    public List<GeoPoint> findGeoIntersections(Ray ray) {
+    public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
 
         Point3D p0 = ray.getP0();
         Vector V = ray.getDir();
@@ -99,9 +101,9 @@ public class Plane extends Geometry {
         double t = tD / tN;
 
         //if there is an intersection point
-        if (t > 0) {
+        if (t > 0 && alignZero(t - maxDistance) <= 0) {
             Point3D iP = ray.getPoint(t);
-            return List.of(new GeoPoint(this,iP));
+            return List.of(new GeoPoint(this, iP));
         } else {
             return null;
         }

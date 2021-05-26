@@ -90,9 +90,9 @@ public class Polygon extends Geometry {
     }
 
     @Override
-    public List<GeoPoint> findGeoIntersections(Ray ray) {
+    public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
 
-        List<GeoPoint> planeGeoIntersections = plane.findGeoIntersections(ray);
+        List<GeoPoint> planeGeoIntersections = plane.findGeoIntersections(ray, maxDistance);
         Point3D p0 = ray.getP0();
         Vector V;
         Vector v1, v2, v3, v4, n1, n2, n3;

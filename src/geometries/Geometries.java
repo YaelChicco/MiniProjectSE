@@ -31,14 +31,14 @@ public class Geometries implements Intersectable {
     }
 
     @Override
-    public List<GeoPoint> findGeoIntersections(Ray ray) {
+    public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
         if (_intersectables == null) {
             return null;
         }
         List<GeoPoint> result = null;
 
         for (Intersectable geo : _intersectables) {
-            List<GeoPoint> geoPoints = geo.findGeoIntersections(ray);
+            List<GeoPoint> geoPoints = geo.findGeoIntersections(ray, maxDistance);
             if (geoPoints != null) {
                 if (result == null) {
                     result = new LinkedList<>();

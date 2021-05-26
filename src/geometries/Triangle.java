@@ -21,14 +21,6 @@ public class Triangle extends Polygon{
     }
 
     @Override
-    public List<GeoPoint> findGeoIntersections(Ray ray) {
-        List<GeoPoint> geoPointList = super.findGeoIntersections(ray);
-        if(geoPointList == null)
-            return null;
-        return List.of(new GeoPoint(this, geoPointList.get(0).point));
-    }
-
-    @Override
     public Vector getNormal(Point3D point) {
         return super.getNormal(point);
     }

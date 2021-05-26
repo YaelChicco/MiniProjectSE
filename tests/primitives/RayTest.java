@@ -4,7 +4,6 @@ import geometries.Intersectable.*;
 import geometries.Plane;
 import geometries.Sphere;
 import geometries.Triangle;
-import primitives.Ray;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -51,7 +50,7 @@ public class RayTest {
         Ray ray=new Ray(new Point3D(6,0,0), new Vector(-1,0,0));
         Plane plane=new Plane(new Point3D(1,0,0), new Vector(1,0,0));
         Triangle triangle=new Triangle(new Point3D(3,-4,-1), new Point3D(3,0,4), new Point3D(3,5,-1));
-        Sphere sphere=new Sphere(new Point3D(-4,0,0),2.0);
+        Sphere sphere=new Sphere(2.0, new Point3D(-4,0,0));
 
         // ============ Equivalence Partitions Tests ==============
         //TC01: A point in the middle of the list is closest to the beginning of the ray

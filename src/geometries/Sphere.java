@@ -3,7 +3,9 @@ package geometries;
 import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
+
 import static primitives.Util.*;
+
 import java.util.List;
 
 /**
@@ -23,10 +25,10 @@ public class Sphere extends Geometry {
     /**
      * constructor of the sphere
      *
-     * @param center ball center point
      * @param radius ball radius
+     * @param center ball center point
      */
-    public Sphere(Point3D center, double radius) {
+    public Sphere(double radius, Point3D center) {
         this._center = center;
         this._radius = radius;
     }
@@ -64,7 +66,7 @@ public class Sphere extends Geometry {
     }
 
     @Override
-    public List<GeoPoint> findGeoIntersections(Ray ray) {
+    public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
         Point3D p0 = ray.getP0();
         Point3D D = _center;
         Vector V = ray.getDir();
@@ -84,20 +86,20 @@ public class Sphere extends Geometry {
         double t1 = alignZero(tm - th);
         double t2 = alignZero(tm + th);
 
-        if ((t1 > 0) && (t2 > 0)) {
+        if (t1 > 0 && t2 > 0 && alignZero(t1 - maxDistance) <= 0 && alignZero(t2 - maxDistance) <= 0) {
             Point3D p1 = ray.getPoint(t1);
             Point3D p2 = ray.getPoint(t2);
-            return (List.of(new GeoPoint(this,p1), new GeoPoint(this,p2)));
+            return (List.of(new GeoPoint(this, p1), new GeoPoint(this, p2)));
         }
 
-        if (t1 > 0) {
+        if (t1 > 0 && alignZero(t1 - maxDistance) <= 0) {
             Point3D p1 = ray.getPoint(t1);
-            return List.of(new GeoPoint(this,p1));
+            return List.of(new GeoPoint(this, p1));
         }
 
-        if (t2 > 0) {
+        if (t2 > 0 && alignZero(t2 - maxDistance) <= 0) {
             Point3D p2 = ray.getPoint(t2);
-            return List.of(new GeoPoint(this,p2));
+            return List.of(new GeoPoint(this, p2));
         }
 
         return null;

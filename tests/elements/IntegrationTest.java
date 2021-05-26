@@ -33,26 +33,26 @@ public class IntegrationTest {
         Camera camera = new Camera(new Point3D(0, 0, 0), new Vector(0, 0, -1), new Vector(0, 1, 0));
         camera.setViewPlaneSize(3, 3);
         camera.setDistance(1);
-        Sphere sphere = new Sphere(new Point3D(0, 0, -3), 1);
+        Sphere sphere = new Sphere(1, new Point3D(0, 0, -3));
         assertEquals(2, intersectionSum(camera, sphere), "sphere, radius 1, wrong number of intersection points");
 
         //TC02: Sphere radius=2.5
         camera = new Camera(new Point3D(0, 0, 0.5), new Vector(0, 0, -1), new Vector(0, 1, 0));
         camera.setViewPlaneSize(3, 3);
         camera.setDistance(1);
-        sphere = new Sphere(new Point3D(0, 0, -2.5), 2.5);
+        sphere = new Sphere(2.5, new Point3D(0, 0, -2.5));
         assertEquals(18, intersectionSum(camera, sphere), "sphere, radius 2.5, wrong number of intersection points");
 
         //TC03: Sphere radius=2
-        sphere = new Sphere(new Point3D(0, 0, -2), 2);
+        sphere = new Sphere(2, new Point3D(0, 0, -2));
         assertEquals(10, intersectionSum(camera, sphere), "sphere, radius 2, wrong number of intersection points");
 
         //TC04: Sphere radius=4
-        sphere = new Sphere(new Point3D(0, 0, -2), 4);
+        sphere = new Sphere(4, new Point3D(0, 0, -2));
         assertEquals(9, intersectionSum(camera, sphere), "sphere, radius 4, wrong number of intersection points");
 
         //TC05: Sphere radius=0.5
-        sphere = new Sphere(new Point3D(0, 0, 1), 0.5);
+        sphere = new Sphere(0.5, new Point3D(0, 0, 1));
         assertEquals(0, intersectionSum(camera, sphere), "sphere, radius 0.5, wrong number of intersection points");
     }
 
