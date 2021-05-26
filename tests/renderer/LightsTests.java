@@ -84,6 +84,10 @@ import scene.Scene;
             render.writeToImage();
         }
 
+
+        /**
+         * Produce a picture of a sphere lighted by spot, point and directional light
+         */
         @Test
         public void sphereMultiple(){
             scene1.geometries.add(sphere);
@@ -161,6 +165,9 @@ import scene.Scene;
             render.writeToImage();
         }
 
+        /**
+         * Produce a picture of a two triangles lighted by spot, point and directional light
+         */
 
         @Test
         public void trianglesMultiple() {
@@ -180,9 +187,6 @@ import scene.Scene;
             render.renderImage();
             render.writeToImage();
 
-            /**
-             scene2.lights.add(new SpotLight((new Color(500, 250, 250), new Point3D(10, -10, -130), new Vector(-2, -2, -1)).setKl(0.0001).setKq(0.000005)) ,
-             new PointLight(new Color(500, 250, 250), new Point3D(10, -10, -130)).setKl(0.0005).setKq(0.0005) , new DirectionalLight(new Color(300, 150, 150), new Vector(0, 0, -1)));
-             */
+
         }
     }
