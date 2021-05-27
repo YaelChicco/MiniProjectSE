@@ -1,7 +1,9 @@
 package geometries;
 
 import java.util.List;
+
 import primitives.*;
+
 import static primitives.Util.*;
 
 /**
@@ -93,44 +95,45 @@ public class Polygon extends Geometry {
     public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
 
         List<GeoPoint> planeGeoIntersections = plane.findGeoIntersections(ray, maxDistance);
-        Point3D p0 = ray.getP0();
-        Vector V;
-        Vector v1, v2, v3, v4, n1, n2, n3;
 
         //only if the ray intersects the plane that the polygon is included in
         // check if the intersection point is in the polygon
-        if (planeGeoIntersections == null) {
+        if (planeGeoIntersections == null)
             return null;
-        } else {
-            V = (planeGeoIntersections.get(0).point).subtract(p0);
-            //Vi is the edges of the pyramid that the polygon is the bases of and the ray's head is the vertex of
-            //Ni is the normals to each side of the pyramid
-            //checks if each Ni*Vi have the same sign
-            v1 = (vertices.get(0)).subtract(p0);
-            v2 = (vertices.get(1)).subtract(p0);
-            n1 = (v1.crossProduct(v2)).normalize();
-            for (int i = 0; i < vertices.size() - 2; i++) {
-                v3 = (vertices.get(i + 2)).subtract(p0);
-                n2 = (v2.crossProduct(v3)).normalize();
 
-                if (i == vertices.size() - 3) {
-                    v4 = (vertices.get(vertices.size() - 1)).subtract(p0);
-                    n3 = (v4.crossProduct((vertices.get(0)).subtract(p0))).normalize();
-                    if (!checkSign(V.dotProduct(n2), V.dotProduct(n3))) {
-                        return null;
-                    }
-                }
-                if (!checkSign(V.dotProduct(n1), V.dotProduct(n2))) {
+        Point3D p0 = ray.getP0();
+        Vector V;
+        Vector v1, v2, v3, v4, n1, n2, n3;
+        V = (planeGeoIntersections.get(0).point).subtract(p0);
+        //Vi is the edges of the pyramid that the polygon is the bases of and the ray's head is the vertex of
+        //Ni is the normals to each side of the pyramid
+        //checks if each Ni*Vi have the same sign
+        v1 = (vertices.get(0)).subtract(p0);
+        v2 = (vertices.get(1)).subtract(p0);
+        n1 = (v1.crossProduct(v2)).normalize();
+
+        for (int i = 0; i < vertices.size() - 2; i++) {
+            v3 = (vertices.get(i + 2)).subtract(p0);
+            n2 = (v2.crossProduct(v3)).normalize();
+
+            if (i == vertices.size() - 3) {
+                v4 = (vertices.get(vertices.size() - 1)).subtract(p0);
+                n3 = (v4.crossProduct((vertices.get(0)).subtract(p0))).normalize();
+                if (!checkSign(V.dotProduct(n2), V.dotProduct(n3))) {
                     return null;
                 }
-                if (isZero(V.dotProduct(n1)) || isZero(V.dotProduct(n2))) {
-                    return null;
-                }
-                v1 = v2;
-                v2 = v3;
-                n1 = n2;
             }
-            return List.of(new GeoPoint(this, planeGeoIntersections.get(0).point));
+            if (!checkSign(V.dotProduct(n1), V.dotProduct(n2))) {
+                return null;
+            }
+            if (isZero(V.dotProduct(n1)) || isZero(V.dotProduct(n2))) {
+                return null;
+            }
+            v1 = v2;
+            v2 = v3;
+            n1 = n2;
         }
+        return List.of(new GeoPoint(this, planeGeoIntersections.get(0).point));
+
     }
 }

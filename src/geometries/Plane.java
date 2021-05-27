@@ -104,9 +104,8 @@ public class Plane extends Geometry {
         if (t > 0 && alignZero(t - maxDistance) <= 0) {
             Point3D iP = ray.getPoint(t);
             return List.of(new GeoPoint(this, iP));
-        } else {
-            return null;
         }
+        return null;
     }
 
     @Override
