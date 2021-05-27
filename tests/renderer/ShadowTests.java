@@ -94,7 +94,6 @@ public class ShadowTests {
 
     }
 
-
     /**
      * Produce a picture of a sphere and triangle with point light and shade
      */
@@ -120,7 +119,6 @@ public class ShadowTests {
         render.writeToImage();
 
     }
-
 
     /**
      * Produce a picture of a sphere and triangle with point light and shade

@@ -6,6 +6,7 @@ import static primitives.Util.alignZero;
 import elements.LightSource;
 import primitives.*;
 import scene.Scene;
+
 import java.util.List;
 
 /**
@@ -46,7 +47,8 @@ public class BasicRayTracer extends RayTracerBase {
     }
 
     private Color calcGlobalEffects(GeoPoint geoPoint, Vector v, int level, double k) {
-        Color color = Color.BLACK; Vector n = geoPoint.geometry.getNormal(geoPoint.point);
+        Color color = Color.BLACK;
+        Vector n = geoPoint.geometry.getNormal(geoPoint.point);
         Material material = geoPoint.geometry.get_material();
         double kkr = k * material.kR;
         if (kkr > MIN_CALC_COLOR_K)
@@ -64,13 +66,13 @@ public class BasicRayTracer extends RayTracerBase {
     }
 
     private Ray constructReflectedRay(Point3D point, Vector v, Vector n) {
-        Vector r=v.subtract(n.scale(2*v.dotProduct(n)));
+        Vector r = v.subtract(n.scale(2 * v.dotProduct(n)));
         return new Ray(point, r, n);
     }
 
     private Color calcGlobalEffect(Ray ray, int level, double kx, double kkx) {
-        GeoPoint gp = findClosestIntersection (ray);
-        return (gp == null ? _scene.backgroundcolor : calcColor(gp, ray, level-1, kkx)
+        GeoPoint gp = findClosestIntersection(ray);
+        return (gp == null ? _scene.backgroundcolor : calcColor(gp, ray, level - 1, kkx)
         ).scale(kx);
     }
 
@@ -122,12 +124,14 @@ public class BasicRayTracer extends RayTracerBase {
         Ray lightRay = new Ray(geopoint.point, lightDirection, n);
         double lightDistance = light.getDistance(geopoint.point);
         var intersections = _scene.geometries.findGeoIntersections(lightRay);
-        if (intersections == null) return 1.0;
+        if (intersections == null)
+            return 1.0;
         double ktr = 1.0;
         for (GeoPoint gp : intersections) {
-            if (alignZero(gp.point.distance(geopoint.point)-lightDistance) <= 0) {
+            if (alignZero(gp.point.distance(geopoint.point) - lightDistance) <= 0) {
                 ktr *= gp.geometry.get_material().kT;
-                if (ktr < MIN_CALC_COLOR_K) return 0.0;
+                if (ktr < MIN_CALC_COLOR_K)
+                    return 0.0;
             }
         }
         return ktr;

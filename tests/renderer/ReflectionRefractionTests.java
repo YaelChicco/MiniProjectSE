@@ -5,7 +5,6 @@ import geometries.Sphere;
 import geometries.Triangle;
 import org.junit.jupiter.api.Test;
 import primitives.*;
-import renderer.*;
 import scene.Scene;
 
 /**

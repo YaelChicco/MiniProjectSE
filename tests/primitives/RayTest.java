@@ -86,7 +86,7 @@ public class RayTest {
         geoPoints.add(new GeoPoint(triangle,new Point3D(3,0,0)));
         geoPoints.add(new GeoPoint(sphere, new Point3D(-6,0,0)));
         geoPoints.add(new GeoPoint(sphere, new Point3D(-2,0,0)));
-//        geoPoints.add(new GeoPoint(plane, new Point3D(1,0,0)));
+        geoPoints.add(new GeoPoint(plane, new Point3D(1,0,0)));
         assertEquals(new Point3D(3,0,0),intersectionPoint.point,"findClosestGeoPoint() last point-point");
         assertEquals(triangle,intersectionPoint.geometry,"findClosestGeoPoint() last point-geometry");
     }
