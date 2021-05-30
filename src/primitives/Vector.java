@@ -7,6 +7,7 @@ import static primitives.Util.isZero;
  * class for a vector in the scene (3 coordinates start point)
  */
 public class Vector {
+
     /**
      * end point of the vector
      */

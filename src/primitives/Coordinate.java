@@ -32,7 +32,7 @@ public final class Coordinate {
         if (this == obj) return true;
         if (obj == null) return false;
         if (!(obj instanceof Coordinate)) return false;
-        Coordinate other = (Coordinate)obj;
+        Coordinate other = (Coordinate) obj;
         return isZero(coord - other.coord);
     }
 

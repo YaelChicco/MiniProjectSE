@@ -1,7 +1,7 @@
 package primitives;
 
-import elements.LightSource;
 import static geometries.Intersectable.GeoPoint;
+
 import java.util.List;
 
 /**
@@ -16,7 +16,10 @@ public class Ray {
      * direction vector
      */
     Vector dir;
-    private static final double DELTA=0.1;
+    /**
+     * A small unit extra for calculations
+     */
+    private static final double DELTA = 0.1;
 
     /**
      * constructor that normalizes the given vector
@@ -29,10 +32,17 @@ public class Ray {
         this.dir = dir.normalized();
     }
 
+    /**
+     * constructor with moving in the normal direction
+     *
+     * @param point start point of the ray
+     * @param v     ray direction
+     * @param n     the normal
+     */
     public Ray(Point3D point, Vector v, Vector n) {
-        Vector _delta = n.scale(n.dotProduct(v) > 0 ? DELTA : - DELTA);
-        p0=point.add(_delta);
-        dir=v;
+        Vector _delta = n.scale(n.dotProduct(v) > 0 ? DELTA : -DELTA);
+        p0 = point.add(_delta);
+        dir = v;
     }
 
     /**

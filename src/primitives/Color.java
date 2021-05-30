@@ -18,7 +18,7 @@ public class Color {
     private final double g;
     private final double b;
 
-    public static final Color BLACK = new Color(0,0,0);
+    public static final Color BLACK = new Color(0, 0, 0);
 
     /**
      * Constructor to generate a color according to RGB components Each component in

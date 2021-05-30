@@ -24,6 +24,7 @@ public class Geometries implements Intersectable {
 
     /**
      * adds geometries to the intersected geometries list
+     *
      * @param list intersected geometries list
      */
     public void add(Intersectable... list) {

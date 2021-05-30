@@ -14,8 +14,17 @@ import java.util.List;
  */
 public class BasicRayTracer extends RayTracerBase {
 
+    /**
+     * initial value of k
+     */
     private static final double INITIAL_K = 1.0;
+    /**
+     * recursion depth
+     */
     private static final int MAX_CALC_COLOR_LEVEL = 10;
+    /**
+     * minimum value of k in the recursion depth
+     */
     private static final double MIN_CALC_COLOR_K = 0.001;
 
     /**
@@ -35,11 +44,25 @@ public class BasicRayTracer extends RayTracerBase {
         return calcColor(closestPoint, ray);
     }
 
+    /**
+     * calculating the color where the ray intersecting
+     * @param geoPoint first intersection point
+     * @param ray intersected ray
+     * @return color of the point
+     */
     private Color calcColor(GeoPoint geoPoint, Ray ray) {
         return calcColor(geoPoint, ray, MAX_CALC_COLOR_LEVEL, INITIAL_K)
                 .add(_scene.ambientLight.getIntensity());
     }
 
+    /**
+     * calculating the color where the ray intersecting- recursion
+     * @param intersection intersection point
+     * @param ray intersected ray
+     * @param level current recursion level
+     * @param k current attention coefficient of the recursion
+     * @return color of the point
+     */
     private Color calcColor(GeoPoint intersection, Ray ray, int level, double k) {
         Color color = intersection.geometry.getEmission();
         color = color.add(calcLocalEffects(intersection, ray, k));

@@ -61,12 +61,20 @@ public interface Intersectable {
 
     /**
      * finds the intersections geoPoints of the ray with the shape
+     *
      * @param ray intersecting ray
      * @return intersections geoPoints
      */
-    default List<GeoPoint> findGeoIntersections(Ray ray){
-        return findGeoIntersections(ray,Double.POSITIVE_INFINITY);
+    default List<GeoPoint> findGeoIntersections(Ray ray) {
+        return findGeoIntersections(ray, Double.POSITIVE_INFINITY);
     }
 
+    /**
+     * finds the intersections geoPoints of the ray with the shape in a given range
+     *
+     * @param ray         intersecting ray
+     * @param maxDistance the range
+     * @return intersections geoPoints
+     */
     List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance);
 }
