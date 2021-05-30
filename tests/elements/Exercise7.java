@@ -25,10 +25,28 @@ public class Exercise7 {
         scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.gray), 0.15));
 
         scene.geometries.add(
+                //desk
                 new Polygon(new Point3D(-100, -100, 0), new Point3D(-100, 100, 0), new Point3D(100, 100, 0), new Point3D(100, -100, 0))
-                        .setEmission(new Color(java.awt.Color.BLUE)),
+                        .setEmission(new Color(153, 102, 0)),
+                new Triangle(new Point3D(0,0,0),new Point3D(-50,0,-100),new Point3D(50,0,-100)).setEmission(new Color(102, 51, 0)),
+                new Triangle(new Point3D(0,0,0),new Point3D(0,50,-100),new Point3D(0,-50,-100)).setEmission(new Color(102, 51, 0)),
+
+
+                //computer
                 new Polygon(new Point3D(25, -70, 0.25), new Point3D(25, -20, 0.25), new Point3D(50, -20, 0.25), new Point3D(50, -70, 0.25))
-                        .setEmission(new Color(java.awt.Color.red))
+                        .setEmission(new Color(java.awt.Color.lightGray)),
+                new Polygon(new Point3D(25,-70,0.25),new Point3D(25,-70,40),new Point3D(25,-20,40),new Point3D(25,-20,0.25))
+                        .setEmission(new Color(java.awt.Color.blue)),
+                //mouse
+                new Sphere(4,new  Point3D(40,-10,0)).setEmission(new Color(java.awt.Color.black)),
+
+                //window
+                new Polygon(new Point3D(-120,-80,10),new Point3D(-120,-80,60),new Point3D(-120,-10,60),new Point3D(-120,-10,10))
+                        .setEmission(new Color(51, 204, 255)),
+                new Polygon(new Point3D(-120,-80,10),new Point3D(-110,-110,7),new Point3D(-110,-110,63),new Point3D(-120,-80,60))
+                        .setEmission(new Color(102, 51, 0)),
+                new Polygon(new Point3D(-120,-10,10),new Point3D(-110,20,7),new Point3D(-110,20,63),new Point3D(-120,-10,60))
+                        .setEmission(new Color(102, 51, 0))
         );
         scene.lights.add( //
                 new DirectionalLight(new Color(350, 200, 200), new Vector(0, 0, -1)));
