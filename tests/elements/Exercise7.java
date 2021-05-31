@@ -27,10 +27,11 @@ public class Exercise7 {
         scene.geometries.add(
                 //desk
                 new Polygon(new Point3D(-100, -100, 0), new Point3D(-100, 100, 0), new Point3D(100, 100, 0), new Point3D(100, -100, 0))
-                        .setEmission(new Color(153, 102, 0)),
-                new Triangle(new Point3D(0,0,0),new Point3D(-50,0,-100),new Point3D(50,0,-100)).setEmission(new Color(102, 51, 0)),
-                new Triangle(new Point3D(0,0,0),new Point3D(0,50,-100),new Point3D(0,-50,-100)).setEmission(new Color(102, 51, 0)),
-
+                        .setEmission(new Color(153, 102, 0)).setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30)),
+                new Triangle(new Point3D(0,0,0),new Point3D(-50,0,-100),new Point3D(50,0,-100))
+                        .setEmission(new Color(102, 51, 0)).setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30)),
+                new Triangle(new Point3D(0,0,0),new Point3D(0,50,-100),new Point3D(0,-50,-100))
+                        .setEmission(new Color(200, 51, 0)).setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30)),
 
                 //computer
                 new Polygon(new Point3D(25, -70, 0.25), new Point3D(25, -20, 0.25), new Point3D(50, -20, 0.25), new Point3D(50, -70, 0.25))
@@ -49,7 +50,7 @@ public class Exercise7 {
                         .setEmission(new Color(102, 51, 0))
         );
         scene.lights.add( //
-                new DirectionalLight(new Color(350, 200, 200), new Vector(0, 0, -1)));
+                new DirectionalLight(new Color(350, 200, 200), new Vector(0, 3, -1)));
 
         Render render = new Render() //
                 .setImageWriter(new ImageWriter("exercise7", 600, 600)) //
