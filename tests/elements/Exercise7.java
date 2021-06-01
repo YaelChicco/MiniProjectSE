@@ -28,10 +28,10 @@ public class Exercise7 {
                 //desk
                 new Polygon(new Point3D(-100, -100, 0), new Point3D(-100, 100, 0), new Point3D(100, 100, 0), new Point3D(100, -100, 0))
                         .setEmission(new Color(153, 102, 0)).setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30)),
-                new Triangle(new Point3D(0,0,0),new Point3D(-50,0,-100),new Point3D(50,0,-100))
+                new Triangle(new Point3D(0,0,0),new Point3D(-50,-50,-100),new Point3D(50,50,-100))
                         .setEmission(new Color(102, 51, 0)).setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30)),
-                new Triangle(new Point3D(0,0,0),new Point3D(0,50,-100),new Point3D(0,-50,-100))
-                        .setEmission(new Color(200, 51, 0)).setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30)),
+                new Triangle(new Point3D(0,0,0),new Point3D(-50,50,-100),new Point3D(50,-50,-100))
+                        .setEmission(new Color(102, 51, 0)).setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30)),
 
                 //computer
                 new Polygon(new Point3D(25, -70, 0.25), new Point3D(25, -20, 0.25), new Point3D(50, -20, 0.25), new Point3D(50, -70, 0.25))
@@ -43,14 +43,26 @@ public class Exercise7 {
 
                 //window
                 new Polygon(new Point3D(-120,-80,10),new Point3D(-120,-80,60),new Point3D(-120,-10,60),new Point3D(-120,-10,10))
-                        .setEmission(new Color(51, 204, 255)),
+                        .setEmission(new Color(51, 204, 255)).setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30).setkT(0.8)),
                 new Polygon(new Point3D(-120,-80,10),new Point3D(-110,-110,7),new Point3D(-110,-110,63),new Point3D(-120,-80,60))
                         .setEmission(new Color(102, 51, 0)),
                 new Polygon(new Point3D(-120,-10,10),new Point3D(-110,20,7),new Point3D(-110,20,63),new Point3D(-120,-10,60))
-                        .setEmission(new Color(102, 51, 0))
+                        .setEmission(new Color(102, 51, 0)),
+
+
+                //wall
+                new Polygon(new Point3D(-120,-120,10),new Point3D(-120,-120,-100),new Point3D(-120,120,-100),new Point3D(-120,120,10))
+                .setEmission(new Color(255, 255, 153)),
+                 new Polygon(new Point3D(-120,-120,10),new Point3D(-120,-80,10),new Point3D(-120,-80,80),new Point3D(-120,-120,80))
+                .setEmission(new Color(255, 255, 153)),
+                new Polygon(new Point3D(-120,-10,10),new Point3D(-120,120,10),new Point3D(-120,120,80),new Point3D(-120,-10,80))
+                        .setEmission(new Color(255, 255, 153)),
+                 new Polygon(new Point3D(-120,-80,60),new Point3D(-120,-80,80),new Point3D(-120,120,80),new Point3D(-120,120,60))
+                          .setEmission(new Color(255, 255, 153))
+
         );
         scene.lights.add( //
-                new DirectionalLight(new Color(350, 200, 200), new Vector(0, 3, -1)));
+                new DirectionalLight(new Color(350, 200, 200), new Vector(-1, 2, -10)));
 
         Render render = new Render() //
                 .setImageWriter(new ImageWriter("exercise7", 600, 600)) //
