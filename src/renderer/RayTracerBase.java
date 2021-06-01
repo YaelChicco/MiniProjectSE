@@ -16,6 +16,7 @@ public abstract class RayTracerBase {
 
     /**
      * constructor with parameter
+     *
      * @param scene shapes scene
      */
     public RayTracerBase(Scene scene) {
@@ -24,6 +25,7 @@ public abstract class RayTracerBase {
 
     /**
      * finds the color of the shape that intersects the ray first
+     *
      * @param ray camera ray
      * @return shape color
      */

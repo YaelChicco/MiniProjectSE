@@ -2,11 +2,8 @@ package renderer;
 
 import elements.Camera;
 import primitives.Color;
-import primitives.Point3D;
 import primitives.Ray;
-import scene.Scene;
 
-import java.util.List;
 import java.util.MissingResourceException;
 
 /**
@@ -15,7 +12,7 @@ import java.util.MissingResourceException;
 public class Render {
 
     /**
-     *creates the image
+     * creates the image
      */
     private ImageWriter _imageWriter;
     /**
@@ -29,6 +26,7 @@ public class Render {
 
     /**
      * setter of the image writer (builder)
+     *
      * @param imageWriter imageWriter
      * @return render
      */
@@ -39,6 +37,7 @@ public class Render {
 
     /**
      * setter of camera (builder)
+     *
      * @param camera camera details
      * @return render
      */
@@ -49,6 +48,7 @@ public class Render {
 
     /**
      * setter of the ray tracer (builder)
+     *
      * @param basicRayTracer the ray tracer
      * @return rebder
      */
@@ -62,11 +62,11 @@ public class Render {
      */
     public void renderImage() {
         //one of the parameters is null
-        if(_imageWriter==null)
+        if (_imageWriter == null)
             throw new MissingResourceException("_imageWriter is null", "Render", "ImageWriter");
-        if(_camera==null)
+        if (_camera == null)
             throw new MissingResourceException("_camera is null", "Render", "Camera");
-        if(_rayTracer==null)
+        if (_rayTracer == null)
             throw new MissingResourceException("_rayTracer is null", "Render", "RayTracerBase");
 
         int nX = _imageWriter.getNx();
@@ -82,11 +82,12 @@ public class Render {
 
     /**
      * creates the grid of the image
-     * @param interval amount of pixels between two lines
+     *
+     * @param interval      amount of pixels between two lines
      * @param intervalColor grid color
      */
     public void printGrid(int interval, Color intervalColor) {
-        if(_imageWriter==null)
+        if (_imageWriter == null)
             throw new MissingResourceException("_imageWriter is null", "Render", "ImageWriter");
 
         int nX = _imageWriter.getNx();
@@ -104,7 +105,7 @@ public class Render {
      * saves the image
      */
     public void writeToImage() {
-        if(_imageWriter==null)
+        if (_imageWriter == null)
             throw new MissingResourceException("_imageWriter is null", "Render", "ImageWriter");
         _imageWriter.writeToImage();
     }
