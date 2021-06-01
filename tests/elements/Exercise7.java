@@ -28,6 +28,8 @@ public class Exercise7 {
                 //desk
                 new Polygon(new Point3D(-100, -100, 0), new Point3D(-100, 100, 0), new Point3D(100, 100, 0), new Point3D(100, -100, 0))
                         .setEmission(new Color(153, 102, 0)).setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30)),
+                new Polygon(new Point3D(100, -100, -10), new Point3D(100, -100, 0), new Point3D(100, 100, 0), new Point3D(100, 100, -10))
+                        .setEmission(new Color(153, 76, 0)).setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30)),
                 new Triangle(new Point3D(0, 0, 0), new Point3D(-50, -50, -100), new Point3D(50, 50, -100))
                         .setEmission(new Color(102, 51, 0)).setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30)),
                 new Triangle(new Point3D(0, 0, 0), new Point3D(-50, 50, -100), new Point3D(50, -50, -100))
