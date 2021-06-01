@@ -20,6 +20,9 @@ public class Exercise7 {
     private Camera camera = new Camera(new Point3D(1000, 0, 500), new Vector(-2, 0, -1), new Vector(-1, 0, 2)) //
             .setViewPlaneSize(200, 200).setDistance(1000);
 
+    /**
+     * picture for exercise 7
+     */
     @Test
     public void myPicture() {
         scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.gray), 0.15));
