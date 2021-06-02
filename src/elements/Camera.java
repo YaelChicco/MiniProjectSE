@@ -4,6 +4,8 @@ import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
 
+import java.util.List;
+
 import static primitives.Util.isZero;
 
 /**
@@ -41,10 +43,26 @@ public class Camera {
      */
     private double _hight;
 
+    private int _apertureSize;
+
+    public void setApertureSize(int apertureSize) {
+        _apertureSize = apertureSize;
+    }
+
+    public void setFocalDist(double focalDist) {
+        _focalDist = focalDist;
+    }
+
+
     /**
      * distance between the view plane and the Camera
      */
     private double _distance;
+
+    /**
+     * distance between the focal plane and the Camera
+     */
+    private double _focalDist;
 
     /**
      * constructor that gets the camera location (point and vectors)
@@ -154,6 +172,11 @@ public class Camera {
         return this;
     }
 
+    public Camera setfocalDistance(double distance) {
+        _focalDist = distance;
+        return this;
+    }
+
     /**
      * creats a ray from the camera through a specific pixel center
      *
@@ -179,4 +202,9 @@ public class Camera {
         }
         return new Ray(_p0, Pij.subtract(_p0));
     }
-}
+
+    public List<Ray> constructRaysThroughPixel(int nX, int nY, int j, int i) {
+
+    }
+
+    }

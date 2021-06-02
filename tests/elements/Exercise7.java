@@ -53,9 +53,9 @@ public class Exercise7 {
                 new Polygon(new Point3D(-120, -80, 10), new Point3D(-120, -80, 60), new Point3D(-120, -10, 60), new Point3D(-120, -10, 10))
                         .setEmission(new Color(153, 255, 255)).setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(20).setkT(0.7)),
                 new Polygon(new Point3D(-120, -80, 10), new Point3D(-110, -110, 7), new Point3D(-110, -110, 63), new Point3D(-120, -80, 60))
-                        .setEmission(new Color(102, 51, 0)),
+                        .setEmission(new Color(102, 51, 0)).setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30)),
                 new Polygon(new Point3D(-120, -10, 10), new Point3D(-110, 20, 7), new Point3D(-110, 20, 63), new Point3D(-120, -10, 60))
-                        .setEmission(new Color(102, 51, 0)),
+                        .setEmission(new Color(102, 51, 0)).setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(30)),
 
                 //window wall
                 new Polygon(new Point3D(-120, -120, 10), new Point3D(-120, -120, -100), new Point3D(-120, 120, -100), new Point3D(-120, 120, 10))
