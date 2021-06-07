@@ -4,6 +4,7 @@ import elements.Camera;
 import primitives.Color;
 import primitives.Ray;
 
+import java.util.List;
 import java.util.MissingResourceException;
 
 /**
@@ -76,6 +77,31 @@ public class Render {
                 Ray ray = _camera.constructRayThroughPixel(nX, nY, j, i);
                 Color color = _rayTracer.traceRay(ray);
                 _imageWriter.writePixel(j, i, color);
+            }
+        }
+    }
+
+    /**
+     * creates a picture with focus
+     */
+    public void renderFocusImage() {
+        //one of the parameters is null
+        if (_imageWriter == null)
+            throw new MissingResourceException("_imageWriter is null", "Render", "ImageWriter");
+        if (_camera == null)
+            throw new MissingResourceException("_camera is null", "Render", "Camera");
+        if (_rayTracer == null)
+            throw new MissingResourceException("_rayTracer is null", "Render", "RayTracerBase");
+
+        int nX = _imageWriter.getNx();
+        int nY = _imageWriter.getNy();
+        for (int i = 0; i < nY; i++) {
+            for (int j = 0; j < nX; j++) {
+                List<Ray> rays = _camera.constructRaysThroughPixel(nX, nY, j, i);
+                Color colorAverage = Color.BLACK;
+                for (Ray ray : rays)
+                    colorAverage = colorAverage.add(_rayTracer.traceRay(ray));
+                _imageWriter.writePixel(j, i, colorAverage.reduce(rays.size()));
             }
         }
     }

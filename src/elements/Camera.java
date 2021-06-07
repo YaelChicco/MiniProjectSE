@@ -4,6 +4,8 @@ import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import static primitives.Util.isZero;
@@ -43,16 +45,20 @@ public class Camera {
      */
     private double _hight;
 
-    private int _apertureSize;
+    /**
+     * size of the aperture
+     */
+    private double _apertureSize;
 
-    public void setApertureSize(int apertureSize) {
-        _apertureSize = apertureSize;
-    }
+    /**
+     * all the start points of the rays from the aperture
+     */
+    private List<Point3D> aperturePoints;
 
-    public void setFocalDist(double focalDist) {
-        _focalDist = focalDist;
-    }
-
+    /**
+     * amount of pixels in a row/column in the aperture
+     */
+    private int _apertureN;
 
     /**
      * distance between the view plane and the Camera
@@ -83,69 +89,6 @@ public class Camera {
         _vRight = _vTo.crossProduct(_vUp);
     }
 
-    /**
-     * getter of p0
-     *
-     * @return p0
-     */
-    public Point3D getP0() {
-        return _p0;
-    }
-
-    /**
-     * getter of vTo
-     *
-     * @return vTo
-     */
-    public Vector getvTo() {
-        return _vTo;
-    }
-
-    /**
-     * getter of vUp
-     *
-     * @return vUp
-     */
-    public Vector getvUp() {
-        return _vUp;
-    }
-
-    /**
-     * getter of vRight
-     *
-     * @return vRight
-     */
-    public Vector getvRight() {
-        return _vRight;
-    }
-
-    /**
-     * getter of width
-     *
-     * @return width
-     */
-    public double getWidth() {
-        return _width;
-    }
-
-    /**
-     * getter of hight
-     *
-     * @return hight
-     */
-    public double getHight() {
-        return _hight;
-    }
-
-    /**
-     * getter of distance
-     *
-     * @return distance
-     */
-    public double getDistance() {
-        return _distance;
-    }
-
     //setters using method chaining
 
     /**
@@ -172,8 +115,21 @@ public class Camera {
         return this;
     }
 
-    public Camera setfocalDistance(double distance) {
+    /**
+     * setter of the distance between the aperture and the focal plane
+     *
+     * @param distance _focalDist
+     * @return the object itself
+     */
+    public Camera setFocalDistance(double distance) {
         _focalDist = distance;
+        return this;
+    }
+
+    public Camera setAperture(double apertureSize, int apertureN) {
+        _apertureSize = apertureSize;
+        _apertureN = apertureN;
+        aperturePointsInit();
         return this;
     }
 
@@ -181,7 +137,7 @@ public class Camera {
      * creats a ray from the camera through a specific pixel center
      *
      * @param nX - number of pixels in view plane width
-     * @param nY - number of pixels in view plane hight
+     * @param nY - number of pixels in view plane height
      * @param j  - distance of the intercept from the midpoint on the y-axis
      * @param i  - distance of the intercept from the midpoint on the X-axis
      * @return ray from the camera through a specific pixel center
@@ -203,8 +159,73 @@ public class Camera {
         return new Ray(_p0, Pij.subtract(_p0));
     }
 
+    /**
+     * creates rays from the aperture for a specific pixel center
+     *
+     * @param nX number of pixels in view plane width
+     * @param nY number of pixels in view plane height
+     * @param j  distance of the intercept from the midpoint on the y-axis
+     * @param i  distance of the intercept from the midpoint on the X-axis
+     * @return rays from the aperture for a specific pixel center
+     */
     public List<Ray> constructRaysThroughPixel(int nX, int nY, int j, int i) {
+        Point3D Pc = _p0.add(_vTo.scale(_distance));
+        double Ry = _hight / nY;
+        double Rx = _width / nX;
 
+        Point3D Pij = Pc;
+        double Xj = (j - (nX - 1) / 2d) * Rx;
+        double Yi = (i - (nY - 1) / 2d) * Ry;
+        if (!isZero(Xj)) {
+            Pij = Pij.add(_vRight.scale(Xj));
+        }
+        if (!isZero(Yi)) {
+            Pij = Pij.add(_vUp.scale(-Yi));
+        }
+        //ray from the camera to the pixel in the viewPlane
+        Ray mainRay = new Ray(_p0, Pij.subtract(_p0));
+
+        //calculates the focus point on ray continuation
+        double distCameraVP = _p0.distance(Pij);
+        double distCameraFP = distCameraVP * _focalDist / _distance;
+        Point3D focalPoint = mainRay.getPoint(distCameraFP);
+
+        //calculates the rays from the aperture
+        List<Ray> apertureRays = new LinkedList<>();
+        for (Point3D p : aperturePoints)
+            apertureRays.add(new Ray(p, p.subtract(focalPoint)));
+        return apertureRays;
     }
 
+    /**
+     * finds all the points on the aperture grid
+     *
+     * @return all the points on the aperture grid
+     */
+    public List<Point3D> aperturePointsInit() {
+        //vectors in size of one unit of the aperture grid
+        Vector newVUp = _vUp.scale(_apertureSize / _apertureN);
+        Vector newVRight = _vRight.scale(_apertureSize / _apertureN);
+
+        //the upper right point on the aperture grid
+        Point3D upRight = _p0.add(newVUp.scale(_apertureN / 2 - 1 / 2)).add(newVRight.scale(_apertureN / 2 - 1 / 2));
+
+        List<Point3D> aperturePoints = new ArrayList<>(_apertureN * _apertureN);
+
+        Vector startOf = newVUp.scale(_apertureN);
+        newVUp = newVUp.scale(-1);
+        newVRight = newVRight.scale(-1);
+
+        //finds all the points by the newVUp and newVRight vectors
+        for (int i = 0; i < _apertureN; i++) {
+            for (int j = 0; j < _apertureN; j++) {
+                if (!upRight.equals(_p0))
+                    aperturePoints.add(upRight);
+                upRight = upRight.add(newVUp);
+            }
+            upRight = upRight.add(newVRight);
+            upRight = upRight.add(startOf);
+        }
+        return aperturePoints;
     }
+}

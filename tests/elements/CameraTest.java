@@ -8,6 +8,9 @@ import org.junit.jupiter.api.Test;
 import elements.Camera;
 import primitives.*;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * Testing Camera Class
  *
@@ -55,4 +58,25 @@ public class CameraTest {
 
     }
 
+    @Test
+    public void testAperturePointsInit() {
+        Camera camera = new Camera(new Point3D(0, 0, 0), new Vector(0, 0, -1), new Vector(0, 1, 0))
+        .setAperture(3,3);
+        List<Point3D> pointsExpected=List.of(
+                new Point3D(1,1,0),
+                new Point3D(1,0,0),
+                new Point3D(1,-1,0),
+                new Point3D(0,1,0),
+                new Point3D(0,-1,0),
+                new Point3D(-1,1,0),
+                new Point3D(-1,0,0),
+                new Point3D(-1,-1,0)
+        );
+
+        List<Point3D> pointsActual=camera.aperturePointsInit();
+        int size = pointsActual.size();
+        assertEquals(pointsExpected.size(), size, "aperturePointsInit()- wrong number of points");
+        for(int i=0; i<size;i++)
+            assertEquals(pointsExpected.get(i), pointsActual.get(i), "aperturePointsInit()- wrong point");
+    }
 }
