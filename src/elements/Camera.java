@@ -210,7 +210,7 @@ public class Camera {
         //the upper right point on the aperture grid
         Point3D upRight = _p0.add(newVUp.scale(_apertureN / 2 - 1 / 2)).add(newVRight.scale(_apertureN / 2 - 1 / 2));
 
-        List<Point3D> aperturePoints = new ArrayList<>(_apertureN * _apertureN);
+        aperturePoints = new ArrayList<>(_apertureN * _apertureN);
 
         Vector startOf = newVUp.scale(_apertureN);
         newVUp = newVUp.scale(-1);

@@ -73,6 +73,31 @@ public class RenderTest {
         render.printGrid(100, new Color(java.awt.Color.WHITE));
         render.writeToImage();
     }
+    @Test
+    public void focusRenderTest() {
+        Camera camera1 = new Camera(new Point3D(0, 0, 1000), new Vector(0, 0, -1), new Vector(0, 1, 0)) //
+                //Camera camera1 = new Camera(new Point3D(1000, 0, 500), new Vector(-2, 0, -1), new Vector(-1, 0, 2)) //
+                .setViewPlaneSize(200, 200).setDistance(1000).setAperture(3,3).setFocalDistance(50);
+        Scene scene = new Scene("Test scene")//
+                .setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.2)); //
+
+        scene.geometries.add(new Sphere(10, new Point3D(20, -20, -50)) //
+                        .setEmission(new Color(java.awt.Color.CYAN)), //
+                             new Sphere(10,new Point3D(0,0,0))
+                        .setEmission(new Color(218,165,32)).setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(20).setkT(0.6)),
+                             new Sphere(10,new Point3D(-20,20,50))
+                        .setEmission(new Color(218,165,32)).setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(20).setkT(0.6)));
+
+
+        ImageWriter imageWriter = new ImageWriter("focus render test", 1000, 1000);
+        Render render = new Render() //
+                .setImageWriter(imageWriter) //
+                .setCamera(camera1) //
+                .setRayTracer(new BasicRayTracer(scene));
+
+        render.renderFocusImage();
+        render.writeToImage();
+    }
 
     /**
      * Test for XML based scene - for bonus
