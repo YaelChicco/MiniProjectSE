@@ -193,7 +193,7 @@ public class Camera {
         //calculates the rays from the aperture
         List<Ray> apertureRays = new LinkedList<>();
         for (Point3D p : aperturePoints)
-            apertureRays.add(new Ray(p, p.subtract(focalPoint)));
+            apertureRays.add(new Ray(p, focalPoint.subtract(p)));
         return apertureRays;
     }
 
