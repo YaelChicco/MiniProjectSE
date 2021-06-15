@@ -98,6 +98,7 @@ public class RenderTest {
 
         render.renderFocusImage();
         render.writeToImage();
+
     }
 
     /**
