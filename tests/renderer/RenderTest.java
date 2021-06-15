@@ -83,9 +83,9 @@ public class RenderTest {
 
         scene.geometries.add(new Sphere(50, new Point3D(70, -70, -300)) //
                         .setEmission(new Color(java.awt.Color.CYAN)).setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(20)), //
-                             new Sphere(50,new Point3D(0,0,-50))
+                new Sphere(50,new Point3D(0,0,-50))
                         .setEmission(new Color(218,165,32)).setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(20)),
-                             new Sphere(50,new Point3D(-70,70,-550))
+                new Sphere(50,new Point3D(-70,70,-550))
                         .setEmission(new Color(255,0,127)).setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(20)));
 
         scene.lights.add(new DirectionalLight(new Color(500,250,250), new Vector(-1,1,-1)));
