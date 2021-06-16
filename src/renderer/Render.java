@@ -2,6 +2,7 @@ package renderer;
 
 import elements.Camera;
 import primitives.Color;
+import primitives.Point3D;
 import primitives.Ray;
 
 import java.util.List;
@@ -35,6 +36,7 @@ public class Render {
      * ray tracer
      */
     private RayTracerBase _rayTracer;
+    private boolean isMultyRay=false;
 
     /**
      * Set multi-threading <br>
@@ -43,14 +45,14 @@ public class Render {
      * @param threads number of threads
      * @return the Render object itself
      */
-    public Render setMultithreading(int threads){
-        if(threads< 0)
+    public Render setMultithreading(int threads) {
+        if (threads < 0)
             throw new IllegalArgumentException("Multithreading parameter must be 0 or higher");
-        if(threads!=0)
-            this.threadsCount=threads;
-        else{
-            int cores=Runtime.getRuntime().availableProcessors()-SPARE_THREADS;
-            this.threadsCount=cores<=2?1:cores;
+        if (threads != 0)
+            this.threadsCount = threads;
+        else {
+            int cores = Runtime.getRuntime().availableProcessors() - SPARE_THREADS;
+            this.threadsCount = cores <= 2 ? 1 : cores;
         }
         return this;
     }
@@ -60,8 +62,13 @@ public class Render {
      *
      * @return the Render object itself
      */
-    public Render setDebugPrint(){
-        print=true;
+    public Render setDebugPrint() {
+        print = true;
+        return this;
+    }
+
+    public Render setMultyRay() {
+        isMultyRay = true;
         return this;
     }
 
@@ -98,7 +105,6 @@ public class Render {
      * thread.
      *
      * @author Dan
-     *
      */
 
     private class Pixel {
@@ -141,8 +147,8 @@ public class Render {
          * @param target target secondary Pixel object to copy the row/column of the
          *               next pixel
          * @return the progress percentage for follow up: if it is 0 - nothing to print,
-         *         if it is -1 - the task is finished, any other value - the progress
-         *         percentage (only when it changes)
+         * if it is -1 - the task is finished, any other value - the progress
+         * percentage (only when it changes)
          */
         private synchronized int nextP(Pixel target) {
             ++col;
@@ -210,7 +216,6 @@ public class Render {
                     } catch (Exception e) {
                     }
         }
-
     }
 
     /**
@@ -258,19 +263,33 @@ public class Render {
 
     /**
      * Cast ray from camera in order to color a pixel
-     * @param nX resolution on X axis (number of pixels in row)
-     * @param nY resolution on Y axis (number of pixels in column)
+     *
+     * @param nX  resolution on X axis (number of pixels in row)
+     * @param nY  resolution on Y axis (number of pixels in column)
      * @param col pixel's column number (pixel index in row)
      * @param row pixel's row number (pixel index in column)
      */
     private void castRay(int nX, int nY, int col, int row) {
+        Ray ray = _camera.constructRayThroughPixel(nX, nY, col, row);
+        Color colorAverage = _rayTracer.traceRay(ray);
+        _imageWriter.writePixel(col, row, colorAverage);
+    }
+
+    /**
+     * Cast ray from camera in order to color a pixel
+     *
+     * @param nX  resolution on X axis (number of pixels in row)
+     * @param nY  resolution on Y axis (number of pixels in column)
+     * @param col pixel's column number (pixel index in row)
+     * @param row pixel's row number (pixel index in column)
+     */
+    private void castRays(int nX, int nY, int col, int row) {
         List<Ray> rays = _camera.constructRaysThroughPixel(nX, nY, col, row);
-        Color colorAverage=Color.BLACK;
+        Color colorAverage = Color.BLACK;
         for (Ray ray : rays)
             colorAverage = colorAverage.add(_rayTracer.traceRay(ray));
         _imageWriter.writePixel(col, row, colorAverage);
     }
-
 
     /**
      * This function renders image's pixel color map from the scene included with
@@ -286,7 +305,10 @@ public class Render {
             threads[i] = new Thread(() -> {
                 Pixel pixel = new Pixel();
                 while (thePixel.nextPixel(pixel))
-                    castRay(nX, nY, pixel.col, pixel.row);
+                    if(isMultyRay)
+                        castRays(nX, nY, pixel.col, pixel.row);
+                    else
+                        castRay(nX, nY, pixel.col, pixel.row);
             });
         }
         // Start threads
@@ -324,7 +346,10 @@ public class Render {
         if (threadsCount == 0)
             for (int i = 0; i < nY; ++i)
                 for (int j = 0; j < nX; ++j)
-                    castRay(nX, nY, j, i);
+                    if(isMultyRay)
+                        castRays(nX, nY, j, i);
+                    else
+                        castRay(nX, nY, j, i);
         else
             renderImageThreaded();
     }
@@ -348,6 +373,42 @@ public class Render {
                 if (j % step == 0 || i % step == 0)
                     _imageWriter.writePixel(j, i, color);
     }
+
+    /**
+     * Cast ray from camera in order to color a pixel
+     *
+     * @param nX  resolution on X axis (number of pixels in row)
+     * @param nY  resolution on Y axis (number of pixels in column)
+     * @param col pixel's column number (pixel index in row)
+     * @param row pixel's row number (pixel index in column)
+     */
+//    private void castRay2(int nX, int nY, int col, int row) {
+//
+//        List<Ray> rays = _camera.constructRaysThroughPixel2(nX, nY, col, row,0);
+//        Color colorAverage = Color.BLACK;
+//
+//
+//        if(!flag){
+//            cas
+//
+//        }
+//        colorAverage = colorAverage.add(_rayTracer.traceRay(ray));
+//        _imageWriter.writePixel(col, row, colorAverage);
+//    }
+
+//    Color castRay2Inner(int nX, int nY, int col, int row, double size, Point3D center, int n) {
+//        List<Ray> rays = _camera.constructRaysThroughPixel2(nX, nY, col, row, size, center, n);
+//        boolean flag=true;
+//        Color colorRay=_rayTracer.traceRay(rays.get(0));
+//
+//        for (Ray ray : rays)
+//            if (_rayTracer.traceRay(ray) != colorRay){
+//                flag = false;
+//                break;
+//            }
+//        if(!flag)
+//            castRay2Inner(nX, nY, col, row, size/2, center, n/2);
+//    }
 }
 
 
