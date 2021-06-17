@@ -284,6 +284,8 @@ public class Render {
      * @param row pixel's row number (pixel index in column)
      */
     private void castRays(int nX, int nY, int col, int row) {
+        Point3D center=_camera.getP0();
+        castRay2Inner(nX, nY, col, row,center,1);
         List<Ray> rays = _camera.constructRaysThroughPixel(nX, nY, col, row);
         Color colorAverage = Color.BLACK;
         for (Ray ray : rays)
@@ -396,19 +398,23 @@ public class Render {
 //        _imageWriter.writePixel(col, row, colorAverage);
 //    }
 
-//    Color castRay2Inner(int nX, int nY, int col, int row, double size, Point3D center, int n) {
-//        List<Ray> rays = _camera.constructRaysThroughPixel2(nX, nY, col, row, size, center, n);
-//        boolean flag=true;
-//        Color colorRay=_rayTracer.traceRay(rays.get(0));
-//
-//        for (Ray ray : rays)
-//            if (_rayTracer.traceRay(ray) != colorRay){
-//                flag = false;
-//                break;
-//            }
-//        if(!flag)
-//            castRay2Inner(nX, nY, col, row, size/2, center, n/2);
-//    }
+    Color castRay2Inner(int nX, int nY, int col, int row, Point3D center, int index) {
+        List<Ray> rays = _camera.constructRaysThroughPixel2(nX, nY, col, row, center, index);
+        boolean flag=true;
+        Color colorRay=_rayTracer.traceRay(rays.get(0));
+
+        for (int i=0; i<4;i++)
+            if (_rayTracer.traceRay(rays.get(i)) != colorRay){
+                switch (i){
+                    case 0:
+                }
+                castRay2Inner(nX, nY, col, row, center, index);
+                break;
+            }
+        if(!flag)
+            castRay2Inner(nX, nY, col, row, center, index++);
+
+    }
 }
 
 
