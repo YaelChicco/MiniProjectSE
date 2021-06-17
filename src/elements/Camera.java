@@ -233,7 +233,7 @@ public class Camera {
         return aperturePoints;
     }
 
-        /**
+    /**
          * creates rays from the aperture for a specific pixel center
          *
          * @param nX number of pixels in view plane width
@@ -242,10 +242,9 @@ public class Camera {
          * @param i  distance of the intercept from the midpoint on the X-axis
          * @return rays from the aperture for a specific pixel center
          */
-
-    public List<Ray> constructRaysThroughPixel2(int nX, int nY, int j, int i, Point3D center,int index) {
-        double size= _apertureSize/index;
-        int n= (int) (_apertureSize/index);
+    public List<Ray> constructRaysThroughPixel2(int nX, int nY, int j, int i, int index, int iter) {
+        double size= _apertureSize/iter;
+        int n= (int) (_apertureSize/iter);
 
 
         n= (int) Math.pow(2,n);
@@ -272,13 +271,16 @@ public class Camera {
 
         //calculates the rays from the aperture
         List<Ray> apertureRays = new LinkedList<>();
-        List<Point3D> corners=cornerPoints(size,center,n);
+        List<Point3D> corners=cornerPoints(size,calcCenter(index,iter),n);
         for (Point3D p : corners)
             apertureRays.add(new Ray(p, focalPoint.subtract(p)));
         return apertureRays;
     }
 
     public Point3D calcCenter(int index, int iter){
+        if(index==0)
+            return _p0;
+
         //vectors in size of one unit of the aperture grid
         Vector newVUp = _vUp.scale(_apertureSize / _apertureN);
         Vector newVRight = _vRight.scale(_apertureSize / _apertureN);
@@ -305,7 +307,33 @@ public class Camera {
         Point3D downRight = center.add(newVUp.scale(-n / 2 + 1 / 2)).add(newVRight.scale(n / 2 - 1 / 2));
         Point3D downLeft = center.add(newVUp.scale(-n / 2 + 1 / 2)).add(newVRight.scale(-n / 2 + 1 / 2));
         Point3D upLeft = center.add(newVUp.scale(n / 2 - 1 / 2)).add(newVRight.scale(-n / 2 + 1 / 2));
-
         return List.of(upRight,downRight, downLeft, upLeft);
+    }
+
+    public List<Point3D> aperturePointsInit2() {
+        //vectors in size of one unit of the aperture grid
+        Vector newVUp = _vUp.scale(_apertureSize / _apertureN);
+        Vector newVRight = _vRight.scale(_apertureSize / _apertureN);
+
+        //the upper right point on the aperture grid
+        Point3D upRight = _p0.add(newVUp.scale(_apertureN / 2 - 1 / 2)).add(newVRight.scale(_apertureN / 2 - 1 / 2));
+
+        aperturePoints = new ArrayList<>(_apertureN * _apertureN);
+
+        Vector startOf = newVUp.scale(_apertureN);
+        newVUp = newVUp.scale(-1);
+        newVRight = newVRight.scale(-1);
+
+        //finds all the points by the newVUp and newVRight vectors
+        for (int i = 0; i < _apertureN; i++) {
+            for (int j = 0; j < _apertureN; j++) {
+                if (!upRight.equals(_p0))
+                    aperturePoints.add(upRight);
+                upRight = upRight.add(newVUp);
+            }
+            upRight = upRight.add(newVRight);
+            upRight = upRight.add(startOf);
+        }
+        return aperturePoints;
     }
 }
