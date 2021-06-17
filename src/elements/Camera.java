@@ -133,6 +133,10 @@ public class Camera {
         return this;
     }
 
+    public int getApertureN() {
+        return _apertureN;
+    }
+
     public Point3D getP0() {
         return _p0;
     }
@@ -242,10 +246,9 @@ public class Camera {
          * @param i  distance of the intercept from the midpoint on the X-axis
          * @return rays from the aperture for a specific pixel center
          */
-    public List<Ray> constructRaysThroughPixel2(int nX, int nY, int j, int i, int index, int iter) {
+    public List<Ray> constructRaysThroughPixel2(int nX, int nY, int j, int i, int index, int iter, Point3D previousCenter) {
         double size= _apertureSize/iter;
         int n= (int) (_apertureSize/iter);
-
 
         n= (int) Math.pow(2,n);
 
@@ -271,15 +274,15 @@ public class Camera {
 
         //calculates the rays from the aperture
         List<Ray> apertureRays = new LinkedList<>();
-        List<Point3D> corners=cornerPoints(size,calcCenter(index,iter),n);
+        List<Point3D> corners=cornerPoints(size,calcCenter(index,iter,previousCenter),n);
         for (Point3D p : corners)
             apertureRays.add(new Ray(p, focalPoint.subtract(p)));
         return apertureRays;
     }
 
-    public Point3D calcCenter(int index, int iter){
+    public Point3D calcCenter(int index, int iter, Point3D perviousCenter){
         if(index==0)
-            return _p0;
+            return perviousCenter;
 
         //vectors in size of one unit of the aperture grid
         Vector newVUp = _vUp.scale(_apertureSize / _apertureN);
@@ -293,7 +296,7 @@ public class Camera {
         if (index==1||index==3)
             newVRight=newVRight.scale(-1);
 
-        return _p0.add(newVUp.scale(n / 2 )).add(newVRight.scale(n / 2 ));
+        return perviousCenter.add(newVUp.scale(n / 2 )).add(newVRight.scale(n / 2 ));
     }
 
     public List<Point3D> cornerPoints(double size, Point3D center, int n) {
