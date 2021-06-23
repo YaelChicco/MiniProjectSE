@@ -385,29 +385,28 @@ public class Render {
      * @param row pixel's row number (pixel index in column)
      */
     private void castRays2(int nX, int nY, int col, int row) {
-        Color color = castRay2Inner(nX, nY, col, row, 0, 1,_camera.getP0());
+        Color color = castRay2Inner(nX, nY, col, row);
         _imageWriter.writePixel(col, row, color);
     }
 
-    Color castRay2Inner(int nX, int nY, int col, int row, int index, int iter, Point3D previousCenter) {
-        List<Ray> rays = _camera.constructRaysThroughPixel2(nX, nY, col, row, index, iter, previousCenter);
+    Color castRay2Inner(int nX, int nY, int col, int row, List<int>()) {
+        List<Ray> rays = _camera.constructRaysThroughPixel2(nX, nY, col, row);
         Color colorRay = _rayTracer.traceRay(rays.get(0));
         Color finalColor = Color.BLACK;
-        previousCenter=_camera.calcCenter(index,iter,previousCenter);
+       // previousCenter=_camera.calcCenter(index,iter,previousCenter);
 
-        if (iter > _camera.getApertureN() / 2) {
+        /*if (iter > _camera.getApertureN() / 2) {
             for (Ray r : rays)
                 finalColor = finalColor.add(_rayTracer.traceRay(r));
             return finalColor.reduce(4);
-        }
+        }*/
 
         boolean flag=true;
         Color aparturePixel=Color.BLACK;
         for (Ray ray : rays) {
             if (!_rayTracer.traceRay(ray).equals(colorRay)) {
-                iter++;
                 for(int i=1; i<=4; i++) {
-                    aparturePixel = castRay2Inner(nX, nY, col, row, i, iter,previousCenter);
+                    aparturePixel = castRay2Inner(nX, nY, col, row);
                     //colors[]
                     finalColor = finalColor.add(aparturePixel);
                 }

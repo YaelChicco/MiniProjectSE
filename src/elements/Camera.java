@@ -55,6 +55,8 @@ public class Camera {
      */
     private List<Point3D> aperturePoints;
 
+    private Point3D[][] pointsMat;
+
     /**
      * amount of pixels in a row/column in the aperture
      */
@@ -130,6 +132,7 @@ public class Camera {
         _apertureSize = apertureSize;
         _apertureN = (int) Math.pow(2,apertureN);
         aperturePointsInit();
+        pointsMat=new Point3D[_apertureN][_apertureN];
         return this;
     }
 
@@ -143,7 +146,6 @@ public class Camera {
 
     /**
      * creates a ray from the camera through a specific pixel center
-     *
      * @param nX - number of pixels in view plane width
      * @param nY - number of pixels in view plane height
      * @param j  - distance of the intercept from the midpoint on the y-axis
@@ -224,11 +226,14 @@ public class Camera {
         newVUp = newVUp.scale(-1);
         newVRight = newVRight.scale(-1);
 
+
         //finds all the points by the newVUp and newVRight vectors
         for (int i = 0; i < _apertureN; i++) {
             for (int j = 0; j < _apertureN; j++) {
-                if (!upRight.equals(_p0))
+                if (!upRight.equals(_p0)) {
                     aperturePoints.add(upRight);
+                    pointsMat[i][j]=upRight;
+                }
                 upRight = upRight.add(newVUp);
             }
             upRight = upRight.add(newVRight);
