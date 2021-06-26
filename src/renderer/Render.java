@@ -385,37 +385,97 @@ public class Render {
      * @param row pixel's row number (pixel index in column)
      */
     private void castRays2(int nX, int nY, int col, int row) {
-        Color color = castRay2Inner(nX, nY, col, row);
+        Point3D focusPoint = _camera.getFocusPoint(nX, nY, col, row);
+        Color color = castRay2Inner(focusPoint, 0, 0, _camera.getApertureN(), _camera.getApertureN());
         _imageWriter.writePixel(col, row, color);
     }
 
-    Color castRay2Inner(int nX, int nY, int col, int row, List<int>()) {
-        List<Ray> rays = _camera.constructRaysThroughPixel2(nX, nY, col, row);
-        Color colorRay = _rayTracer.traceRay(rays.get(0));
-        Color finalColor = Color.BLACK;
-       // previousCenter=_camera.calcCenter(index,iter,previousCenter);
+//    Color castRay2Inner(int nX, int nY, int col, int row, List<Integer> indexes) {
+//        List<Ray> rays = _camera.constructRaysThroughPixel2(nX, nY, col, row);
+//        Color colorRay = _rayTracer.traceRay(rays.get(0));
+//        Color finalColor = Color.BLACK;
+//       // previousCenter=_camera.calcCenter(index,iter,previousCenter);
+//
+//        /*if (iter > _camera.getApertureN() / 2) {
+//            for (Ray r : rays)
+//                finalColor = finalColor.add(_rayTracer.traceRay(r));
+//            return finalColor.reduce(4);
+//        }*/
+//
+//        boolean flag=true;
+//        Color aparturePixel=Color.BLACK;
+//        for (Ray ray : rays) {
+//            if (!_rayTracer.traceRay(ray).equals(colorRay)) {
+//                for(int i=1; i<=4; i++) {
+//                    aparturePixel = castRay2Inner(nX, nY, col, row);
+//                    //colors[]
+//                    finalColor = finalColor.add(aparturePixel);
+//                }
+//                flag=false;
+//                break;
+//            }
+//        }
+//        if(flag)
+//            return colorRay;
+//        return finalColor.reduce(4);
+//    }
+//}
 
-        /*if (iter > _camera.getApertureN() / 2) {
-            for (Ray r : rays)
-                finalColor = finalColor.add(_rayTracer.traceRay(r));
+    Color castRay2Inner(Point3D focusPoint, int x1, int y1, int x2, int y2) {
+        Color current=averageColor4(focusPoint, x1, y1, x2, y2);
+        if (current!=null)
+            return current;
+
+        if (x1 + 1 == x2 && y1 + 1 == y2){
+            Color finalColor=colors[x1][y1].add(colors[x2][y1]).add(colors[x2][y2]).add(colors[x1][y2]);
             return finalColor.reduce(4);
-        }*/
-
-        boolean flag=true;
-        Color aparturePixel=Color.BLACK;
-        for (Ray ray : rays) {
-            if (!_rayTracer.traceRay(ray).equals(colorRay)) {
-                for(int i=1; i<=4; i++) {
-                    aparturePixel = castRay2Inner(nX, nY, col, row);
-                    //colors[]
-                    finalColor = finalColor.add(aparturePixel);
-                }
-                flag=false;
-                break;
-            }
         }
-        if(flag)
-            return colorRay;
+
+        int distance=(x2-x1)/2;
+        Color finalColor=castRay2Inner(focusPoint,x1, y1,x1+distance,y1+distance);
+        finalColor=finalColor.add(castRay2Inner(focusPoint,x1+distance, y1, x2, y1+distance));
+        finalColor=finalColor.add(castRay2Inner(focusPoint,x1+distance, y1+distance, x2, y2));
+        finalColor=finalColor.add(castRay2Inner(focusPoint,x1, y1+distance, x1+distance, y2));
         return finalColor.reduce(4);
+    }
+
+    private Color averageColor4(Point3D focusPoint, int x1, int y1, int x2, int y2) {
+        int xRight = x2;
+        int yRight = y1;
+
+        int xUp = x1;
+        int yUp = y2;
+
+        Color downLeft = colors[x1][y1];
+        if (downLeft == null) {
+            Point3D aperturePoint = _camera.getPointByMat(x1, y1);
+            downLeft = _rayTracer.traceRay(new Ray(aperturePoint, focusPoint.subtract(aperturePoint)));
+            colors[x1][y1] = downLeft;
+        }
+
+        Color downRight = colors[xRight][yRight];
+        if (downRight == null) {
+            Point3D aperturePoint = _camera.getPointByMat(xRight, yRight);
+            downRight = _rayTracer.traceRay(new Ray(aperturePoint, focusPoint.subtract(aperturePoint)));
+            colors[xRight][yRight] = downRight;
+        }
+
+        Color upRight = colors[x2][y2];
+        if (upRight == null) {
+            Point3D aperturePoint = _camera.getPointByMat(x2, y2);
+            upRight = _rayTracer.traceRay(new Ray(aperturePoint, focusPoint.subtract(aperturePoint)));
+            colors[x2][y2] = upRight;
+        }
+
+        Color upLeft = colors[xUp][yUp];
+        if (upLeft == null) {
+            Point3D aperturePoint = _camera.getPointByMat(xUp, yUp);
+            upLeft = _rayTracer.traceRay(new Ray(aperturePoint, focusPoint.subtract(aperturePoint)));
+            colors[xUp][yUp] = upLeft;
+        }
+
+        if (!downLeft.equals(downRight) || !downLeft.equals(upRight) || !downLeft.equals(upLeft))
+            return null;
+        return downLeft;
     }
 }

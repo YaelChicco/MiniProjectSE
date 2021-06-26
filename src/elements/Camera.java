@@ -144,6 +144,10 @@ public class Camera {
         return _p0;
     }
 
+    public Point3D getPointByMat(int x,int y){
+        return pointsMat[x][y];
+    }
+
     /**
      * creates a ray from the camera through a specific pixel center
      * @param nX - number of pixels in view plane width
@@ -179,26 +183,7 @@ public class Camera {
      * @return rays from the aperture for a specific pixel center
      */
     public List<Ray> constructRaysThroughPixel(int nX, int nY, int j, int i) {
-        Point3D Pc = _p0.add(_vTo.scale(_distance));
-        double Ry = _hight / nY;
-        double Rx = _width / nX;
-
-        Point3D Pij = Pc;
-        double Xj = (j - (nX - 1) / 2d) * Rx;
-        double Yi = (i - (nY - 1) / 2d) * Ry;
-        if (!isZero(Xj)) {
-            Pij = Pij.add(_vRight.scale(Xj));
-        }
-        if (!isZero(Yi)) {
-            Pij = Pij.add(_vUp.scale(-Yi));
-        }
-        //ray from the camera to the pixel in the viewPlane
-        Ray mainRay = new Ray(_p0, Pij.subtract(_p0));
-
-        //calculates the focus point on ray continuation
-        double distCameraVP = _p0.distance(Pij);
-        double distCameraFP = distCameraVP * _focalDist / _distance;
-        Point3D focalPoint = mainRay.getPoint(distCameraFP);
+        Point3D focalPoint = getFocusPoint(nX, nY, j, i);
 
         //calculates the rays from the aperture
         List<Ray> apertureRays = new LinkedList<>();
@@ -242,82 +227,6 @@ public class Camera {
         return aperturePoints;
     }
 
-    /**
-         * creates rays from the aperture for a specific pixel center
-         *
-         * @param nX number of pixels in view plane width
-         * @param nY number of pixels in view plane height
-         * @param j  distance of the intercept from the midpoint on the y-axis
-         * @param i  distance of the intercept from the midpoint on the X-axis
-         * @return rays from the aperture for a specific pixel center
-         */
-    public List<Ray> constructRaysThroughPixel2(int nX, int nY, int j, int i, int index, int iter, Point3D previousCenter) {
-        double size= _apertureSize/iter;
-        int n= (int) (_apertureSize/iter);
-
-        n= (int) Math.pow(2,n);
-
-        Point3D Pc = _p0.add(_vTo.scale(_distance));
-        double Ry = _hight / nY;
-        double Rx = _width / nX;
-
-        Point3D Pij = Pc;
-        double Xj = (j - (nX - 1) / 2d) * Rx;
-        double Yi = (i - (nY - 1) / 2d) * Ry;
-        if (!isZero(Xj)) {
-            Pij = Pij.add(_vRight.scale(Xj));
-        }
-        if (!isZero(Yi)) {
-            Pij = Pij.add(_vUp.scale(-Yi));
-        }
-        //ray from the camera to the pixel in the viewPlane
-         Ray mainRay = new Ray(_p0, Pij.subtract(_p0));
-        //calculates the focus point on ray continuation
-        double distCameraVP = _p0.distance(Pij);
-        double distCameraFP = distCameraVP * _focalDist / _distance;
-        Point3D focalPoint = mainRay.getPoint(distCameraFP);
-
-        //calculates the rays from the aperture
-        List<Ray> apertureRays = new LinkedList<>();
-        List<Point3D> corners=cornerPoints(size,calcCenter(index,iter,previousCenter),n);
-        for (Point3D p : corners)
-            apertureRays.add(new Ray(p, focalPoint.subtract(p)));
-        return apertureRays;
-    }
-
-    public Point3D calcCenter(int index, int iter, Point3D perviousCenter){
-        if(index==0)
-            return perviousCenter;
-
-        //vectors in size of one unit of the aperture grid
-        Vector newVUp = _vUp.scale(_apertureSize / _apertureN);
-        Vector newVRight = _vRight.scale(_apertureSize / _apertureN);
-
-        int n=_apertureN/iter;
-
-        if (index==2||index==4)
-            newVUp=newVUp.scale(-1);
-
-        if (index==1||index==3)
-            newVRight=newVRight.scale(-1);
-
-        return perviousCenter.add(newVUp.scale(n / 2 )).add(newVRight.scale(n / 2 ));
-    }
-
-    public List<Point3D> cornerPoints(double size, Point3D center, int n) {
-
-        //vectors in size of one unit of the aperture grid
-        Vector newVUp = _vUp.scale(size / n);
-        Vector newVRight = _vRight.scale(size /n);
-
-        //the upper right point on the aperture grid
-        Point3D upRight = center.add(newVUp.scale(n / 2 - 1 / 2)).add(newVRight.scale(n / 2 - 1 / 2));
-        Point3D downRight = center.add(newVUp.scale(-n / 2 + 1 / 2)).add(newVRight.scale(n / 2 - 1 / 2));
-        Point3D downLeft = center.add(newVUp.scale(-n / 2 + 1 / 2)).add(newVRight.scale(-n / 2 + 1 / 2));
-        Point3D upLeft = center.add(newVUp.scale(n / 2 - 1 / 2)).add(newVRight.scale(-n / 2 + 1 / 2));
-        return List.of(upRight,downRight, downLeft, upLeft);
-    }
-
     public List<Point3D> aperturePointsInit2() {
         //vectors in size of one unit of the aperture grid
         Vector newVUp = _vUp.scale(_apertureSize / _apertureN);
@@ -343,5 +252,27 @@ public class Camera {
             upRight = upRight.add(startOf);
         }
         return aperturePoints;
+    }
+
+    public Point3D getFocusPoint(int nX, int nY, int j, int i) {
+        Point3D Pc = _p0.add(_vTo.scale(_distance));
+        double Ry = _hight / nY;
+        double Rx = _width / nX;
+
+        Point3D Pij = Pc;
+        double Xj = (j - (nX - 1) / 2d) * Rx;
+        double Yi = (i - (nY - 1) / 2d) * Ry;
+        if (!isZero(Xj)) {
+            Pij = Pij.add(_vRight.scale(Xj));
+        }
+        if (!isZero(Yi)) {
+            Pij = Pij.add(_vUp.scale(-Yi));
+        }
+        //ray from the camera to the pixel in the viewPlane
+        Ray mainRay = new Ray(_p0, Pij.subtract(_p0));
+        //calculates the focus point on ray continuation
+        double distCameraVP = _p0.distance(Pij);
+        double distCameraFP = distCameraVP * _focalDist / _distance;
+        return mainRay.getPoint(distCameraFP);
     }
 }
