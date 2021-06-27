@@ -386,40 +386,9 @@ public class Render {
      */
     private void castRays2(int nX, int nY, int col, int row) {
         Point3D focusPoint = _camera.getFocusPoint(nX, nY, col, row);
-        Color color = castRay2Inner(focusPoint, 0, 0, _camera.getApertureN(), _camera.getApertureN());
+        Color color = castRay2Inner(focusPoint, 0, 0, _camera.getApertureN()-1, _camera.getApertureN()-1);
         _imageWriter.writePixel(col, row, color);
     }
-
-//    Color castRay2Inner(int nX, int nY, int col, int row, List<Integer> indexes) {
-//        List<Ray> rays = _camera.constructRaysThroughPixel2(nX, nY, col, row);
-//        Color colorRay = _rayTracer.traceRay(rays.get(0));
-//        Color finalColor = Color.BLACK;
-//       // previousCenter=_camera.calcCenter(index,iter,previousCenter);
-//
-//        /*if (iter > _camera.getApertureN() / 2) {
-//            for (Ray r : rays)
-//                finalColor = finalColor.add(_rayTracer.traceRay(r));
-//            return finalColor.reduce(4);
-//        }*/
-//
-//        boolean flag=true;
-//        Color aparturePixel=Color.BLACK;
-//        for (Ray ray : rays) {
-//            if (!_rayTracer.traceRay(ray).equals(colorRay)) {
-//                for(int i=1; i<=4; i++) {
-//                    aparturePixel = castRay2Inner(nX, nY, col, row);
-//                    //colors[]
-//                    finalColor = finalColor.add(aparturePixel);
-//                }
-//                flag=false;
-//                break;
-//            }
-//        }
-//        if(flag)
-//            return colorRay;
-//        return finalColor.reduce(4);
-//    }
-//}
 
     Color castRay2Inner(Point3D focusPoint, int x1, int y1, int x2, int y2) {
         Color current=averageColor4(focusPoint, x1, y1, x2, y2);

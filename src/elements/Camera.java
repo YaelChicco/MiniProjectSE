@@ -131,17 +131,13 @@ public class Camera {
     public Camera setAperture(double apertureSize, int apertureN) {
         _apertureSize = apertureSize;
         _apertureN = (int) Math.pow(2,apertureN);
-        aperturePointsInit();
+        aperturePointsInit2();
         pointsMat=new Point3D[_apertureN][_apertureN];
         return this;
     }
 
     public int getApertureN() {
         return _apertureN;
-    }
-
-    public Point3D getP0() {
-        return _p0;
     }
 
     public Point3D getPointByMat(int x,int y){
