@@ -95,8 +95,33 @@ public class RenderTest {
                 .setImageWriter(imageWriter) //
                 .setCamera(camera1) //
                 .setRayTracer(new BasicRayTracer(scene))
-                .setMultyRay(true)
-                .setMultithreading(3);
+                .setMultyRay(true);
+                //.setMultithreading(3);
+
+        render.renderImage();
+        render.writeToImage();
+    }
+
+    @Test
+    public void focusRenderImproveTest() {
+        Camera camera1 = new Camera(new Point3D(0, 0, 1000), new Vector(0, 0, -1), new Vector(0, 1, 0)) //
+                //Camera camera1 = new Camera(new Point3D(1000, 0, 500), new Vector(-2, 0, -1), new Vector(-1, 0, 2)) //
+                .setViewPlaneSize(1, 1).setDistance(1000).setAperture(27,3).setFocalDistance(1300);
+        Scene scene = new Scene("Test scene")//
+                .setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.2)); //
+
+        scene.geometries.add(new Sphere(300, new Point3D(0, 0, -300)) //
+                        .setEmission(new Color(java.awt.Color.CYAN)).setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(20)));
+
+        scene.lights.add(new DirectionalLight(new Color(500,250,250), new Vector(-1,1,-1)));
+
+        ImageWriter imageWriter = new ImageWriter("focus render test 2", 1000, 1000);
+        Render render = new Render() //
+                .setImageWriter(imageWriter) //
+                .setCamera(camera1) //
+                .setRayTracer(new BasicRayTracer(scene))
+                .setMultyRay(false);
+                //.setMultithreading(3);
 
         render.renderImage();
         render.writeToImage();

@@ -209,10 +209,11 @@ public class Camera {
         //finds all the points by the newVUp and newVRight vectors
         for (int i = 0; i < _apertureN; i++) {
             for (int j = 0; j < _apertureN; j++) {
-                if (!upRight.equals(_p0)) {
-                    aperturePoints.add(upRight);
-                    pointsMat[i][j]=upRight;
-                }
+//                if (!upRight.equals(_p0)) {
+//
+//                }
+                aperturePoints.add(upRight);
+                pointsMat[i][j]=upRight;
                 upRight = upRight.add(newVUp);
             }
             upRight = upRight.add(newVRight);

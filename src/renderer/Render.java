@@ -392,9 +392,9 @@ public class Render {
 
         int distance=(x2-x1)/2;
         Color finalColor=castRay2Inner(focusPoint,x1, y1,x1+distance,y1+distance);
-        finalColor=finalColor.add(castRay2Inner(focusPoint,x1+distance, y1, x2, y1+distance));
-        finalColor=finalColor.add(castRay2Inner(focusPoint,x1+distance, y1+distance, x2, y2));
-        finalColor=finalColor.add(castRay2Inner(focusPoint,x1, y1+distance, x1+distance, y2));
+        finalColor=finalColor.add(castRay2Inner(focusPoint,x2-distance, y1, x2, y1+distance));
+        finalColor=finalColor.add(castRay2Inner(focusPoint,x2-distance, y2-distance, x2, y2));
+        finalColor=finalColor.add(castRay2Inner(focusPoint,x1, y2-distance, x1+distance, y2));
         return finalColor.reduce(4);
     }
 
@@ -435,7 +435,7 @@ public class Render {
         }
 
         Vector right=apertureDR.subtract(apertureDL).scale(0.5);
-        Vector up=apertureUL.subtract(apertureDL).scale(0.5);
+        Vector up = apertureUL.subtract(apertureDL).scale(0.5);
         Point3D center=apertureDL.add(right).add(up);
         Color centerColor = _rayTracer.traceRay(new Ray(center, focusPoint.subtract(center)));
         centerColors.add(centerColor);
