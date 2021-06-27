@@ -39,6 +39,7 @@ public class Render {
      */
     private RayTracerBase _rayTracer;
     private boolean isMultyRay = false;
+    private boolean isAdaptiveSS=false;
     private Color[][] colors;
     private List<Color> centerColors;
     /**
@@ -70,8 +71,9 @@ public class Render {
         return this;
     }
 
-    public Render setMultyRay() {
+    public Render setMultyRay(boolean isAdaptiveSS) {
         isMultyRay = true;
+        this.isAdaptiveSS=isAdaptiveSS;
         return this;
     }
 
@@ -284,8 +286,12 @@ public class Render {
             threads[i] = new Thread(() -> {
                 Pixel pixel = new Pixel();
                 while (thePixel.nextPixel(pixel))
-                    if (isMultyRay)
-                        castRays(nX, nY, pixel.col, pixel.row);
+                    if (isMultyRay) {
+                        if(!isAdaptiveSS)
+                            castRays(nX, nY, pixel.col, pixel.row);
+                        else
+                            castRays2(nX, nY, pixel.col, pixel.row);
+                    }
                     else
                         castRay(nX, nY, pixel.col, pixel.row);
             });
@@ -325,8 +331,12 @@ public class Render {
         if (threadsCount == 0)
             for (int i = 0; i < nY; ++i)
                 for (int j = 0; j < nX; ++j)
-                    if (isMultyRay)
-                        castRays(nX, nY, j, i);
+                    if (isMultyRay) {
+                        if(!isAdaptiveSS)
+                            castRays(nX, nY, j, i);
+                        else
+                            castRays2(nX, nY, j, i);
+                    }
                     else
                         castRay(nX, nY, j, i);
         else

@@ -77,7 +77,7 @@ public class RenderTest {
     public void focusRenderTest() {
         Camera camera1 = new Camera(new Point3D(0, 0, 1000), new Vector(0, 0, -1), new Vector(0, 1, 0)) //
                 //Camera camera1 = new Camera(new Point3D(1000, 0, 500), new Vector(-2, 0, -1), new Vector(-1, 0, 2)) //
-                .setViewPlaneSize(200, 200).setDistance(1000).setAperture(27,9).setFocalDistance(1300);
+                .setViewPlaneSize(200, 200).setDistance(1000).setAperture(27,3).setFocalDistance(1300);
         Scene scene = new Scene("Test scene")//
                 .setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.2)); //
 
@@ -90,11 +90,13 @@ public class RenderTest {
 
         scene.lights.add(new DirectionalLight(new Color(500,250,250), new Vector(-1,1,-1)));
 
-        ImageWriter imageWriter = new ImageWriter("focus render test", 1000, 1000);
+        ImageWriter imageWriter = new ImageWriter("focus render test 2", 1000, 1000);
         Render render = new Render() //
                 .setImageWriter(imageWriter) //
                 .setCamera(camera1) //
-                .setRayTracer(new BasicRayTracer(scene)).setMultyRay();
+                .setRayTracer(new BasicRayTracer(scene))
+                .setMultyRay(true)
+                .setMultithreading(3);
 
         render.renderImage();
         render.writeToImage();
@@ -114,7 +116,9 @@ public class RenderTest {
                 .setImageWriter(imageWriter) //
                 .setScene(scene) //
                 .setCamera(camera) //
-                .setRayTracer(new BasicRayTracer(scene));
+                .setRayTracer(new BasicRayTracer(scene))
+                .setMultithreading(3)
+                .setMultyRay();
 
         render.renderImage();
         render.printGrid(100, new Color(java.awt.Color.YELLOW));

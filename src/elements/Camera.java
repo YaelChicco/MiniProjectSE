@@ -131,8 +131,9 @@ public class Camera {
     public Camera setAperture(double apertureSize, int apertureN) {
         _apertureSize = apertureSize;
         _apertureN = (int) Math.pow(2,apertureN);
-        aperturePointsInit2();
         pointsMat=new Point3D[_apertureN][_apertureN];
+        aperturePoints = new ArrayList<>(_apertureN * _apertureN);
+        aperturePointsInit();
         return this;
     }
 
@@ -193,7 +194,7 @@ public class Camera {
      *
      * @return all the points on the aperture grid
      */
-    public List<Point3D> aperturePointsInit() {
+    public void aperturePointsInit() {
         //vectors in size of one unit of the aperture grid
         Vector newVUp = _vUp.scale(_apertureSize / _apertureN);
         Vector newVRight = _vRight.scale(_apertureSize / _apertureN);
@@ -201,12 +202,9 @@ public class Camera {
         //the upper right point on the aperture grid
         Point3D upRight = _p0.add(newVUp.scale(_apertureN / 2 - 1 / 2)).add(newVRight.scale(_apertureN / 2 - 1 / 2));
 
-        aperturePoints = new ArrayList<>(_apertureN * _apertureN);
-
         Vector startOf = newVUp.scale(_apertureN);
         newVUp = newVUp.scale(-1);
         newVRight = newVRight.scale(-1);
-
 
         //finds all the points by the newVUp and newVRight vectors
         for (int i = 0; i < _apertureN; i++) {
@@ -220,34 +218,6 @@ public class Camera {
             upRight = upRight.add(newVRight);
             upRight = upRight.add(startOf);
         }
-        return aperturePoints;
-    }
-
-    public List<Point3D> aperturePointsInit2() {
-        //vectors in size of one unit of the aperture grid
-        Vector newVUp = _vUp.scale(_apertureSize / _apertureN);
-        Vector newVRight = _vRight.scale(_apertureSize / _apertureN);
-
-        //the upper right point on the aperture grid
-        Point3D upRight = _p0.add(newVUp.scale(_apertureN / 2 - 1 / 2)).add(newVRight.scale(_apertureN / 2 - 1 / 2));
-
-        aperturePoints = new ArrayList<>(_apertureN * _apertureN);
-
-        Vector startOf = newVUp.scale(_apertureN);
-        newVUp = newVUp.scale(-1);
-        newVRight = newVRight.scale(-1);
-
-        //finds all the points by the newVUp and newVRight vectors
-        for (int i = 0; i < _apertureN; i++) {
-            for (int j = 0; j < _apertureN; j++) {
-                if (!upRight.equals(_p0))
-                    aperturePoints.add(upRight);
-                upRight = upRight.add(newVUp);
-            }
-            upRight = upRight.add(newVRight);
-            upRight = upRight.add(startOf);
-        }
-        return aperturePoints;
     }
 
     public Point3D getFocusPoint(int nX, int nY, int j, int i) {
