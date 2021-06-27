@@ -375,6 +375,16 @@ public class Render {
         _imageWriter.writePixel(col, row, finalColor);
     }
 
+    /**
+     * Calculates the final color of the pixel
+     * @param focusPoint- the point on the focal plane that the rays pass through
+     * @param colors-the matrix of the ray's colors
+     * @param x1-index of the bottom left square of the aperture
+     * @param y1-index of the bottom left square of the aperture
+     * @param x2-index of the top right square of the aperture
+     * @param y2-index of the top right square of the aperture
+     * @return the color of the pixel
+     */
     private Color castRay2Inner(Point3D focusPoint, Color[][] colors, int x1, int y1, int x2, int y2) {
         Color current = averageColor4(focusPoint, colors, x1, y1, x2, y2);
         if (current != null)
@@ -394,6 +404,16 @@ public class Render {
         return finalColor.reduce(4);
     }
 
+    /**
+     * Calculates the colors of 4 rays and saves each one in a matrix
+     * @param focusPoint- the point on the focal plane that the rays pass through
+     * @param colors-the matrix of the ray's colors
+     * @param x1-index of the bottom left square of the aperture
+     * @param y1-index of the bottom left square of the aperture
+     * @param x2-index of the top right square of the aperture
+     * @param y2-index of the top right square of the aperture
+     * @return the calculate color of the 4 rays
+     */
     private Color averageColor4(Point3D focusPoint, Color[][] colors, int x1, int y1, int x2, int y2) {
         int xRight = x2;
         int yRight = y1;

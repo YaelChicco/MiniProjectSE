@@ -55,6 +55,9 @@ public class Camera {
      */
     private List<Point3D> aperturePoints;
 
+    /**
+     * mat of all the points on the aperture
+     */
     private Point3D[][] pointsMat;
 
     /**
@@ -128,6 +131,12 @@ public class Camera {
         return this;
     }
 
+    /**
+     * setter of the aperture
+     * @param apertureSize- size of the aperture
+     * @param apertureN- amount of pixels in a row/column in the aperture
+     * @return the object itself
+     */
     public Camera setAperture(double apertureSize, int apertureN) {
         _apertureSize = apertureSize;
         _apertureN = (int) Math.pow(2,apertureN);
@@ -137,10 +146,19 @@ public class Camera {
         return this;
     }
 
+    /**
+     * getter of the number of pixels in a row/column in the aperture
+     */
     public int getApertureN() {
         return _apertureN;
     }
 
+    /**
+     * getter of point from the matrix
+     * @param x-index of the point in the mat
+     * @param y-index of the point in the mat
+     * @return point3D from the mat
+     */
     public Point3D getPointByMat(int x,int y){
         return pointsMat[x][y];
     }
@@ -221,6 +239,14 @@ public class Camera {
         }
     }
 
+    /**
+     * calculates the focal point
+     * @param nX number of pixels in view plane width
+     * @param nY number of pixels in view plane height
+     * @param j  distance of the intercept from the midpoint on the y-axis
+     * @param i  distance of the intercept from the midpoint on the X-axis
+     * @return the focal point
+     */
     public Point3D getFocusPoint(int nX, int nY, int j, int i) {
         Point3D Pc = _p0.add(_vTo.scale(_distance));
         double Ry = _hight / nY;
