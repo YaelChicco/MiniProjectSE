@@ -94,9 +94,9 @@ public class RenderTest {
         Render render = new Render() //
                 .setImageWriter(imageWriter) //
                 .setCamera(camera1) //
-                .setRayTracer(new BasicRayTracer(scene));
+                .setRayTracer(new BasicRayTracer(scene)).setMultyRay();
 
-        render.renderFocusImage();
+        render.renderImage();
         render.writeToImage();
     }
 
