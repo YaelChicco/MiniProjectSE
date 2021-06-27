@@ -6,7 +6,6 @@ import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.MissingResourceException;
 
@@ -38,7 +37,13 @@ public class Render {
      * ray tracer
      */
     private RayTracerBase _rayTracer;
+    /**
+     * boolean field for depth of field
+     */
     private boolean isMultyRay = false;
+    /**
+     * boolean field for adaptive super sampling
+     */
     private boolean isAdaptiveSS = false;
 
     /**
@@ -236,7 +241,6 @@ public class Render {
     public void writeToImage() {
         if (_imageWriter == null)
             throw new MissingResourceException(RESOURCE_ERROR, RENDER_CLASS, IMAGE_WRITER_COMPONENT);
-
         _imageWriter.writeToImage();
     }
 
@@ -288,7 +292,7 @@ public class Render {
                         if (!isAdaptiveSS)
                             castRays(nX, nY, pixel.col, pixel.row);
                         else
-                            castRays2(nX, nY, pixel.col, pixel.row);
+                            castRaysASS(nX, nY, pixel.col, pixel.row);
                     } else
                         castRay(nX, nY, pixel.col, pixel.row);
             });
@@ -332,7 +336,7 @@ public class Render {
                         if (!isAdaptiveSS)
                             castRays(nX, nY, j, i);
                         else
-                            castRays2(nX, nY, j, i);
+                            castRaysASS(nX, nY, j, i);
                     } else
                         castRay(nX, nY, j, i);
         else
@@ -367,11 +371,11 @@ public class Render {
      * @param col pixel's column number (pixel index in row)
      * @param row pixel's row number (pixel index in column)
      */
-    private void castRays2(int nX, int nY, int col, int row) {
+    private void castRaysASS(int nX, int nY, int col, int row) {
         Point3D focusPoint = _camera.getFocusPoint(nX, nY, col, row);
         int n = _camera.getApertureN();
         Color[][] colors = new Color[n][n];
-        Color finalColor = castRay2Inner(focusPoint,colors, 0, 0, n - 1, n - 1);
+        Color finalColor = castRaysASSInner(focusPoint,colors, 0, 0, n - 1, n - 1);
         _imageWriter.writePixel(col, row, finalColor);
     }
 
@@ -385,7 +389,7 @@ public class Render {
      * @param y2-index of the top right square of the aperture
      * @return the color of the pixel
      */
-    private Color castRay2Inner(Point3D focusPoint, Color[][] colors, int x1, int y1, int x2, int y2) {
+    private Color castRaysASSInner(Point3D focusPoint, Color[][] colors, int x1, int y1, int x2, int y2) {
         Color current = averageColor4(focusPoint, colors, x1, y1, x2, y2);
         if (current != null)
             return current;
@@ -397,10 +401,10 @@ public class Render {
 
         int distance = (x2 - x1) / 2;
 
-        Color finalColor = castRay2Inner(focusPoint, colors, x1, y1, x1 + distance, y1 + distance);
-        finalColor = finalColor.add(castRay2Inner(focusPoint, colors, x2 - distance, y1, x2, y1 + distance));
-        finalColor = finalColor.add(castRay2Inner(focusPoint, colors, x2 - distance, y2 - distance, x2, y2));
-        finalColor = finalColor.add(castRay2Inner(focusPoint, colors, x1, y2 - distance, x1 + distance, y2));
+        Color finalColor = castRaysASSInner(focusPoint, colors, x1, y1, x1 + distance, y1 + distance);
+        finalColor = finalColor.add(castRaysASSInner(focusPoint, colors, x2 - distance, y1, x2, y1 + distance));
+        finalColor = finalColor.add(castRaysASSInner(focusPoint, colors, x2 - distance, y2 - distance, x2, y2));
+        finalColor = finalColor.add(castRaysASSInner(focusPoint, colors, x1, y2 - distance, x1 + distance, y2));
         return finalColor.reduce(4);
     }
 
