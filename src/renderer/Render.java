@@ -39,9 +39,8 @@ public class Render {
      */
     private RayTracerBase _rayTracer;
     private boolean isMultyRay = false;
-    private boolean isAdaptiveSS=false;
-    private Color[][] colors;
-    private List<Color> centerColors;
+    private boolean isAdaptiveSS = false;
+
     /**
      * Set multi-threading <br>
      * - if the parameter is 0 - number of cores less 2 is taken
@@ -73,7 +72,7 @@ public class Render {
 
     public Render setMultyRay(boolean isAdaptiveSS) {
         isMultyRay = true;
-        this.isAdaptiveSS=isAdaptiveSS;
+        this.isAdaptiveSS = isAdaptiveSS;
         return this;
     }
 
@@ -206,7 +205,6 @@ public class Render {
      */
     public Render setCamera(Camera camera) {
         this._camera = camera;
-        colors = new Color[_camera.getApertureN()][_camera.getApertureN()];
         return this;
     }
 
@@ -287,12 +285,11 @@ public class Render {
                 Pixel pixel = new Pixel();
                 while (thePixel.nextPixel(pixel))
                     if (isMultyRay) {
-                        if(!isAdaptiveSS)
+                        if (!isAdaptiveSS)
                             castRays(nX, nY, pixel.col, pixel.row);
                         else
                             castRays2(nX, nY, pixel.col, pixel.row);
-                    }
-                    else
+                    } else
                         castRay(nX, nY, pixel.col, pixel.row);
             });
         }
@@ -332,12 +329,11 @@ public class Render {
             for (int i = 0; i < nY; ++i)
                 for (int j = 0; j < nX; ++j)
                     if (isMultyRay) {
-                        if(!isAdaptiveSS)
+                        if (!isAdaptiveSS)
                             castRays(nX, nY, j, i);
                         else
                             castRays2(nX, nY, j, i);
-                    }
-                    else
+                    } else
                         castRay(nX, nY, j, i);
         else
             renderImageThreaded();
@@ -373,32 +369,32 @@ public class Render {
      */
     private void castRays2(int nX, int nY, int col, int row) {
         Point3D focusPoint = _camera.getFocusPoint(nX, nY, col, row);
-        centerColors =new LinkedList<Color>();
-        Color color = castRay2Inner(focusPoint, 0, 0, _camera.getApertureN()-1, _camera.getApertureN()-1);
-        for (Color c: centerColors)
-            color.add(c);
-        _imageWriter.writePixel(col, row, color.reduce(centerColors.size()+1));
+        int n = _camera.getApertureN();
+        Color[][] colors = new Color[n][n];
+        Color finalColor = castRay2Inner(focusPoint,colors, 0, 0, n - 1, n - 1);
+        _imageWriter.writePixel(col, row, finalColor);
     }
 
-    Color castRay2Inner(Point3D focusPoint, int x1, int y1, int x2, int y2) {
-        Color current=averageColor4(focusPoint, x1, y1, x2, y2);
-        if (current!=null)
+    private Color castRay2Inner(Point3D focusPoint, Color[][] colors, int x1, int y1, int x2, int y2) {
+        Color current = averageColor4(focusPoint, colors, x1, y1, x2, y2);
+        if (current != null)
             return current;
 
-        if (x1 + 1 == x2 && y1 + 1 == y2){
-            Color finalColor=colors[x1][y1].add(colors[x2][y1]).add(colors[x2][y2]).add(colors[x1][y2]);
+        if (x1 + 1 == x2 && y1 + 1 == y2) {
+            Color finalColor = colors[x1][y1].add(colors[x2][y1]).add(colors[x2][y2]).add(colors[x1][y2]);
             return finalColor.reduce(4);
         }
 
-        int distance=(x2-x1)/2;
-        Color finalColor=castRay2Inner(focusPoint,x1, y1,x1+distance,y1+distance);
-        finalColor=finalColor.add(castRay2Inner(focusPoint,x2-distance, y1, x2, y1+distance));
-        finalColor=finalColor.add(castRay2Inner(focusPoint,x2-distance, y2-distance, x2, y2));
-        finalColor=finalColor.add(castRay2Inner(focusPoint,x1, y2-distance, x1+distance, y2));
+        int distance = (x2 - x1) / 2;
+
+        Color finalColor = castRay2Inner(focusPoint, colors, x1, y1, x1 + distance, y1 + distance);
+        finalColor = finalColor.add(castRay2Inner(focusPoint, colors, x2 - distance, y1, x2, y1 + distance));
+        finalColor = finalColor.add(castRay2Inner(focusPoint, colors, x2 - distance, y2 - distance, x2, y2));
+        finalColor = finalColor.add(castRay2Inner(focusPoint, colors, x1, y2 - distance, x1 + distance, y2));
         return finalColor.reduce(4);
     }
 
-    private Color averageColor4(Point3D focusPoint, int x1, int y1, int x2, int y2) {
+    private Color averageColor4(Point3D focusPoint, Color[][] colors, int x1, int y1, int x2, int y2) {
         int xRight = x2;
         int yRight = y1;
 
@@ -434,15 +430,19 @@ public class Render {
             colors[xUp][yUp] = upLeft;
         }
 
-        Vector right=apertureDR.subtract(apertureDL).scale(0.5);
+        Vector right = apertureDR.subtract(apertureDL).scale(0.5);
         Vector up = apertureUL.subtract(apertureDL).scale(0.5);
-        Point3D center=apertureDL.add(right).add(up);
+        Point3D center = apertureDL.add(right).add(up);
         Color centerColor = _rayTracer.traceRay(new Ray(center, focusPoint.subtract(center)));
-        centerColors.add(centerColor);
 
-        if (!downLeft.equals(downRight) || !downLeft.equals(upRight) || !downLeft.equals(upLeft) || !downLeft.equals(centerColor))
-            return null;
+        List<Color> colorList = List.of(downLeft, downRight, upLeft, upRight, centerColor);
+        for (Color c1 : colorList) {
+            for (Color c2 : colorList) {
+                if (!c1.equals(c2))
+                    return null;
+            }
+        }
 
-        return downLeft.add(upLeft).add(upRight).add(downRight).reduce(4);
+        return downLeft.add(upLeft, upRight, downRight, centerColor).reduce(5);
     }
 }
