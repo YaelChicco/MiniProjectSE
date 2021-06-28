@@ -16,7 +16,7 @@ import renderer.Render;
 import scene.Scene;
 
 public class FinalProject {
-    private static final Material mat = new Material().setKd(0.5).setKs(0.5).setShininess(60);
+    private static final Material mat = new Material().setKd(0.5).setKs(0.5).setShininess(30);
     private Scene scene = new Scene("Test scene");
     private Camera camera = new Camera(new Point3D(1000, -600, 20), new Vector(-50, 30, -1), new Vector(-50, 30, 3400)) //
             .setViewPlaneSize(200, 200).setDistance(1000);
@@ -25,6 +25,7 @@ public class FinalProject {
     public void myPicture() {
         scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.gray), 0.15)).setBackGround(new Color(0, 0, 51));
         scene.geometries.add(
+
                 //sea
                 new Plane(new Point3D(0, 0, -50), new Vector(0, 0, 1))
                         .setEmission(new Color(23, 23, 79))
@@ -39,51 +40,55 @@ public class FinalProject {
 
                 //white
                 new Polygon(new Point3D(15, -15, -10), new Point3D(10, -10, 80), new Point3D(10, 10, 80), new Point3D(15, 15, -10))
-                        .setEmission(new Color(255, 255, 255)).setMaterial(mat),
+                        .setEmission(new Color(200, 200, 200)).setMaterial(mat),
                 new Polygon(new Point3D(-15, -15, -10), new Point3D(-10, -10, 80), new Point3D(10, -10, 80), new Point3D(15, -15, -10))
-                        .setEmission(new Color(200, 200, 200)),
+                        .setEmission(new Color(200, 200, 200)).setMaterial(mat),
                 new Polygon(new Point3D(-15, -15, -10), new Point3D(-10, -10, 80), new Point3D(-10, 10, 80), new Point3D(-15, 15, -10))
-                        .setEmission(new Color(255, 255, 255)),
+                        .setEmission(new Color(200, 200, 200)).setMaterial(mat),
                 new Polygon(new Point3D(-15, 15, -10), new Point3D(-10, 10, 80), new Point3D(10, 10, 80), new Point3D(15, 15, -10))
-                        .setEmission(new Color(200, 200, 200)),
+                        .setEmission(new Color(200, 200, 200)).setMaterial(mat),
 
                 //front red
                 new Polygon(new Point3D(15.05, -15.05, -10), new Point3D(14.05, -14.05, 8), new Point3D(14.05, 14.05, 8), new Point3D(15.05, 15.05, -10))
-                        .setEmission(new Color(255, 0, 0)),
+                        .setEmission(new Color(200, 0, 0)).setMaterial(mat),
                 new Polygon(new Point3D(13.05, -13.05, 26), new Point3D(12.05, -12.05, 44), new Point3D(12.05, 12.05, 44), new Point3D(13.05, 13.05, 26))
-                        .setEmission(new Color(255, 0, 0)),
+                        .setEmission(new Color(200, 0, 0)).setMaterial(mat),
                 new Polygon(new Point3D(11.05, -11.05, 62), new Point3D(10.05, -10.05, 80), new Point3D(10.05, 10.05, 80), new Point3D(11.05, 11.05, 62))
-                        .setEmission(new Color(255, 0, 0)),
+                        .setEmission(new Color(200, 0, 0)).setMaterial(mat),
 
                 //left red
                 new Polygon(new Point3D(-15.05, -15.05, -10), new Point3D(-14.05, -14.05, 8), new Point3D(14.05, -14.05, 8), new Point3D(15.05, -15.05, -10))
-                        .setEmission(new Color(200, 0, 0)),
+                        .setEmission(new Color(200, 0, 0)).setMaterial(mat),
                 new Polygon(new Point3D(-13.05, -13.05, 26), new Point3D(-12.05, -12.05, 44), new Point3D(12.05, -12.05, 44), new Point3D(13.05, -13.05, 26))
-                        .setEmission(new Color(200, 0, 0)),
+                        .setEmission(new Color(200, 0, 0)).setMaterial(mat),
                 new Polygon(new Point3D(-11.05, -11.05, 62), new Point3D(-10.05, -10.05, 80), new Point3D(10.05, -10.05, 80), new Point3D(11.05, -11.05, 62))
-                        .setEmission(new Color(200, 0, 0)),
+                        .setEmission(new Color(200, 0, 0)).setMaterial(mat),
 
                 //back red
                 new Polygon(new Point3D(-15.05, -15.05, -10), new Point3D(-14.05, -14.05, 8), new Point3D(-14.05, 14.05, 8), new Point3D(-15.05, 15.05, -10))
-                        .setEmission(new Color(255, 0, 0)),
+                        .setEmission(new Color(200, 0, 0)).setMaterial(mat),
                 new Polygon(new Point3D(-13.05, -13.05, 26), new Point3D(-12.05, -12.05, 44), new Point3D(-12.05, 12.05, 44), new Point3D(-13.05, 13.05, 26))
-                        .setEmission(new Color(255, 0, 0)),
+                        .setEmission(new Color(200, 0, 0)).setMaterial(mat),
                 new Polygon(new Point3D(-11.05, -11.05, 62), new Point3D(-10.05, -10.05, 80), new Point3D(-10.05, 10.05, 80), new Point3D(-11.05, 11.05, 62))
-                        .setEmission(new Color(255, 0, 0)),
+                        .setEmission(new Color(200, 0, 0)).setMaterial(mat),
 
                 //right red
                 new Polygon(new Point3D(-15.05, 15.05, -10), new Point3D(-14.05, 14.05, 8), new Point3D(14.05, 14.05, 8), new Point3D(15.05, 15.05, -10))
-                        .setEmission(new Color(200, 0, 0)),
+                        .setEmission(new Color(200, 0, 0)).setMaterial(mat),
                 new Polygon(new Point3D(-13.05, 13.05, 26), new Point3D(-12.05, 12.05, 44), new Point3D(12.05, 12.05, 44), new Point3D(13.05, 13.05, 26))
-                        .setEmission(new Color(200, 0, 0)),
+                        .setEmission(new Color(200, 0, 0)).setMaterial(mat),
                 new Polygon(new Point3D(-11.05, 11.05, 62), new Point3D(-10.05, 10.05, 80), new Point3D(10.05, 10.05, 80), new Point3D(11.05, 11.05, 62))
-                        .setEmission(new Color(200, 0, 0)),
+                        .setEmission(new Color(200, 0, 0)).setMaterial(mat),
 
-                new Triangle(new Point3D())
-
-
-
-
+                //roof
+                new Triangle(new Point3D(10, -10, 80), new Point3D(10, 10, 80), new Point3D(0, 0, 100))
+                        .setEmission(new Color(200,200,200)).setMaterial(mat),
+                new Triangle(new Point3D(-10, -10, 80), new Point3D(10, -10, 80), new Point3D(0, 0, 100))
+                        .setEmission(new Color(200,200,200)).setMaterial(mat),
+                new Triangle(new Point3D(-10, -10, 80), new Point3D(-10, 10, 80), new Point3D(0, 0, 100))
+                        .setEmission(new Color(200,200,200)).setMaterial(mat),
+                new Triangle(new Point3D(-10, 10, 80), new Point3D(10, 10, 80), new Point3D(0, 0, 100))
+                        .setEmission(new Color(200,200,200)).setMaterial(mat)
         );
         scene.lights.add(new DirectionalLight(new Color(80, 80, 80), new Vector(-50, -30, -100)));
         Render render = new Render() //
