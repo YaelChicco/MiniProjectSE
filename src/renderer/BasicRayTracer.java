@@ -40,7 +40,7 @@ public class BasicRayTracer extends RayTracerBase {
     public Color traceRay(Ray ray) {
         GeoPoint closestPoint = findClosestIntersection(ray);
         if (closestPoint == null)
-            return Color.BLACK;
+            return _scene.backgroundcolor;
         return calcColor(closestPoint, ray);
     }
 
