@@ -49,11 +49,7 @@ public class Point3D {
      * @return new point (after adding)
      */
     public Point3D add(Vector vector) {
-        double x = _x.coord + vector._head._x.coord;
-        double y = _y.coord + vector._head._y.coord;
-        double z = _z.coord + vector._head._z.coord;
-
-        return new Point3D(x, y, z);
+        return new Point3D(_x.coord + vector._head._x.coord, _y.coord + vector._head._y.coord, _z.coord + vector._head._z.coord);
     }
 
     /**
@@ -63,11 +59,7 @@ public class Point3D {
      * @return vector from the given point to the current point
      */
     public Vector subtract(Point3D point) {
-        double x = _x.coord - point._x.coord;
-        double y = _y.coord - point._y.coord;
-        double z = _z.coord - point._z.coord;
-
-        return new Vector(x, y, z);
+        return new Vector(_x.coord - point._x.coord, _y.coord - point._y.coord, _z.coord - point._z.coord);
     }
 
     /**
@@ -77,11 +69,9 @@ public class Point3D {
      * @return the distance squared
      */
     public double distanceSquared(Point3D other) {
-        double xx = (other._x.coord - _x.coord) * (other._x.coord - _x.coord);
-        double yy = (other._y.coord - _y.coord) * (other._y.coord - _y.coord);
-        double zz = (other._z.coord - _z.coord) * (other._z.coord - _z.coord);
-
-        return (xx + yy + zz);
+        return ((other._x.coord - _x.coord) * (other._x.coord - _x.coord)
+                +(other._y.coord - _y.coord) * (other._y.coord - _y.coord)
+                +(other._z.coord - _z.coord) * (other._z.coord - _z.coord));
     }
 
     /**

@@ -66,8 +66,7 @@ public class BasicRayTracer extends RayTracerBase {
      * @return color of the point
      */
     private Color calcColor(GeoPoint intersection, Ray ray, int level, double k) {
-        Color color = intersection.geometry.getEmission();
-        color = color.add(calcLocalEffects(intersection, ray, k));
+        Color color = intersection.geometry.getEmission().add(calcLocalEffects(intersection, ray, k));
         return 1 == level ? color : color.add(calcGlobalEffects(intersection, ray.getDir(), level, k));
     }
 
@@ -130,8 +129,7 @@ public class BasicRayTracer extends RayTracerBase {
      * @return the reflected ray
      */
     private Ray constructReflectedRay(Point3D point, Vector v, Vector n) {
-        Vector r = v.subtract(n.scale(2 * v.dotProduct(n)));
-        return new Ray(point, r, n);
+        return new Ray(point, v.subtract(n.scale(2 * v.dotProduct(n))), n);
     }
 
     /**
@@ -155,28 +153,30 @@ public class BasicRayTracer extends RayTracerBase {
      * @return local color of the point
      */
     private Color calcLocalEffects(GeoPoint intersection, Ray ray, double k) {
-        Vector v = ray.getDir();
+        Vector l, r, v = ray.getDir();
         Vector n = intersection.geometry.getNormal(intersection.point);
-        double nv = alignZero(n.dotProduct(v));
+        double nl, nv = alignZero(n.dotProduct(v));
         if (nv == 0) {
             return Color.BLACK;
         }
 
         Material material = intersection.geometry.get_material();
+        Point3D p = intersection.point;
         int nShininess = material.nShininess;
         double kd = material.kD;
         double ks = material.kS;
         Color color = Color.BLACK;
 
         for (LightSource lightSource : _scene.lights) {
-            Vector l = lightSource.getL(intersection.point);
-            double nl = alignZero(n.dotProduct(l));
+            l = lightSource.getL(p);
+            nl = alignZero(n.dotProduct(l));
             if (nl * nv > 0) { // sign(nl) == sing(nv)
                 double ktr = transparency(lightSource, l, n, intersection);
                 if (ktr * k > MIN_CALC_COLOR_K) {
-                    Color lightIntensity = lightSource.getIntensity(intersection.point).scale(ktr);
-                    color = color.add(calcDiffusive(kd, l, n, lightIntensity),
-                            calcSpecular(ks, l, n, v, nShininess, lightIntensity));
+                    Color lightIntensity = lightSource.getIntensity(p).scale(ktr);
+                    r = l.subtract(n.scale(2 * nl));
+                    color = color.add(calcDiffusive(kd, nl, lightIntensity),
+                            calcSpecular(ks, r, v, nShininess, lightIntensity));
                 }
             }
         }
@@ -196,16 +196,14 @@ public class BasicRayTracer extends RayTracerBase {
         Vector lightDirection = l.scale(-1); // from point to light source
         Ray lightRay = new Ray(geoPoint.point, lightDirection, n);
         double lightDistance = light.getDistance(geoPoint.point);
-        var intersections = _scene.geometries.findGeoIntersections(lightRay);
+        var intersections = _scene.geometries.findGeoIntersections(lightRay, lightDistance);
         if (intersections == null)
             return 1.0;
         double ktr = 1.0;
         for (GeoPoint gp : intersections) {
-            if (alignZero(gp.point.distance(geoPoint.point) - lightDistance) <= 0) {
-                ktr *= gp.geometry.get_material().kT;
-                if (ktr < MIN_CALC_COLOR_K)
-                    return 0.0;
-            }
+            ktr *= gp.geometry.get_material().kT;
+            if (ktr < MIN_CALC_COLOR_K)
+                return 0.0;
         }
         return ktr;
     }
@@ -214,29 +212,28 @@ public class BasicRayTracer extends RayTracerBase {
      * calculates the specular effects
      *
      * @param ks             specular coefficient
-     * @param l              vector from the light source
-     * @param n              normal in the point
+     * @param r              vector of the light reflection
      * @param v              vector from the camera
      * @param nShininess     shininess coefficient
      * @param lightIntensity intensity of the light source
      * @return specular color of the point
      */
-    private Color calcSpecular(double ks, Vector l, Vector n, Vector v, int nShininess, Color lightIntensity) {
-        Vector r = l.subtract(n.scale(2 * (l.dotProduct(n))));
-        double minusVR = v.scale(-1).dotProduct(r);
-        return lightIntensity.scale(ks * Math.max(0, Math.pow(minusVR, nShininess)));
+    private Color calcSpecular(double ks, Vector r, Vector v, int nShininess, Color lightIntensity) {
+        double minusVR = alignZero(-v.dotProduct(r));
+        if (minusVR <= 0)
+            return Color.BLACK;
+        return lightIntensity.scale(ks * Math.pow(minusVR, nShininess));
     }
 
     /**
      * calculates the diffuse effects
      *
      * @param kd             diffuse coefficient
-     * @param l              vector from the light source
-     * @param n              normal in the point
+     * @param nl             vector from the light source dotProduct normal in the point
      * @param lightIntensity intensity of the light source
      * @return diffuse color of the point
      */
-    private Color calcDiffusive(double kd, Vector l, Vector n, Color lightIntensity) {
-        return lightIntensity.scale(kd * Math.abs(l.dotProduct(n)));
+    private Color calcDiffusive(double kd, double nl, Color lightIntensity) {
+        return lightIntensity.scale(kd * (nl < 0 ? -nl : nl));
     }
 }

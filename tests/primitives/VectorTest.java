@@ -95,7 +95,7 @@ class VectorTest {
     @Test
     void testNormalize() {
         Vector v = new Vector(1, 2, 3);
-        Vector vCopy = new Vector(v.getHead());
+        Vector vCopy = new Vector(v._head);
         Vector vCopyNormalize = vCopy.normalize();
 
         // ============ Equivalence Partitions Tests ==============

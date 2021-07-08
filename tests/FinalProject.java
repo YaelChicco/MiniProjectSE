@@ -22,7 +22,7 @@ public class FinalProject {
 
     private Scene scene = new Scene("Test scene");
     private Camera camera = new Camera(new Point3D(1000, -600, 20), new Vector(-50, 30, -1), new Vector(-50, 30, 3400)) //
-            .setViewPlaneSize(200, 200).setDistance(1000).setAperture(16,3).setFocalDistance(1166);
+            .setViewPlaneSize(200, 200).setDistance(1000).setAperture(16,4).setFocalDistance(1166);
 
     @Test
     public void myPicture() {
@@ -124,7 +124,8 @@ public class FinalProject {
                         .setEmission(new Color(2102,102,153)).setMaterial(mat),
 
                 //moon
-                new Sphere(18, new Point3D(-150,-30,100)).setEmission(new Color(110,110,110)).setMaterial(transMat),
+                new Sphere(18, new Point3D(-150,-30,100)).setEmission(new Color(110,110,110))
+                        .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(35).setkT(0.4)),
 
                 //stars
                 new Sphere(1, new Point3D(-150,50,80)).setEmission(new Color(110,110,110)).setMaterial(mat),
@@ -132,31 +133,27 @@ public class FinalProject {
                 new Sphere(1.5, new Point3D(-150,180,125)).setEmission(new Color(110,110,110)).setMaterial(mat),
                 new Sphere(1, new Point3D(-150,220,60)).setEmission(new Color(110,110,110)).setMaterial(mat),
                 new Sphere(1.8, new Point3D(-150,150,40)).setEmission(new Color(110,110,110)).setMaterial(mat),
-                new Sphere(1, new Point3D(-150,240,102)).setEmission(new Color(110,110,110)).setMaterial(mat),
+                new Sphere(1.3, new Point3D(-150,240,102)).setEmission(new Color(110,110,110)).setMaterial(mat),
                 new Sphere(2, new Point3D(-150,23,100)).setEmission(new Color(110,110,110)).setMaterial(mat),
                 new Sphere(2, new Point3D(-150,-3,50)).setEmission(new Color(110,110,110)).setMaterial(mat),
                 new Sphere(2, new Point3D(-150,-50,70)).setEmission(new Color(110,110,110)).setMaterial(mat),
                 new Sphere(1, new Point3D(-150,-35,30)).setEmission(new Color(110,110,110)).setMaterial(mat)
-
-
         );
 
-        scene.lights.add(new DirectionalLight(new Color(80, 80, 80), new Vector(150, 30, -100)));
+        scene.lights.add(new DirectionalLight(new Color(80, 80, 80), new Vector(150, 60, -100)));
+//        scene.lights.add(new PointLight(new Color(200, 200, 200),new Point3D(0,0,90)));
         scene.lights.add(new PointLight(new Color(200, 200, 200),new Point3D(9.9,0,90)));
         scene.lights.add(new PointLight(new Color(200, 200, 200),new Point3D(-9.9,0,90)));
         scene.lights.add(new PointLight(new Color(200, 200, 200),new Point3D(0,9.9,90)));
         scene.lights.add(new PointLight(new Color(200, 200, 200),new Point3D(0,-9.9,90)));
 
-
         Render render = new Render() //
-                .setImageWriter(new ImageWriter("LightHouse", 600, 600)) //
+                .setImageWriter(new ImageWriter("LightHouse 2", 600, 600)) //
                 .setCamera(camera) //
                 .setMultithreading(3)
-                .setMultyRay(false)
+                .setMultyRay(true)
                 .setRayTracer(new BasicRayTracer(scene));
         render.renderImage();
         render.writeToImage();
-
-
     }
 }

@@ -254,8 +254,7 @@ public class Render {
      */
     private void castRay(int nX, int nY, int col, int row) {
         Ray ray = _camera.constructRayThroughPixel(nX, nY, col, row);
-        Color colorAverage = _rayTracer.traceRay(ray);
-        _imageWriter.writePixel(col, row, colorAverage);
+        _imageWriter.writePixel(col, row, _rayTracer.traceRay(ray));
     }
 
     /**
