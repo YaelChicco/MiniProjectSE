@@ -141,14 +141,13 @@ public class FinalProject {
         );
 
         scene.lights.add(new DirectionalLight(new Color(80, 80, 80), new Vector(150, 60, -100)));
-//        scene.lights.add(new PointLight(new Color(200, 200, 200),new Point3D(0,0,90)));
         scene.lights.add(new PointLight(new Color(200, 200, 200),new Point3D(9.9,0,90)));
         scene.lights.add(new PointLight(new Color(200, 200, 200),new Point3D(-9.9,0,90)));
         scene.lights.add(new PointLight(new Color(200, 200, 200),new Point3D(0,9.9,90)));
         scene.lights.add(new PointLight(new Color(200, 200, 200),new Point3D(0,-9.9,90)));
 
         Render render = new Render() //
-                .setImageWriter(new ImageWriter("LightHouse 2", 600, 600)) //
+                .setImageWriter(new ImageWriter("LightHouse focus", 600, 600)) //
                 .setCamera(camera) //
                 .setMultithreading(3)
                 .setMultyRay(true)
