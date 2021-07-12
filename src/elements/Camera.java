@@ -87,10 +87,8 @@ public class Camera {
             throw new IllegalArgumentException("vTo is not orthogonal to vUp");
         }
         _p0 = p0;
-        //
         _vTo = vTo.normalized();
         _vUp = vUp.normalized();
-        //
         _vRight = _vTo.crossProduct(_vUp);
     }
 
@@ -99,7 +97,7 @@ public class Camera {
     /**
      * sets the size of the view plane
      *
-     * @param width view plane width
+     * @param width  view plane width
      * @param height view plane hight
      * @return "this": camera current instance
      */
@@ -175,6 +173,20 @@ public class Camera {
      * @return ray from the camera through a specific pixel center
      */
     public Ray constructRayThroughPixel(int nX, int nY, int j, int i) {
+        Point3D Pij = pixelCenter(nX, nY, j, i);
+        return new Ray(_p0, Pij.subtract(_p0));
+    }
+
+    /**
+     * finds the pixel's center
+     *
+     * @param nX - number of pixels in view plane width
+     * @param nY - number of pixels in view plane height
+     * @param j  - distance of the intercept from the midpoint on the y-axis
+     * @param i  - distance of the intercept from the midpoint on the X-axis
+     * @return pixel center
+     */
+    private Point3D pixelCenter(int nX, int nY, int j, int i) {
         Point3D Pc = _p0.add(_vTo.scale(_distance));
         double Ry = _height / nY;
         double Rx = _width / nX;
@@ -188,7 +200,7 @@ public class Camera {
         if (!isZero(Yi)) {
             Pij = Pij.add(_vUp.scale(-Yi));
         }
-        return new Ray(_p0, Pij.subtract(_p0));
+        return Pij;
     }
 
     /**
@@ -215,24 +227,26 @@ public class Camera {
      */
     public void aperturePointsInit() {
         //vectors in size of one unit of the aperture grid
-        Vector newVUp = _vUp.scale(_apertureSize / _apertureN);
-        Vector newVRight = _vRight.scale(_apertureSize / _apertureN);
+        Vector Vdown = _vUp.scale(_apertureSize / _apertureN);
+        Vector Vleft = _vRight.scale(_apertureSize / _apertureN);
 
         //the upper right point on the aperture grid
-        Point3D upRight = _p0.add(newVUp.scale(_apertureN / 2 - 1 / 2)).add(newVRight.scale(_apertureN / 2 - 1 / 2));
+        Point3D upRight = _p0.add(Vdown.scale(_apertureN / 2 - 1 / 2)).add(Vleft.scale(_apertureN / 2 - 1 / 2));
 
-        Vector startOf = newVUp.scale(_apertureN);
-        newVUp = newVUp.scale(-1);
-        newVRight = newVRight.scale(-1);
+        //back to the column's head
+        Vector startOf = Vdown.scale(_apertureN);
 
-        //finds all the points by the newVUp and newVRight vectors
+        Vdown = Vdown.scale(-1);
+        Vleft = Vleft.scale(-1);
+
+        //finds all the points by the Vdown and Vleft vectors
         for (int i = 0; i < _apertureN; i++) {
             for (int j = 0; j < _apertureN; j++) {
                 aperturePoints.add(upRight);
                 pointsMat[i][j] = upRight;
-                upRight = upRight.add(newVUp);
+                upRight = upRight.add(Vdown);
             }
-            upRight = upRight.add(newVRight);
+            upRight = upRight.add(Vleft);
             upRight = upRight.add(startOf);
         }
     }
@@ -247,21 +261,11 @@ public class Camera {
      * @return the focal point
      */
     public Point3D getFocusPoint(int nX, int nY, int j, int i) {
-        Point3D Pc = _p0.add(_vTo.scale(_distance));
-        double Ry = _height / nY;
-        double Rx = _width / nX;
+        Point3D Pij = pixelCenter(nX, nY, j, i);
 
-        Point3D Pij = Pc;
-        double Xj = (j - (nX - 1) / 2d) * Rx;
-        double Yi = (i - (nY - 1) / 2d) * Ry;
-        if (!isZero(Xj)) {
-            Pij = Pij.add(_vRight.scale(Xj));
-        }
-        if (!isZero(Yi)) {
-            Pij = Pij.add(_vUp.scale(-Yi));
-        }
         //ray from the camera to the pixel in the viewPlane
         Ray mainRay = new Ray(_p0, Pij.subtract(_p0));
+
         //calculates the focus point on ray continuation
         double distCameraVP = _p0.distance(Pij);
         double distCameraFP = distCameraVP * _focalDist / _distance;
